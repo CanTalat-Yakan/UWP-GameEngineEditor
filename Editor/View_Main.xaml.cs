@@ -39,7 +39,7 @@ namespace Editor
                 x_AppBarButton_Status_Kill,
                 x_TextBlock_Status_Content);
 
-            x_Grid_Main.Children.Add(output = new View_Output());
+            x_Grid_Main.Children.Add(output = new View_Output(this, x_TextBlock_Status_Content));
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_gameMode.Play(); }
