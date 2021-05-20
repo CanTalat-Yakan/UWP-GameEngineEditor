@@ -120,6 +120,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\Control_GameMode.cs" />
+    <Compile Include="Assets\Control_Output.cs" />
+    <Compile Include="Assets\Control_Properties.cs" />
+    <Compile Include="Assets\Control_TreeView.cs" />
     <Compile Include="View_Main.xaml.cs">
       <DependentUpon>View_Main.xaml</DependentUpon>
     </Compile>
