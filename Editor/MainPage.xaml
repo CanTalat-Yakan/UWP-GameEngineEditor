@@ -20,9 +20,21 @@
             <Grid controls:DockPanel.Dock="Bottom">
                 <CommandBar>
                     <CommandBar.PrimaryCommands>
+                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
+                                            Click="AppBarToggleButton_Click_Play"/>
+                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
+                                            Click="AppBarToggleButton_Click_Pause"/>
+                        <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
+                                      Click="AppBarButton_Click_Forward"/>
+                        <AppBarButton x:Name="x_AppBarButton_Status_Repeat" Icon="RepeatAll" Label="Repeat" IsEnabled="False"
+                                      Click="AppBarButton_Click_Repeat"/>
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
+                        <AppBarToggleButton Label="Light-Theme" 
+                                            Click="AppBarToggleButton_Click_Light"/>
+                        <AppBarButton Label="Kill Process" x:Name="x_pBrBtn_Kill" IsEnabled="False"
+                                      Click="AppBarButton_Click_Kill"/>
                     </CommandBar.SecondaryCommands>
 
                     <CommandBar.Content>

@@ -26,5 +26,12 @@ namespace Editor
         {
             this.InitializeComponent();
         }
+
+        private void AppBarToggleButton_Click_Play(object sender, RoutedEventArgs e) { }
+        private void AppBarToggleButton_Click_Pause(object sender, RoutedEventArgs e) { }
+        private void AppBarButton_Click_Forward(object sender, RoutedEventArgs e) { }
+        private void AppBarButton_Click_Repeat(object sender, RoutedEventArgs e) { }
+        private void AppBarButton_Click_Kill(object sender, RoutedEventArgs e) { }
+        private void AppBarToggleButton_Click_Light(object sender, RoutedEventArgs e) { }
     }
 }
