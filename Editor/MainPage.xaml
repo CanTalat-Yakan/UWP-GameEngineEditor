@@ -11,6 +11,30 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        <controls:DockPanel>
 
+            <!--MENU -->
+            <MenuBar x:Name="x_MenuBar_Menu" controls:DockPanel.Dock="Top"/>
+
+            <!--STATUS -->
+            <Grid controls:DockPanel.Dock="Bottom">
+                <CommandBar>
+                    <CommandBar.PrimaryCommands>
+                    </CommandBar.PrimaryCommands>
+
+                    <CommandBar.SecondaryCommands>
+                    </CommandBar.SecondaryCommands>
+
+                    <CommandBar.Content>
+                        <TextBlock x:Name="x_TextBlock_Status_Content" Text="Engine Ready..." Margin="12,14"/>
+                    </CommandBar.Content>
+                </CommandBar>
+            </Grid>
+
+            <!--MAIN-->
+            <Grid>
+                
+            </Grid>
+        </controls:DockPanel>
     </Grid>
 </Page>
