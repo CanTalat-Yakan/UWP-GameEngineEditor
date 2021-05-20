@@ -10,7 +10,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace Editor.Assets
+namespace Editor.Assets.Control
 {
     internal enum EMessageType
     {

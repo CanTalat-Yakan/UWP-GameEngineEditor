@@ -120,9 +120,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\Control_GameMode.cs" />
+    <Compile Include="Assets\Control_Layout.cs" />
+    <Compile Include="Assets\Control_Menu.cs" />
     <Compile Include="Assets\Control_Output.cs" />
     <Compile Include="Assets\Control_Properties.cs" />
     <Compile Include="Assets\Control_TreeView.cs" />
+    <Compile Include="View_Hierarchy.xaml.cs">
+      <DependentUpon>View_Hierarchy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View_Main.xaml.cs">
       <DependentUpon>View_Main.xaml</DependentUpon>
     </Compile>
@@ -151,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View_Hierarchy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View_Main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

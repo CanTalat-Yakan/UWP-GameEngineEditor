@@ -24,7 +24,7 @@ namespace Editor
     public sealed partial class View_Main : Page
     {
         Control_GameMode m_gameMode;
-        View_Output output;
+        Control_Layout m_layout;
 
         public View_Main()
         {
@@ -39,7 +39,16 @@ namespace Editor
                 x_AppBarButton_Status_Kill,
                 x_TextBlock_Status_Content);
 
-            x_Grid_Main.Children.Add(output = new View_Output(this, x_TextBlock_Status_Content));
+            m_layout = new Control_Layout(
+                this, 
+                x_Grid_Main, 
+                new View_Output(
+                    this, 
+                    x_TextBlock_Status_Content), 
+                new View_Hierarchy());
+            //output.Children.Add(m_output = new View_Output(this, x_TextBlock_Status_Content));
+            //hierarchy.Children.Add(m_hierarchy = new View_Hierarchy());
+            //x_Grid_Properties.Children.Add(m_output = new View_Output(this, x_TextBlock_Status_Content));
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_gameMode.Play(); }

@@ -21,8 +21,6 @@
                               Click="AppBarButton_Output_Clear"/>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Output_Collapse" IsChecked="True" Label="Collapse" Icon="List" 
                                     Click="AppBarToggleButton_Output_Collapse_Click"/>
-                <!--<AppBarToggleButton x:Name="x_ppBrTgglBtn_Messages" IsChecked="True" Label="Message" Icon="Message" HorizontalAlignment="Right"/>-->
-                <!--<AppBarToggleButton x:Name="x_ppBrTgglBtn_Errors" IsChecked="True" Label="Error" Icon="ReportHacked" HorizontalAlignment="Right"/>-->
             </controls:TabbedCommandBarItem>
 
             <!--Messages-->
