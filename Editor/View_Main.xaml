@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="Editor.MainPage"
+    x:Class="Editor.View_Main"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Editor"
@@ -20,21 +20,21 @@
             <Grid controls:DockPanel.Dock="Bottom">
                 <CommandBar>
                     <CommandBar.PrimaryCommands>
-                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
-                                            Click="AppBarToggleButton_Click_Play"/>
+                        <AppBarToggleButton Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
+                                            Click="AppBarToggleButton_Status_Play_Click"/>
                         <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
-                                            Click="AppBarToggleButton_Click_Pause"/>
+                                            Click="AppBarToggleButton_Status_Pause_Click"/>
                         <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
-                                      Click="AppBarButton_Click_Forward"/>
+                                      Click="AppBarButton_Status_Forward_Click"/>
                         <AppBarButton x:Name="x_AppBarButton_Status_Repeat" Icon="RepeatAll" Label="Repeat" IsEnabled="False"
-                                      Click="AppBarButton_Click_Repeat"/>
+                                      Click="AppBarButton_Status_Repeat_Click"/>
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
                         <AppBarToggleButton Label="Light-Theme" 
-                                            Click="AppBarToggleButton_Click_Light"/>
-                        <AppBarButton Label="Kill Process" x:Name="x_pBrBtn_Kill" IsEnabled="False"
-                                      Click="AppBarButton_Click_Kill"/>
+                                            Click="AppBarToggleButton_Status_Light"/>
+                        <AppBarButton x:Name="x_AppBarButton_Status_Kill" Label="Kill Process" IsEnabled="False"
+                                      Click="AppBarButton_Status_Kill_Click"/>
                     </CommandBar.SecondaryCommands>
 
                     <CommandBar.Content>
@@ -44,8 +44,7 @@
             </Grid>
 
             <!--MAIN-->
-            <Grid>
-                
+            <Grid x:Name="x_Grid_Main">
             </Grid>
         </controls:DockPanel>
     </Grid>
