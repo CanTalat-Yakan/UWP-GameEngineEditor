@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Editor.Assets.Control;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -22,8 +23,12 @@ namespace Editor
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        GameMode m_gameMode;
+
         public MainPage()
         {
+            m_gameMode = new GameMode();
+
             this.InitializeComponent();
         }
 
