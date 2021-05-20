@@ -8,7 +8,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace Editor.Assets.Control
 {
-    public enum EGameMode
+    internal enum EGameMode
     {
         NONE,
         PLAYING,
