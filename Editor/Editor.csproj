@@ -125,16 +125,25 @@
     <Compile Include="Assets\Control_Output.cs" />
     <Compile Include="Assets\Control_Properties.cs" />
     <Compile Include="Assets\Control_TreeView.cs" />
-    <Compile Include="View_Hierarchy.xaml.cs">
+    <Compile Include="Views\View_Files.xaml.cs">
+      <DependentUpon>View_Files.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\View_Hierarchy.xaml.cs">
       <DependentUpon>View_Hierarchy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View_Main.xaml.cs">
+    <Compile Include="Views\View_Main.xaml.cs">
       <DependentUpon>View_Main.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View_Output.xaml.cs">
+    <Compile Include="Views\View_Output.xaml.cs">
       <DependentUpon>View_Output.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\View_Properties.xaml.cs">
+      <DependentUpon>View_Properties.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\View_Settings.xaml.cs">
+      <DependentUpon>View_Settings.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -156,15 +165,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="View_Hierarchy.xaml">
+    <Page Include="Views\View_Files.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View_Main.xaml">
+    <Page Include="Views\View_Hierarchy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\View_Main.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View_Output.xaml">
+    <Page Include="Views\View_Output.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\View_Properties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\View_Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
