@@ -40,7 +40,7 @@
                         </ComboBox>
                         <Button Grid.Column="1" Width="25" Height="32" VerticalAlignment="Bottom">
                             <Button.Content>
-                                <SymbolIcon Margin="-10" Symbol="Add" Opacity="0.65"/>
+                                <TextBlock Text="+" FontSize="28" Margin="-5,-15,-5,-10" Opacity="0.65" HorizontalAlignment="Center"/>
                             </Button.Content>
                         </Button>
                         <ComboBox Header="Layer" HorizontalAlignment="Stretch" Grid.Column="2">
@@ -52,7 +52,7 @@
                         </ComboBox>
                         <Button Grid.Column="3" Width="25" Height="32" VerticalAlignment="Bottom">
                             <Button.Content>
-                                <SymbolIcon Margin="-10" Symbol="Add" Opacity="0.65"/>
+                                <TextBlock Text="+" FontSize="28" Margin="-5,-15,-5,-10" Opacity="0.65" HorizontalAlignment="Center"/>
                             </Button.Content>
                         </Button>
                     </Grid>
@@ -69,17 +69,17 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Position:" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Grid Margin="5,0,-1,0" Width="15">
+                                    <Grid Margin="5,0,0,0" Width="15">
                                         <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
                                     <my:NumberBox Text="0"/>
-                                    <Grid Margin="5,0,-1,0" Width="15">
+                                    <Grid Margin="5,0,0,0" Width="15">
                                         <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
                                     <my:NumberBox Text="0"/>
-                                    <Grid Margin="5,0,-1,0" Width="15">
+                                    <Grid Margin="5,0,0,0" Width="15">
                                         <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
@@ -89,17 +89,17 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Rotation:" Width="80" VerticalAlignment="Bottom"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <my:NumberBox Text="0"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <my:NumberBox Text="0"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
@@ -108,17 +108,17 @@
 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Scale:" Width="80" VerticalAlignment="Bottom"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <my:NumberBox Text="0"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
                                 <my:NumberBox Text="0"/>
-                                <Grid Margin="5,0,-1,0" Width="15">
+                                <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
@@ -182,7 +182,7 @@
                             <!--SLIDER-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Slider:" Width="80" VerticalAlignment="Bottom"/>
-                                <Slider x:Name="x_Sldr_Example" Width="192" Value="{Binding ElementName=x_TxtBlck_Example, Path=Text}"/>
+                                <Slider x:Name="x_Sldr_Example" Width="192"/>
                                 <TextBlock x:Name="x_TxtBlck_Example" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=x_Sldr_Example, Path=Value}"/>
                             </StackPanel>
                             <!--BOOL-->

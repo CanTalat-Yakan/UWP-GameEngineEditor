@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Assets.Control;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,13 @@ namespace Editor
 {
     public sealed partial class View_Files : UserControl
     {
+        Control_Files m_control;
+
         public View_Files()
         {
             this.InitializeComponent();
+
+            m_control = new Control_Files(x_TreeView_Assets);
         }
     }
 }

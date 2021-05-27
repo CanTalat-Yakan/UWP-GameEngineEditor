@@ -25,7 +25,16 @@ namespace Editor
         public View_Hierarchy()
         {
             this.InitializeComponent();
-            SScene scene = new SScene();
+            Scene scene = new Scene();
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Core" });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Content" });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Manager" });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Camera", id_parent = scene.m_Hierarchy[0].id });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Directional Light", id_parent = scene.m_Hierarchy[0].id });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Player", id_parent = scene.m_Hierarchy[1].id });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "VCamera", id_parent = scene.m_Hierarchy[5].id });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Controller", id_parent = scene.m_Hierarchy[5].id });
+            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "GameManager", id_parent = scene.m_Hierarchy[2].id });
             hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
         }
     }

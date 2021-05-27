@@ -6,10 +6,58 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:my="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <controls:TabbedCommandBarItem Header="Project">
+            <AppBarButton Icon="Undo" Label="Undo"/>
+            <AppBarButton Icon="Redo" Label="Redo"/>
+            <AppBarButton Icon="Paste" Label="Paste"/>
+            <AppBarSeparator/>
+            <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
+            <AppBarToggleButton IsChecked="True" Label="3D Models">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            <AppBarToggleButton IsChecked="True" Label="Add-ons">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+        </controls:TabbedCommandBarItem>
 
+        <Grid Grid.Row="1">
+            <TreeView x:Name="x_TreeView_Assets">
+                <TreeView.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem Text="Create">
+                            <MenuFlyoutItem Text="Folder"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Material"/>
+                            <MenuFlyoutItem Text="Scene"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Script"/>
+                            <MenuFlyoutItem Text="Shader"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutItem Text="Open in Explorer"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Open"/>
+                        <MenuFlyoutItem Text="Delete"/>
+                        <MenuFlyoutItem Text="Rename"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Refresh"/>
+                    </MenuFlyout>
+                </TreeView.ContextFlyout>
+            </TreeView>
+        </Grid>
     </Grid>
 </UserControl>

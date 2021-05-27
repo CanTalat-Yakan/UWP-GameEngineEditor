@@ -119,14 +119,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Assets\Control_GameMode.cs" />
-    <Compile Include="Assets\Control_Hierarchy.cs" />
-    <Compile Include="Assets\Control_Layout.cs" />
-    <Compile Include="Assets\Control_Menu.cs" />
-    <Compile Include="Assets\Control_Output.cs" />
-    <Compile Include="Assets\Control_Properties.cs" />
-    <Compile Include="Assets\Control_Serialization.cs" />
-    <Compile Include="Assets\Control_TreeView.cs" />
+    <Compile Include="Assets\Control\Control_Files.cs" />
+    <Compile Include="Assets\Control\Control_GameMode.cs" />
+    <Compile Include="Assets\Control\Control_Hierarchy.cs" />
+    <Compile Include="Assets\Control\Control_Layout.cs" />
+    <Compile Include="Assets\Control\Control_Menu.cs" />
+    <Compile Include="Assets\Control\Control_Output.cs" />
+    <Compile Include="Assets\Control\Control_Properties.cs" />
+    <Compile Include="Assets\Control\Control_Serialization.cs" />
+    <Compile Include="Assets\Control\Control_TreeView.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
       <DependentUpon>View_Files.xaml</DependentUpon>
     </Compile>
@@ -153,14 +154,37 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\LargeTile.scale-100.png" />
+    <Content Include="Assets\Icons\LargeTile.scale-200.png" />
+    <Content Include="Assets\Icons\LargeTile.scale-400.png" />
+    <Content Include="Assets\Icons\SmallTile.scale-100.png" />
+    <Content Include="Assets\Icons\SmallTile.scale-200.png" />
+    <Content Include="Assets\Icons\SmallTile.scale-400.png" />
+    <Content Include="Assets\Icons\SplashScreen.scale-100.png" />
+    <Content Include="Assets\Icons\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Icons\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Icons\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Icons\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Icons\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-lightunplated_targetsize-16.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-lightunplated_targetsize-256.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-lightunplated_targetsize-48.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Icons\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Icons\StoreLogo.scale-100.png" />
+    <Content Include="Assets\Icons\StoreLogo.scale-200.png" />
+    <Content Include="Assets\Icons\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Icons\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Icons\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Icons\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

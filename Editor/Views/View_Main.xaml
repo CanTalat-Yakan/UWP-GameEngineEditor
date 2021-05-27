@@ -33,12 +33,10 @@
                 </MenuBarItem>
 
                 <MenuBarItem Title="Edit">
-                    <MenuFlyoutItem Text="Undo"/>
-                    <MenuFlyoutItem Text="Redo"/>
-                    <MenuFlyoutItem Text="Select All"/>
+                    <MenuFlyoutItem Text="Undo" Icon="Undo"/>
+                    <MenuFlyoutItem Text="Redo" Icon="Redo"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Text="Rename" Icon="Rename"/>
-                    <MenuFlyoutItem Text="Duplicate"/>
                     <MenuFlyoutItem Text="Delete" Icon="Delete"/>
                     <MenuFlyoutSeparator/>
                     <MenuFlyoutItem Text="Play" Icon="Play"/>
