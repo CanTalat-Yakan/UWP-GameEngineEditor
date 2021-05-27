@@ -1,4 +1,4 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +25,7 @@ namespace Editor.Assets.Control
     }
     class Control_TreeView
     {
-        private string[] GetRelativePaths(string[] _list, string _relativeTo)
+        internal string[] GetRelativePaths(string[] _list, string _relativeTo)
         {
             string[] list = new string[_list.Length];
 
@@ -35,7 +35,7 @@ namespace Editor.Assets.Control
             return list;
         }
 
-        private void PopulateTreeView(TreeView treeView, string[] paths, char pathSeparator)
+        internal void PopulateTreeView(TreeView treeView, string[] paths, char pathSeparator)
         {
             TreeViewNode lastNode = null;
             string subPathAgg;

@@ -49,9 +49,6 @@ namespace Editor
                 new View_Files(), 
                 new View_Properties(), 
                 new View_Settings());
-            //output.Children.Add(m_output = new View_Output(this, x_TextBlock_Status_Content));
-            //hierarchy.Children.Add(m_hierarchy = new View_Hierarchy());
-            //x_Grid_Properties.Children.Add(m_output = new View_Output(this, x_TextBlock_Status_Content));
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_gameMode.Play(); }

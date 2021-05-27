@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Assets.Control;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,13 @@ namespace Editor
 {
     public sealed partial class View_Hierarchy : UserControl
     {
+        Control_Hierarchy hierarchy;
+
         public View_Hierarchy()
         {
             this.InitializeComponent();
+            SScene scene = new SScene();
+            hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
         }
     }
 }

@@ -6,10 +6,239 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:my="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Spacing="3">
+                <StackPanel Margin="8,5,0,5">
+                    <Grid>
+                        <CheckBox IsChecked="True"/>
+                        <TextBox Text="GameObject" Margin="25,5,5,0"/>
+                    </Grid>
+
+                    <NavigationViewItemSeparator/>
+
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Header="Tag" HorizontalAlignment="Stretch" Grid.Column="0">
+                            <ComboBoxItem Tag="0" Content="Untagged" IsSelected="True"/>
+                            <ComboBoxItem Tag="1" Content="MainCamera"/>
+                            <ComboBoxItem Tag="2" Content="Respawn"/>
+                            <ComboBoxItem Tag="3" Content="Finish"/>
+                            <ComboBoxItem Tag="4" Content="Player"/>
+                            <ComboBoxItem Tag="5" Content="GameController"/>
+                        </ComboBox>
+                        <Button Grid.Column="1" Width="25" Height="32" VerticalAlignment="Bottom">
+                            <Button.Content>
+                                <SymbolIcon Margin="-10" Symbol="Add" Opacity="0.65"/>
+                            </Button.Content>
+                        </Button>
+                        <ComboBox Header="Layer" HorizontalAlignment="Stretch" Grid.Column="2">
+                            <ComboBoxItem Tag="0" Content="Default" IsSelected="True"/>
+                            <ComboBoxItem Tag="1" Content="Transparent FX"/>
+                            <ComboBoxItem Tag="2" Content="Ignore Raycast"/>
+                            <ComboBoxItem Tag="3" Content="Water"/>
+                            <ComboBoxItem Tag="4" Content="UI"/>
+                        </ComboBox>
+                        <Button Grid.Column="3" Width="25" Height="32" VerticalAlignment="Bottom">
+                            <Button.Content>
+                                <SymbolIcon Margin="-10" Symbol="Add" Opacity="0.65"/>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <NavigationViewItemSeparator/>
+
+                <!--TRANSFORM-->
+                <Grid>
+                    <controls:Expander Header="Transform" IsExpanded="True" HorizontalContentAlignment="Stretch">
+
+                        <!--//Content-->
+                        <StackPanel Spacing="10" Margin="10,5,0,20">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Position:" Width="80" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Grid Margin="5,0,-1,0" Width="15">
+                                        <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
+                                        <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <my:NumberBox Text="0"/>
+                                    <Grid Margin="5,0,-1,0" Width="15">
+                                        <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
+                                        <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <my:NumberBox Text="0"/>
+                                    <Grid Margin="5,0,-1,0" Width="15">
+                                        <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
+                                        <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Grid>
+                                    <my:NumberBox Text="0"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Rotation:" Width="80" VerticalAlignment="Bottom"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Scale:" Width="80" VerticalAlignment="Bottom"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                                <Grid Margin="5,0,-1,0" Width="15">
+                                    <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
+                                    <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Grid>
+                                <my:NumberBox Text="0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </controls:Expander>
+                </Grid>
+
+                <!--SKRIPT-->
+                <Grid>
+                </Grid>
+                <Grid>
+                    <controls:Expander Header="ExampleScript" HorizontalContentAlignment="Stretch" IsExpanded="{Binding ElementName=x_ChckBx_ExpanderExample, Path=IsChecked}" IsEnabled="{Binding ElementName=x_ChckBx_ExpanderExample, Path=IsChecked}">
+                        <!--//Content-->
+                        <StackPanel Spacing="10" Margin="10,5,0,20">
+                            <!--COLOR-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Color:" Width="80" VerticalAlignment="Bottom"/>
+                                <controls:ColorPickerButton SelectedColor="Red">
+                                    <controls:ColorPickerButton.ColorPickerStyle>
+                                        <Style TargetType="controls:ColorPicker">
+                                            <Setter Property="ColorSpectrumShape" Value="Ring"/>
+                                            <Setter Property="IsAlphaEnabled" Value="True"/>
+                                            <Setter Property="IsHexInputVisible" Value="True"/>
+                                        </Style>
+                                    </controls:ColorPickerButton.ColorPickerStyle>
+                                </controls:ColorPickerButton>
+                            </StackPanel>
+                            <!--FLOAT-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Float:" Width="80" VerticalAlignment="Bottom"/>
+                                <my:NumberBox Text="0" SpinButtonPlacementMode="Inline"/>
+                            </StackPanel>
+                            <!--STRING-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="String:" Width="80" VerticalAlignment="Bottom"/>
+                                <TextBox Text="Example" MaxWidth="250"/>
+                            </StackPanel>
+                            <!--VECTOR 2-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Vector 2:" Width="80" VerticalAlignment="Bottom"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                            </StackPanel>
+                            <!--VECTOR 3-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Vector 3:" Width="80" VerticalAlignment="Bottom"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                            </StackPanel>
+                            <!--VECTOR 4-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Vector 4:" Width="80" VerticalAlignment="Bottom"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0"/>
+                            </StackPanel>
+                            <!--SLIDER-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Slider:" Width="80" VerticalAlignment="Bottom"/>
+                                <Slider x:Name="x_Sldr_Example" Width="192" Value="{Binding ElementName=x_TxtBlck_Example, Path=Text}"/>
+                                <TextBlock x:Name="x_TxtBlck_Example" Padding="10,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=x_Sldr_Example, Path=Value}"/>
+                            </StackPanel>
+                            <!--BOOL-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Bool:" Width="80" VerticalAlignment="Bottom"/>
+                                <CheckBox/>
+                            </StackPanel>
+                            <!--TEXTURE-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Texture:" Width="80" VerticalAlignment="Bottom"/>
+                                <Grid Width="48" Height="48" BorderThickness="1" BorderBrush="{ThemeResource SystemControlHighlightAccentBrush}">
+                                    <Image Name="Img_SelectTexture" Stretch="UniformToFill"/>
+                                    <AppBarButton Click="AppBarButton_Click_SelectImagePath"/>
+                                </Grid>
+                                <TextBlock x:Name="TxtBlck_TexturePath" Margin="5,0,0,0" Text="None" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                            <!--ENUM-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Enum:" Width="80" VerticalAlignment="Bottom"/>
+                                <ComboBox>
+                                    <ComboBoxItem Tag="0" Content="Example" IsSelected="True"/>
+                                    <ComboBoxItem Tag="1" Content="AnotherAnother"/>
+                                </ComboBox>
+                            </StackPanel>
+                            <!--HEADER-->
+                            <TextBlock Text="Header" FontSize="18" FontWeight="Bold" Margin="0,20,0,0"/>
+                            <!--EXPANDER-->
+                            <controls:Expander Header="Expander" Margin="15,0,0,0" ExpandDirection="Down" HorizontalContentAlignment="Stretch">
+                                <StackPanel Spacing="10" Margin="10,5,0,15">
+                                    <!--COLOR-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Eyedrop:" Width="80" VerticalAlignment="Bottom"/>
+                                        <controls:EyedropperToolButton/>
+                                    </StackPanel>
+                                    <!--REFERENCE-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Reference:" Width="80" VerticalAlignment="Bottom"/>
+                                        <Button Content="..."/>
+                                        <TextBlock Margin="5,0,0,0" Text="None(Type)" VerticalAlignment="Bottom"/>
+                                    </StackPanel>
+                                    <!--BUTTON-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Button:" Width="80" VerticalAlignment="Bottom"/>
+                                        <Button Content="Event"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </controls:Expander>
+                        </StackPanel>
+                    </controls:Expander>
+                    <CheckBox x:Name="x_ChckBx_ExpanderExample" IsChecked="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,-80,0"/>
+                </Grid>
+
+                <Button Content="Add Component" Margin="10,10,10,10" HorizontalAlignment="Center"/>
+
+            </StackPanel>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>
