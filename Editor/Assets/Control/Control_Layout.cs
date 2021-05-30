@@ -28,14 +28,14 @@ namespace Editor.Assets.Control
         internal Grid m_Files = new Grid();
         internal Grid m_Properties = new Grid();
 
-        public Control_Layout(View_Main _main, Grid _content, View_Output _output, View_Hierarchy _hierarchy, View_Files _files, View_Properties _properties, View_Settings _settings)
+        public Control_Layout(View_Main _main, Grid _content, View_Output _output, View_Hierarchy _hierarchy, View_Files _files, View_Properties _properties, View_Settings _settings, View_Port _port)
         {
             m_main = _main;
 
             m_Content = CreateLayout();
 
             m_SwapChain.Children.Add(Wrap(
-                new STabItem() { Header = "View Port", Content = new Image() { Source = new BitmapImage(new Uri("ms-appx://Assets/TmpSceneview.png")), Stretch = Stretch.UniformToFill } },
+                new STabItem() { Header = "View Port", Content = _port },
                 new STabItem() { Header = "Settings", Content = _settings }));
 
             m_Output.Children.Add(Wrap(

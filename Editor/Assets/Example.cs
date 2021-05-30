@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Example
+public class Example
 {
+    public string stringExample;
 
+    public void DebugLogExamples()
+    {
+
+    }
 }
