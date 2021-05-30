@@ -48,7 +48,8 @@ namespace Editor
                 new View_Hierarchy(this), 
                 new View_Files(this), 
                 new View_Properties(this), 
-                new View_Settings(this));
+                new View_Settings(this),
+                new View_Port(this));
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_GameMode.Play(); }
