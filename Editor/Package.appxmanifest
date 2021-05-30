@@ -32,10 +32,10 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="Editor.App">
       <uap:VisualElements
-        DisplayName="Editor"
+        DisplayName="Sugar Editor"
         Square150x150Logo="Assets\Icons\Square150x150Logo.png"
         Square44x44Logo="Assets\Icons\Square44x44Logo.png"
-        Description="Editor"
+        Description="GameEngine Editor to create Assets you can utilize in your own Engine with the included API"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Icons\Wide310x150Logo.png" Square71x71Logo="Assets\Icons\SmallTile.png" Square310x310Logo="Assets\Icons\LargeTile.png">
           <uap:ShowNameOnTiles>
