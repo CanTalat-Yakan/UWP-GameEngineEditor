@@ -8,42 +8,45 @@ using System.Numerics;
 
 namespace Editor.Assets.Control
 {
-    struct SGameObject
+    class CGameObject
     {
-        int m_id;
-        public int id { get => m_id; set { m_id = new Random().Next(0, int.MaxValue); } }
+        public CGameObject()
+        {
+            ID = new Random().Next(0, int.MaxValue);
+        }
 
-        public int? id_parent;
-        public string name;
-        public string isActive;
-        public string isStatic;
-        public string tag;
-        public string layer;
-        public Vector3 position;
-        public Vector3 rotation;
-        public Vector3 scale;
+        public int ID;
+        public int? ID_parent;
+        public string Name;
+        public string IsActive;
+        public string IsStatic;
+        public string Tag;
+        public string Layer;
+        public Vector3 Position;
+        public Vector3 Rotation;
+        public Vector3 Scale;
     }
-    class Scene
+    class CScene
     {
-        public List<SGameObject> m_Hierarchy = new List<SGameObject>();
+        public List<CGameObject> m_Hierarchy = new List<CGameObject>();
         public string[] ToStringArray()
         {
             string[] s = new string[m_Hierarchy.Count];
 
             for (int i = 0; i < m_Hierarchy.Count; i++)
-                s[i] = GetParents(m_Hierarchy[i], m_Hierarchy[i].name, '/');
+                s[i] = GetParents(m_Hierarchy[i], m_Hierarchy[i].Name, '/');
 
             return s;
         }
 
-        string GetParents(SGameObject _current, string _path, char _pathSeperator)
+        string GetParents(CGameObject _current, string _path, char _pathSeperator)
         {
-            if (_current.id_parent != null)
-                foreach (SGameObject gameObject in m_Hierarchy)
-                    if (gameObject.id == _current.id_parent)
+            if (_current.ID_parent != null)
+                foreach (CGameObject gameObject in m_Hierarchy)
+                    if (gameObject.ID == _current.ID_parent)
                         _path = GetParents(
                             gameObject,
-                            gameObject.name + _pathSeperator + _path,
+                            gameObject.Name + _pathSeperator + _path,
                             _pathSeperator);
 
             return _path;
@@ -54,9 +57,9 @@ namespace Editor.Assets.Control
         Control_TreeView m_control = new Control_TreeView();
 
         internal TreeView m_tree;
-        internal Scene m_scene;
+        internal CScene m_scene;
 
-        public Control_Hierarchy(TreeView _tree, Scene _scene)
+        public Control_Hierarchy(TreeView _tree, CScene _scene)
         {
             m_tree = _tree;
             m_scene = _scene;

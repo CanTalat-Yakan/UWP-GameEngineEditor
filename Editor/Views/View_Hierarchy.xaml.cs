@@ -22,19 +22,19 @@ namespace Editor
     {
         Control_Hierarchy hierarchy;
 
-        public View_Hierarchy()
+        public View_Hierarchy(View_Main _main)
         {
             this.InitializeComponent();
-            Scene scene = new Scene();
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Core" });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Content" });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Manager" });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Camera", id_parent = scene.m_Hierarchy[0].id });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Directional Light", id_parent = scene.m_Hierarchy[0].id });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Player", id_parent = scene.m_Hierarchy[1].id });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "VCamera", id_parent = scene.m_Hierarchy[5].id });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "Controller", id_parent = scene.m_Hierarchy[5].id });
-            scene.m_Hierarchy.Add(new SGameObject() { id = 1, name = "GameManager", id_parent = scene.m_Hierarchy[2].id });
+            CScene scene = new CScene();
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Core" });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Content" });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Manager" });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Camera", ID_parent = scene.m_Hierarchy[0].ID });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Directional Light", ID_parent = scene.m_Hierarchy[0].ID });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Player", ID_parent = scene.m_Hierarchy[1].ID });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "VCamera", ID_parent = scene.m_Hierarchy[5].ID });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "Controller", ID_parent = scene.m_Hierarchy[5].ID });
+            scene.m_Hierarchy.Add(new CGameObject() { Name = "GameManager", ID_parent = scene.m_Hierarchy[2].ID });
             hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
         }
     }

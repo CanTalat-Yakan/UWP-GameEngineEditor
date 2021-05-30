@@ -24,11 +24,11 @@ namespace Editor
     {
         internal Control_Output m_output;
 
-        public View_Output(View_Main main, TextBlock status)
+        public View_Output(View_Main _main, TextBlock _status)
         {
             this.InitializeComponent();
 
-            m_output = new Control_Output(status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse);
+            m_output = new Control_Output(_status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors);
 
             m_output.Log("Hi");
             Test();
@@ -44,7 +44,7 @@ namespace Editor
 
         private void AppBarButton_Output_Clear(object sender, RoutedEventArgs e) { m_output.ClearOutput(); }
         private void AppBarToggleButton_Output_Collapse_Click(object sender, RoutedEventArgs e) { m_output.IterateOutputMessages(); }
-
-
+        private void AppBarToggleButton_Filter_Click(object sender, RoutedEventArgs e) { m_output.IterateOutputMessages(); }
+        private void AppBarToggleButton_Debug_ErrorPause_Click(object sender, RoutedEventArgs e) { }
     }
 }

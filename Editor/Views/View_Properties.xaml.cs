@@ -22,18 +22,18 @@ namespace Editor
 {
     public sealed partial class View_Properties : UserControl
     {
-        Control_Properties m_control;
+        internal Control_Properties m_Control;
 
-        public View_Properties()
+        public View_Properties(View_Main _main)
         {
             this.InitializeComponent();
 
-            m_control = new Control_Properties();
+            m_Control = new Control_Properties();
         }
 
         void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e)
         {
-            m_control.SelectImage(Img_SelectTexture, TxtBlck_TexturePath);
+            m_Control.SelectImage(Img_SelectTexture, TxtBlck_TexturePath);
         }
 
     }

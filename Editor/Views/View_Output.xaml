@@ -9,7 +9,8 @@
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
-    d:DesignWidth="400">
+    d:DesignWidth="800"
+    d:MinWidth="500">
 
     <Grid>
         <!--CONTENT-->
@@ -21,6 +22,20 @@
                               Click="AppBarButton_Output_Clear"/>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Output_Collapse" IsChecked="True" Label="Collapse" Icon="List" 
                                     Click="AppBarToggleButton_Output_Collapse_Click"/>
+                <AppBarSeparator />
+                <AppBarToggleButton x:Name="x_AppBarToggleButton_Debug_ErrorPause" IsChecked="False" Label="Error Pause" Icon="Pause"
+                                    Click="AppBarToggleButton_Debug_ErrorPause_Click"/>
+                <AppBarSeparator />
+                <AppBarToggleButton x:Name="x_AppBarToggleButton_Filter_Messages" IsChecked="True" Label="Messages" Icon="Message"
+                                    Click="AppBarToggleButton_Filter_Click"/>
+                <AppBarToggleButton x:Name="x_AppBarToggleButton_Filter_Warnings" IsChecked="True" Label="Warnings"
+                                    Click="AppBarToggleButton_Filter_Click">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE7BA;" />
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+                <AppBarToggleButton x:Name="x_AppBarToggleButton_Filter_Errors" IsChecked="True" Label="Error" Icon="ReportHacked"
+                                    Click="AppBarToggleButton_Filter_Click"/>
             </controls:TabbedCommandBarItem>
 
             <!--Messages-->

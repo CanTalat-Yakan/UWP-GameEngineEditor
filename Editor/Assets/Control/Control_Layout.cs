@@ -6,10 +6,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace Editor.Assets.Control
 {
+    internal struct STabItem
+    {
+        public string Header;
+        public object Content;
+    }
     internal class Control_Layout
     {
         View_Main m_main;
@@ -27,11 +34,22 @@ namespace Editor.Assets.Control
 
             m_Content = CreateLayout();
 
-            m_SwapChain.Children.Add(Wrap("View Port", new Grid(), _settings));
-            m_Output.Children.Add(Wrap("Output", _output));
-            m_Hierarchy.Children.Add(Wrap("Hierarchy", _hierarchy));
-            m_Files.Children.Add(Wrap("Files", _files));
-            m_Properties.Children.Add(Wrap("Properties", _properties));
+            m_SwapChain.Children.Add(Wrap(
+                new STabItem() { Header = "View Port", Content = new Image() { Source = new BitmapImage(new Uri("ms-appx://Assets/TmpSceneview.png")), Stretch = Stretch.UniformToFill } },
+                new STabItem() { Header = "Settings", Content = _settings }));
+
+            m_Output.Children.Add(Wrap(
+                new STabItem() { Header = "Output", Content = _output }));
+
+            m_Hierarchy.Children.Add(Wrap(
+                new STabItem() { Header = "Hierarchy", Content = _hierarchy }));
+
+            m_Files.Children.Add(Wrap(
+                new STabItem() { Header = "Files", Content = _files }));
+
+            m_Properties.Children.Add(Wrap(
+                new STabItem() { Header = "Properties", Content = _properties }));
+
 
             _content.Children.Add(m_Content);
         }
@@ -94,13 +112,13 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        Grid Wrap(string _header, params object[] _panel)
+        Grid Wrap(params STabItem[] _i)
         {
             Grid grid = new Grid();
             TabView tabView = new TabView() { CloseButtonOverlayMode = TabViewCloseButtonOverlayMode.OnPointerOver };
-            foreach (object p in _panel)
+            foreach (STabItem p in _i)
             {
-                TabViewItem item = new TabViewItem() { Header = _header, Content = p };
+                TabViewItem item = new TabViewItem() { Header = p.Header, Content = p.Content };
                 tabView.TabItems.Add(item);
             }
             grid.Children.Add(tabView);
@@ -109,7 +127,3 @@ namespace Editor.Assets.Control
         }
     }
 }
-
-
-/*                  <my:TabView Grid.Row="1" Margin="0,16,0,0" CloseButtonOverlayMode="OnPointerOver">
-                        <my:TabViewItem Header="Output">*/

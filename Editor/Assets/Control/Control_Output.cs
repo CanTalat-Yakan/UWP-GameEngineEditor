@@ -37,26 +37,38 @@ namespace Editor.Assets.Control
         StackPanel m_stack;
         ScrollViewer m_scroll;
         AppBarToggleButton m_collapse;
+        AppBarToggleButton m_filterMessages;
+        AppBarToggleButton m_filterWarnings;
+        AppBarToggleButton m_filterErrors;
 
-        internal Control_Output(TextBlock status, StackPanel stack, ScrollViewer scroll, AppBarToggleButton collapse)
+        internal Control_Output(TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors)
         {
-            m_status = status;
-            m_stack = stack;
-            m_scroll = scroll; 
-            m_collapse = collapse;
+            m_status = _status;
+            m_stack = _stack;
+            m_scroll = _scroll;
+            m_collapse = _collapse;
+            m_filterMessages = _filterMessages;
+            m_filterWarnings = _filterWarnings;
+            m_filterErrors = _filterErrors;
         }
 
+        public Control_Output()
+        {
+        }
 
         void SetStatus(SMessageInfo _m)
         {
             m_status.Text = _m.Message;
         }
 
-        UIElement CreateMessage(DateTime _d, SMessageInfo _m, int _i = 0)
+        UIElement CreateMessage(DateTime _d, SMessageInfo _m, int? _i)
         {
             //Content of the message
             StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10, Margin = new Thickness(10, 0, 0, 0) };
-            stack.Children.Add(new SymbolIcon() { Symbol = _m.Type == EMessageType.MESSAGE ? Symbol.Message : Symbol.ReportHacked });
+            if (_m.Type == EMessageType.WARNING)
+                stack.Children.Add(new FontIcon() { Glyph = "\uE7BA" });
+            else
+                stack.Children.Add(new SymbolIcon() { Symbol = _m.Type == EMessageType.MESSAGE ? Symbol.Message : Symbol.ReportHacked });
             stack.Children.Add(new TextBlock() { Text = "[" + _d.TimeOfDay.ToString("hh\\:mm\\:ss").ToString() + "]" });
             stack.Children.Add(new TextBlock() { Text = _m.Message });
 
@@ -71,7 +83,7 @@ namespace Editor.Assets.Control
             Grid grid = new Grid() { HorizontalAlignment = HorizontalAlignment.Stretch };
             grid.Children.Add(stack);
             //If there is a count the number gets shown on the right
-            if (_i != 0)
+            if (_i != null)
                 grid.Children.Add(new TextBlock() { Margin = new Thickness(0, 0, 10, 0), MinWidth = 25, HorizontalAlignment = HorizontalAlignment.Right, Text = _i.ToString() });
             //Set flyout to button that stretches along the grid
             grid.Children.Add(new Button()
@@ -120,7 +132,26 @@ namespace Editor.Assets.Control
                 dic = l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
 
                 foreach (var kv in dic)
+                {
+                    switch (kv.Value.Type)
+                    {
+                        case EMessageType.MESSAGE:
+                            if (!m_filterMessages.IsChecked.Value)
+                                continue;
+                            break;
+                        case EMessageType.WARNING:
+                            if (!m_filterWarnings.IsChecked.Value)
+                                continue;
+                            break;
+                        case EMessageType.ERROR:
+                            if (!m_filterErrors.IsChecked.Value)
+                                continue;
+                            break;
+                        default:
+                            break;
+                    }
                     m_stack.Children.Add(CreateMessage(kv.Key, kv.Value, m_messageCollection[kv.Value].Count()));
+                }
             }
             else
             {
@@ -132,7 +163,26 @@ namespace Editor.Assets.Control
                 dic = l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
 
                 foreach (var kv in dic)
-                    m_stack.Children.Add(CreateMessage(kv.Key, kv.Value));
+                {
+                    switch (kv.Value.Type)
+                    {
+                        case EMessageType.MESSAGE:
+                            if (!m_filterMessages.IsChecked.Value)
+                                continue;
+                            break;
+                        case EMessageType.WARNING:
+                            if (!m_filterWarnings.IsChecked.Value)
+                                continue;
+                            break;
+                        case EMessageType.ERROR:
+                            if (!m_filterErrors.IsChecked.Value)
+                                continue;
+                            break;
+                        default:
+                            break;
+                    }
+                    m_stack.Children.Add(CreateMessage(kv.Key, kv.Value, null));
+                }
             }
 
             m_stack.UpdateLayout();

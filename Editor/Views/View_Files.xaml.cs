@@ -20,9 +20,9 @@ namespace Editor
 {
     public sealed partial class View_Files : UserControl
     {
-        Control_Files m_control;
+        internal Control_Files m_control;
 
-        public View_Files()
+        public View_Files(View_Main _main)
         {
             this.InitializeComponent();
 

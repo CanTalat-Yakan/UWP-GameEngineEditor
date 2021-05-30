@@ -23,14 +23,14 @@ namespace Editor
     /// </summary>
     public sealed partial class View_Main : Page
     {
-        Control_GameMode m_gameMode;
-        Control_Layout m_layout;
+        internal Control_GameMode m_GameMode;
+        internal Control_Layout m_Layout;
 
         public View_Main()
         {
             this.InitializeComponent();
 
-            m_gameMode = new Control_GameMode(
+            m_GameMode = new Control_GameMode(
                 this,
                 x_AppBarToggleButton_Status_Play,
                 x_AppBarToggleButton_Status_Pause,
@@ -39,23 +39,23 @@ namespace Editor
                 x_AppBarButton_Status_Kill,
                 x_TextBlock_Status_Content);
 
-            m_layout = new Control_Layout(
+            m_Layout = new Control_Layout(
                 this, 
                 x_Grid_Main, 
                 new View_Output(
                     this, 
                     x_TextBlock_Status_Content), 
-                new View_Hierarchy(), 
-                new View_Files(), 
-                new View_Properties(), 
-                new View_Settings());
+                new View_Hierarchy(this), 
+                new View_Files(this), 
+                new View_Properties(this), 
+                new View_Settings(this));
         }
 
-        private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_gameMode.Play(); }
-        private void AppBarToggleButton_Status_Pause_Click(object sender, RoutedEventArgs e) { m_gameMode.Pause(); }
-        private void AppBarButton_Status_Forward_Click(object sender, RoutedEventArgs e) { m_gameMode.Forward(); }
-        private void AppBarButton_Status_Repeat_Click(object sender, RoutedEventArgs e) { m_gameMode.Repeat(); }
-        private void AppBarButton_Status_Kill_Click(object sender, RoutedEventArgs e) { m_gameMode.Kill(); }
+        private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_GameMode.Play(); }
+        private void AppBarToggleButton_Status_Pause_Click(object sender, RoutedEventArgs e) { m_GameMode.Pause(); }
+        private void AppBarButton_Status_Forward_Click(object sender, RoutedEventArgs e) { m_GameMode.Forward(); }
+        private void AppBarButton_Status_Repeat_Click(object sender, RoutedEventArgs e) { m_GameMode.Repeat(); }
+        private void AppBarButton_Status_Kill_Click(object sender, RoutedEventArgs e) { m_GameMode.Kill(); }
         private void AppBarToggleButton_Status_Light(object sender, RoutedEventArgs e) { this.RequestedTheme = this.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : this.RequestedTheme = ElementTheme.Light; }
 
     }

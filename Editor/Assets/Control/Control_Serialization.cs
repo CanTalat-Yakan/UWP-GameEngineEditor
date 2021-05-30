@@ -10,22 +10,22 @@ using System.Xml.Serialization;
 
 namespace Editor.Assets.Control
 {
-    public enum EDataType
+    internal enum EDataType
     {
         BINARY,
         XML,
         JSON,
     }
 
-    public static class Control_Serialization
+    static class Control_Serialization
     {
-        public static void DeleteFile(string _path)
+        internal static void DeleteFile(string _path)
         {
             if (File.Exists(_path))
                 File.Delete(_path);
         }
 
-        public static void SaveFile<T>(T _object, string _path, EDataType _eDataType = EDataType.BINARY)
+        internal static void SaveFile<T>(T _object, string _path, EDataType _eDataType = EDataType.BINARY)
         {
             switch (_eDataType)
             {
@@ -43,7 +43,7 @@ namespace Editor.Assets.Control
             }
         }
 
-        private static void SaveXml<T>(T _object, string _path)
+        internal static void SaveXml<T>(T _object, string _path)
         {
             using (FileStream fs = new FileStream(_path, File.Exists(_path) ? FileMode.Create : FileMode.CreateNew))
             {
@@ -52,7 +52,7 @@ namespace Editor.Assets.Control
             }
         }
 
-        private static void SaveBinary<T>(T _object, string _path)
+        internal static void SaveBinary<T>(T _object, string _path)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -62,7 +62,7 @@ namespace Editor.Assets.Control
             }
         }
 
-        private static void SaveJSON<T>(T _object, string _path)
+        internal static void SaveJSON<T>(T _object, string _path)
         {
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.WriteIndented = true;
@@ -72,7 +72,7 @@ namespace Editor.Assets.Control
         }
 
 
-        public static T LoadFile<T>(string _path, EDataType _eDataType = EDataType.BINARY)
+        internal static T LoadFile<T>(string _path, EDataType _eDataType = EDataType.BINARY)
         {
             object obj = null;
 
@@ -93,7 +93,7 @@ namespace Editor.Assets.Control
             return (T)obj;
         }
 
-        private static object LoadXml(Type _type, string _path)
+        internal static object LoadXml(Type _type, string _path)
         {
             object obj = null;
 
@@ -106,7 +106,7 @@ namespace Editor.Assets.Control
             return obj;
         }
 
-        private static object LoadBinary(string _path)
+        internal static object LoadBinary(string _path)
         {
             object obj = null;
 
@@ -119,7 +119,7 @@ namespace Editor.Assets.Control
             return obj;
         }
 
-        private static object LoadJSON(Type _type, string _path)
+        internal static object LoadJSON(Type _type, string _path)
         {
             return JsonSerializer.Deserialize(File.ReadAllText(_path), _type);
         }

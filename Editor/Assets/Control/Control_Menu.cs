@@ -10,7 +10,7 @@ namespace Editor.Assets.Control
     class Control_Menu
     {
 
-        void GetDefault()
+        internal void GetDefault()
         {
         }
     }
