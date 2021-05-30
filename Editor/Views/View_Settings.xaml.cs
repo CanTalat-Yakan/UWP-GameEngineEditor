@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Assets.Control;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,13 @@ namespace Editor
 {
     public sealed partial class View_Settings : UserControl
     {
-        public View_Settings()
+        internal Control_Settings m_Settings;
+
+        public View_Settings(View_Main _main)
         {
             this.InitializeComponent();
+
+            m_Settings = new Control_Settings(_main, x_MarkDownTextBlock_Settings);
         }
     }
 }
