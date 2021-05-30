@@ -28,7 +28,7 @@ namespace Editor
         {
             this.InitializeComponent();
 
-            m_output = new Control_Output(_status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors);
+            m_output = new Control_Output(_main, _status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors, x_AppBarToggleButton_Debug_ErrorPause);
 
             m_output.Log("Hi");
             Test();

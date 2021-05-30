@@ -33,6 +33,8 @@ namespace Editor.Assets.Control
     {
         Dictionary<SMessageInfo, List<DateTime>> m_messageCollection = new Dictionary<SMessageInfo, List<DateTime>>();
 
+        View_Main m_main;
+
         TextBlock m_status;
         StackPanel m_stack;
         ScrollViewer m_scroll;
@@ -40,9 +42,11 @@ namespace Editor.Assets.Control
         AppBarToggleButton m_filterMessages;
         AppBarToggleButton m_filterWarnings;
         AppBarToggleButton m_filterErrors;
+        AppBarToggleButton m_pauseError;
 
-        internal Control_Output(TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors)
+        internal Control_Output(View_Main _main, TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError)
         {
+            m_main = _main;
             m_status = _status;
             m_stack = _stack;
             m_scroll = _scroll;
@@ -50,10 +54,7 @@ namespace Editor.Assets.Control
             m_filterMessages = _filterMessages;
             m_filterWarnings = _filterWarnings;
             m_filterErrors = _filterErrors;
-        }
-
-        public Control_Output()
-        {
+            m_pauseError = _pauseError;
         }
 
         void SetStatus(SMessageInfo _m)
@@ -107,6 +108,10 @@ namespace Editor.Assets.Control
         internal void Log(string _m, EMessageType _t = EMessageType.MESSAGE, [CallerLineNumber] int _l = 0, [CallerMemberName] string _c = null, [CallerFilePath] string _s = null)
         {
             SMessageInfo message = new SMessageInfo() { Script = _s, Method = _c, Line = _l, Message = _m, Type = _t };
+
+            if (m_pauseError.IsChecked.Value)
+                if (_t == EMessageType.ERROR)
+                    m_main.m_GameMode.Pause();
 
             if (!m_messageCollection.ContainsKey(message))
                 m_messageCollection.Add(message, new List<DateTime>() { DateTime.Now });
