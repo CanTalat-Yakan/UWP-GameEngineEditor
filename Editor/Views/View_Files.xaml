@@ -33,17 +33,19 @@
             </controls:TabbedCommandBarItem>
 
             <Grid>
-                <TreeView x:Name="x_TreeView_Assets">
+                <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False" >
                     <TreeView.ContextFlyout>
                         <MenuFlyout>
                             <MenuFlyoutSubItem Text="Create">
-                                <MenuFlyoutItem Text="Folder"/>
+                                <MenuFlyoutItem Text="New Folder"/>
                                 <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem Text="Material"/>
                                 <MenuFlyoutItem Text="Scene"/>
-                                <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem Text="Script"/>
-                                <MenuFlyoutItem Text="Shader"/>
+                                <MenuFlyoutItem Text="Material"/>
+                                <MenuFlyoutSubItem Text="Shader">
+                                    <MenuFlyoutItem Text="Standard"/>
+                                    <MenuFlyoutItem Text="Unlit"/>
+                                </MenuFlyoutSubItem>
                             </MenuFlyoutSubItem>
                             <MenuFlyoutItem Text="Open in Explorer"/>
                             <MenuFlyoutSeparator/>
