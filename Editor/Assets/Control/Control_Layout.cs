@@ -35,14 +35,14 @@ namespace Editor.Assets.Control
             m_Content = CreateLayout();
 
             m_SwapChain.Children.Add(Wrap(
-                new STabItem() { Header = "View Port", Content = _port },
+                new STabItem() { Header = "Viewport", Content = _port },
                 new STabItem() { Header = "Settings", Content = _settings }));
 
             m_Output.Children.Add(Wrap(
                 new STabItem() { Header = "Output", Content = _output }));
 
             m_Hierarchy.Children.Add(Wrap(
-                new STabItem() { Header = "Hierarchy", Content = _hierarchy }));
+                new STabItem() { Header = "Scene", Content = _hierarchy }));
 
             m_Files.Children.Add(Wrap(
                 new STabItem() { Header = "Files", Content = _files }));
