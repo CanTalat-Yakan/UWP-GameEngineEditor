@@ -130,6 +130,30 @@ namespace Editor.Assets.Control
             Dictionary<DateTime, SMessageInfo> dic = new Dictionary<DateTime, SMessageInfo>();
             m_stack.Children.Clear();
 
+            int numMessages = 0;
+            int numWarnings = 0;
+            int numErrors = 0;
+            foreach (var kv in m_messageCollection)
+            {
+                switch (kv.Key.Type)
+                {
+                    case EMessageType.MESSAGE:
+                        numMessages += kv.Value.Count;
+                        break;
+                    case EMessageType.WARNING:
+                        numWarnings += kv.Value.Count;
+                        break;
+                    case EMessageType.ERROR:
+                        numErrors += kv.Value.Count;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            m_filterMessages.Label = $"{numMessages} Messages";
+            m_filterWarnings.Label = $"{numWarnings} Warnings";
+            m_filterErrors.Label = $"{numErrors} Errors";
+
             if (m_collapse.IsChecked.Value)
             {
                 foreach (var k in m_messageCollection.Keys)
@@ -200,6 +224,10 @@ namespace Editor.Assets.Control
         {
             m_messageCollection.Clear();
             m_stack.Children.Clear();
+
+            m_filterMessages.Label = $"  Messages";
+            m_filterWarnings.Label = $"  Warnings";
+            m_filterErrors.Label = $"  Errors";
         }
     }
 }
