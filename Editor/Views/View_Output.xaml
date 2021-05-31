@@ -25,6 +25,8 @@
                 <AppBarSeparator />
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Debug_ErrorPause" IsChecked="False" Label="Error Pause" Icon="Pause"
                                     Click="AppBarToggleButton_Debug_ErrorPause_Click"/>
+                <AppBarToggleButton x:Name="x_AppBarToggleButton_Debug_ClearPlay" IsChecked="true" Label="Clear Play" Icon="Clear"
+                                    Click="AppBarToggleButton_Debug_ClearPlay_Click"/>
                 <AppBarSeparator />
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Filter_Messages" IsChecked="True" Label="Messages" Icon="Message"
                                     Click="AppBarToggleButton_Filter_Click"/>
