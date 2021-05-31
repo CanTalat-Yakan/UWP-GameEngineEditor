@@ -25,8 +25,9 @@ namespace Editor.Assets.Control
         AppBarButton m_repeat;
         AppBarButton m_kill;
         TextBlock m_status;
+        Control_Output m_output;
 
-        internal Control_GameMode(View_Main main, AppBarToggleButton play, AppBarToggleButton pause, AppBarButton forward, AppBarButton repeat, AppBarButton kill, TextBlock status)
+        internal Control_GameMode(View_Main main, AppBarToggleButton play, AppBarToggleButton pause, AppBarButton forward, AppBarButton repeat, AppBarButton kill, TextBlock status, Control_Output _output)
         {
             m_main = main;
             m_play = play;
@@ -35,6 +36,7 @@ namespace Editor.Assets.Control
             m_repeat = repeat;
             m_kill = kill;
             m_status = status;
+            m_output = _output;
         }
 
 
@@ -58,8 +60,9 @@ namespace Editor.Assets.Control
 
         internal void Play()
         {
-            //if (m_gameMode.m_playMode == EGameMode.NONE)
-            //  ClearOutput();
+            if (m_playMode == EGameMode.NONE)
+                if (m_output.m_ClearPlay.IsChecked.Value)
+                    m_output.ClearOutput();
 
             SetStatusAppBarButtons(m_play.IsChecked.Value);
 
@@ -73,13 +76,17 @@ namespace Editor.Assets.Control
         }
         internal void Forward()
         {
-            //Update();
+            if (m_playMode != EGameMode.PAUSED)
+                return;
+
+            m_output.Log("Stepped Forward..");
 
             SetStatus("Stepped Forward");
         }
         internal void Repeat()
         {
-            //ClearOutput();
+            if (m_output.m_ClearPlay.IsChecked.Value)
+                m_output.ClearOutput();
 
             m_playMode = EGameMode.PLAYING;
 
