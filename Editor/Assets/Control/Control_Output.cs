@@ -43,8 +43,9 @@ namespace Editor.Assets.Control
         AppBarToggleButton m_filterWarnings;
         AppBarToggleButton m_filterErrors;
         AppBarToggleButton m_pauseError;
+        internal AppBarToggleButton m_ClearPlay;
 
-        internal Control_Output(View_Main _main, TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError)
+        internal Control_Output(View_Main _main, TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError, AppBarToggleButton _clearPlay)
         {
             m_main = _main;
             m_status = _status;
@@ -55,6 +56,7 @@ namespace Editor.Assets.Control
             m_filterWarnings = _filterWarnings;
             m_filterErrors = _filterErrors;
             m_pauseError = _pauseError;
+            m_ClearPlay = _clearPlay;
         }
 
         void SetStatus(SMessageInfo _m)
