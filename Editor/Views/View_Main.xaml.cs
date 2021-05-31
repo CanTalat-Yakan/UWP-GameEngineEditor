@@ -25,7 +25,6 @@ namespace Editor
     {
         internal Control_GameMode m_GameMode;
         internal Control_Layout m_Layout;
-        internal View_Output m_Output;
 
         public View_Main()
         {
@@ -34,9 +33,7 @@ namespace Editor
             m_Layout = new Control_Layout(
                 this, 
                 x_Grid_Main,
-                m_Output = new View_Output(
-                    this, 
-                    x_TextBlock_Status_Content), 
+                new View_Output(this, x_TextBlock_Status_Content), 
                 new View_Hierarchy(this), 
                 new View_Files(this), 
                 new View_Properties(this), 
@@ -51,7 +48,7 @@ namespace Editor
                 x_AppBarButton_Status_Repeat,
                 x_AppBarButton_Status_Kill,
                 x_TextBlock_Status_Content,
-                m_Output.m_control);
+                m_Layout.m_ViewOutput.m_control);
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_GameMode.Play(); }
@@ -59,7 +56,7 @@ namespace Editor
         private void AppBarButton_Status_Forward_Click(object sender, RoutedEventArgs e) { m_GameMode.Forward(); }
         private void AppBarButton_Status_Repeat_Click(object sender, RoutedEventArgs e) { m_GameMode.Repeat(); }
         private void AppBarButton_Status_Kill_Click(object sender, RoutedEventArgs e) { m_GameMode.Kill(); }
-        private void AppBarToggleButton_Status_Light(object sender, RoutedEventArgs e) { this.RequestedTheme = this.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : this.RequestedTheme = ElementTheme.Light; }
+        private void AppBarToggleButton_Status_Light(object sender, RoutedEventArgs e) { RequestedTheme = RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : RequestedTheme = ElementTheme.Light; }
 
     }
 }

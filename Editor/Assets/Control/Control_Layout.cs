@@ -21,40 +21,31 @@ namespace Editor.Assets.Control
     {
         View_Main m_main;
 
-        internal Grid m_Content;
-        internal Grid m_SwapChain = new Grid();
-        internal Grid m_Output = new Grid();
-        internal Grid m_Hierarchy = new Grid();
-        internal Grid m_Files = new Grid();
-        internal Grid m_Properties = new Grid();
+        internal Grid m_GridContent;
+
+        internal View_Port m_ViewPort;
+        internal View_Settings m_ViewSettings;
+        internal View_Output m_ViewOutput;
+        internal View_Hierarchy m_ViewHierarchy;
+        internal View_Files m_ViewFiles;
+        internal View_Properties m_ViewProperties;
 
         public Control_Layout(View_Main _main, Grid _content, View_Output _output, View_Hierarchy _hierarchy, View_Files _files, View_Properties _properties, View_Settings _settings, View_Port _port)
         {
             m_main = _main;
 
-            m_Content = CreateLayout();
+            m_GridContent = CreateLayout(
+                Wrap(new STabItem() { Header = "Viewport", Content = m_ViewPort = _port },
+                     new STabItem() { Header = "Settings", Content = m_ViewSettings = _settings }),
+                Wrap(new STabItem() { Header = "Output", Content = m_ViewOutput = _output }),
+                Wrap(new STabItem() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy }),
+                Wrap(new STabItem() { Header = "Files", Content = m_ViewFiles = _files }),
+                Wrap(new STabItem() { Header = "Properties", Content = m_ViewProperties = _properties }));
 
-            m_SwapChain.Children.Add(Wrap(
-                new STabItem() { Header = "Viewport", Content = _port },
-                new STabItem() { Header = "Settings", Content = _settings }));
-
-            m_Output.Children.Add(Wrap(
-                new STabItem() { Header = "Output", Content = _output }));
-
-            m_Hierarchy.Children.Add(Wrap(
-                new STabItem() { Header = "Scene", Content = _hierarchy }));
-
-            m_Files.Children.Add(Wrap(
-                new STabItem() { Header = "Files", Content = _files }));
-
-            m_Properties.Children.Add(Wrap(
-                new STabItem() { Header = "Properties", Content = _properties }));
-
-
-            _content.Children.Add(m_Content);
+            _content.Children.Add(m_GridContent);
         }
 
-        Grid CreateLayout()
+        Grid CreateLayout(params Grid[] _panel)
         {
             GridSplitter splitH = new GridSplitter() { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 0, -16, 0), Opacity = 0.5f };
             Grid.SetColumn(splitH, 0);
@@ -86,23 +77,23 @@ namespace Editor.Assets.Control
 
 
             //SwapChain
-            collumn0.Children.Add(m_SwapChain);
+            collumn0.Children.Add(_panel[0]);
             //Output
-            collumn0.Children.Add(m_Output);
-            Grid.SetRow(m_Output, 1);
+            collumn0.Children.Add(_panel[1]);
+            Grid.SetRow(_panel[1], 1);
             collumn0.Children.Add(splitV);
             grid.Children.Add(collumn0);
 
             //Hierarchy
-            collumn1.Children.Add(m_Hierarchy);
+            collumn1.Children.Add(_panel[2]);
             //Files
-            collumn1.Children.Add(m_Files);
-            Grid.SetRow(m_Files, 1);
+            collumn1.Children.Add(_panel[3]);
+            Grid.SetRow(_panel[3], 1);
             collumn1.Children.Add(splitV2);
             grid.Children.Add(collumn1);
 
             //Properties
-            collumn2.Children.Add(m_Properties);
+            collumn2.Children.Add(_panel[4]);
             grid.Children.Add(collumn2);
 
             grid.Children.Add(splitH);
