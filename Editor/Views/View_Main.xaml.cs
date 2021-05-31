@@ -25,10 +25,23 @@ namespace Editor
     {
         internal Control_GameMode m_GameMode;
         internal Control_Layout m_Layout;
+        internal View_Output m_Output;
 
         public View_Main()
         {
             this.InitializeComponent();
+
+            m_Layout = new Control_Layout(
+                this, 
+                x_Grid_Main,
+                m_Output = new View_Output(
+                    this, 
+                    x_TextBlock_Status_Content), 
+                new View_Hierarchy(this), 
+                new View_Files(this), 
+                new View_Properties(this), 
+                new View_Settings(this),
+                new View_Port(this));
 
             m_GameMode = new Control_GameMode(
                 this,
@@ -37,19 +50,8 @@ namespace Editor
                 x_AppBarButton_Status_Forward,
                 x_AppBarButton_Status_Repeat,
                 x_AppBarButton_Status_Kill,
-                x_TextBlock_Status_Content);
-
-            m_Layout = new Control_Layout(
-                this, 
-                x_Grid_Main, 
-                new View_Output(
-                    this, 
-                    x_TextBlock_Status_Content), 
-                new View_Hierarchy(this), 
-                new View_Files(this), 
-                new View_Properties(this), 
-                new View_Settings(this),
-                new View_Port(this));
+                x_TextBlock_Status_Content,
+                m_Output.m_control);
         }
 
         private void AppBarToggleButton_Status_Play_Click(object sender, RoutedEventArgs e) { m_GameMode.Play(); }
