@@ -7,110 +7,112 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <controls:DockPanel>
 
             <!--MENU -->
-            <MenuBar x:Name="x_MenuBar_Menu" controls:DockPanel.Dock="Top">
-                <MenuBarItem Title="File">
-                    <MenuFlyoutItem Text="New"/>
-                    <MenuFlyoutItem Text="Open Scene"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Save"/>
-                    <MenuFlyoutItem Text="Save As..."/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="New Project..."/>
-                    <MenuFlyoutItem Text="Open Project..."/>
-                    <MenuFlyoutItem Text="Save Project"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Build Settings..."/>
-                    <MenuFlyoutItem Text="Build and Run"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Exit"/>
-                </MenuBarItem>
+            <Grid controls:DockPanel.Dock="Top">
+                <MenuBar x:Name="x_MenuBar_Menu">
+                    <MenuBarItem Title="File">
+                        <MenuFlyoutItem Text="New"/>
+                        <MenuFlyoutItem Text="Open Scene"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Save"/>
+                        <MenuFlyoutItem Text="Save As..."/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="New Project..."/>
+                        <MenuFlyoutItem Text="Open Project..."/>
+                        <MenuFlyoutItem Text="Save Project"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Build Settings..."/>
+                        <MenuFlyoutItem Text="Build and Run"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Exit"/>
+                    </MenuBarItem>
 
-                <MenuBarItem Title="Edit">
-                    <MenuFlyoutItem Text="Undo" Icon="Undo"/>
-                    <MenuFlyoutItem Text="Redo" Icon="Redo"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Rename" Icon="Rename"/>
-                    <MenuFlyoutItem Text="Delete" Icon="Delete"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Play" Icon="Play"/>
-                    <MenuFlyoutItem Text="Pause" Icon="Pause"/>
-                    <MenuFlyoutItem Text="Step" Icon="Forward"/>
-                    <MenuFlyoutItem Text="Repeat" Icon="RepeatAll"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Settings"/>
-                </MenuBarItem>
+                    <MenuBarItem Title="Edit">
+                        <MenuFlyoutItem Text="Undo" Icon="Undo"/>
+                        <MenuFlyoutItem Text="Redo" Icon="Redo"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Rename" Icon="Rename"/>
+                        <MenuFlyoutItem Text="Delete" Icon="Delete"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Play" Icon="Play"/>
+                        <MenuFlyoutItem Text="Pause" Icon="Pause"/>
+                        <MenuFlyoutItem Text="Step" Icon="Forward"/>
+                        <MenuFlyoutItem Text="Repeat" Icon="RepeatAll"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Settings"/>
+                    </MenuBarItem>
 
-                <MenuBarItem Title="Assets">
-                    <MenuFlyoutSubItem Text="Create">
-                        <MenuFlyoutItem Text="New Folder"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="C# Script"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutSubItem Text="Shader">
-                            <MenuFlyoutItem Text="Unlit"/>
-                            <MenuFlyoutItem Text="Standard"/>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Scene"/>
-                        <MenuFlyoutItem Text="Material"/>
-                    </MenuFlyoutSubItem>
-                    <MenuFlyoutSubItem Text="GameObject">
-                        <MenuFlyoutItem Text="Create Empty"/>
-                        <MenuFlyoutItem Text="Create Empty Child"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutSubItem Text="3D Object">
-                            <MenuFlyoutItem Text="Plane"/>
-                            <MenuFlyoutItem Text="Cube"/>
-                            <MenuFlyoutItem Text="Sphere"/>
-                            <MenuFlyoutItem Text="Cylinder"/>
-                            <MenuFlyoutItem Text="Capsule"/>
-                            <MenuFlyoutItem Text="Quad"/>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutSubItem Text="Light">
-                            <MenuFlyoutItem Text="Directional Light"/>
-                            <MenuFlyoutItem Text="Point Light"/>
-                            <MenuFlyoutItem Text="Spot Light"/>
+                    <MenuBarItem Title="Assets">
+                        <MenuFlyoutSubItem Text="Create">
+                            <MenuFlyoutItem Text="New Folder"/>
                             <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="Reflection Probe"/>
+                            <MenuFlyoutItem Text="C# Script"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutSubItem Text="Shader">
+                                <MenuFlyoutItem Text="Unlit"/>
+                                <MenuFlyoutItem Text="Standard"/>
+                            </MenuFlyoutSubItem>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Scene"/>
+                            <MenuFlyoutItem Text="Material"/>
                         </MenuFlyoutSubItem>
-                    </MenuFlyoutSubItem>
-                </MenuBarItem>
+                        <MenuFlyoutSubItem Text="GameObject">
+                            <MenuFlyoutItem Text="Create Empty"/>
+                            <MenuFlyoutItem Text="Create Empty Child"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutSubItem Text="3D Object">
+                                <MenuFlyoutItem Text="Plane"/>
+                                <MenuFlyoutItem Text="Cube"/>
+                                <MenuFlyoutItem Text="Sphere"/>
+                                <MenuFlyoutItem Text="Cylinder"/>
+                                <MenuFlyoutItem Text="Capsule"/>
+                                <MenuFlyoutItem Text="Quad"/>
+                            </MenuFlyoutSubItem>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutSubItem Text="Light">
+                                <MenuFlyoutItem Text="Directional Light"/>
+                                <MenuFlyoutItem Text="Point Light"/>
+                                <MenuFlyoutItem Text="Spot Light"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Text="Reflection Probe"/>
+                            </MenuFlyoutSubItem>
+                        </MenuFlyoutSubItem>
+                    </MenuBarItem>
 
-                <MenuBarItem Title="Tools">
-                    <MenuFlyoutSubItem Text="Explore Tools">
-                        <MenuFlyoutItem Text="Templates"/>
-                        <MenuFlyoutItem Text="Packages"/>
-                    </MenuFlyoutSubItem>
-                </MenuBarItem>
+                    <MenuBarItem Title="Tools">
+                        <MenuFlyoutSubItem Text="Explore Tools">
+                            <MenuFlyoutItem Text="Templates"/>
+                            <MenuFlyoutItem Text="Packages"/>
+                        </MenuFlyoutSubItem>
+                    </MenuBarItem>
 
-                <MenuBarItem Title="Component">
-                    <MenuFlyoutItem Text="Add..."/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Camera"/>
-                    <MenuFlyoutItem Text="Mesh"/>
-                    <MenuFlyoutItem Text="Light"/>
-                </MenuBarItem>
+                    <MenuBarItem Title="Component">
+                        <MenuFlyoutItem Text="Add..."/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Camera"/>
+                        <MenuFlyoutItem Text="Mesh"/>
+                        <MenuFlyoutItem Text="Light"/>
+                    </MenuBarItem>
 
-                <MenuBarItem Title="Help">
-                    <MenuFlyoutItem Text="About OpenSource-Engine"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Documentation"/>
-                    <MenuFlyoutItem Text="Manual"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Check for Updates"/>
-                    <MenuFlyoutItem Text="Report Bug..."/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Software Licenses"/>
-                </MenuBarItem>
-            </MenuBar>
+                    <MenuBarItem Title="Help">
+                        <MenuFlyoutItem Text="About OpenSource-Engine"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Documentation"/>
+                        <MenuFlyoutItem Text="Manual"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Check for Updates"/>
+                        <MenuFlyoutItem Text="Report Bug..."/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Software Licenses"/>
+                    </MenuBarItem>
+                </MenuBar>
+            </Grid>
 
             <!--STATUS -->
             <Grid controls:DockPanel.Dock="Bottom">

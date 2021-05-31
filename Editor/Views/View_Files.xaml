@@ -41,6 +41,7 @@
                                 <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem Text="Scene"/>
                                 <MenuFlyoutItem Text="Script"/>
+                                <MenuFlyoutSeparator/>
                                 <MenuFlyoutItem Text="Material"/>
                                 <MenuFlyoutSubItem Text="Shader">
                                     <MenuFlyoutItem Text="Standard"/>
