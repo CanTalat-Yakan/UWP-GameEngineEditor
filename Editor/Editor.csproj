@@ -165,7 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Engine\Shader.hlsl" />
-    <Content Include="Assets\Engine\ShaderSimple.hlsl" />
     <Content Include="Assets\Icons\LargeTile.scale-100.png" />
     <Content Include="Assets\Icons\LargeTile.scale-200.png" />
     <Content Include="Assets\Icons\LargeTile.scale-400.png" />
@@ -198,7 +197,6 @@
     <Content Include="Assets\Icons\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\Settings.txt" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="ShaderSimple.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

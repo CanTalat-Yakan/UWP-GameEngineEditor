@@ -32,8 +32,10 @@
 
         Dictionary<Guid, MeshBufferInfo> m_bufferMap;
         Vector3 m_cameraPosition;
-        float m_front;
-        float m_right;
+        Vector3 m_cameraMouseRot = new Vector3(0, 0, 0);
+        Vector3 m_front = new Vector3(0, 0, 10);
+        Vector3 m_right = new Vector3(1, 0, 0);
+        Vector3 m_up = Vector3.Up;
         D3D11.Buffer m_viewConstantsBuffer;
         ViewConstantsBuffer m_viewConstants;
 
@@ -58,20 +60,19 @@
         }
         void InitialiseDirect3D()
         {
-            using (var defaultDevice = new D3D11.Device(
-              SharpDX.Direct3D.DriverType.Hardware,
-              D3D11.DeviceCreationFlags.Debug))
+            using (var defaultDevice = new D3D11.Device(SharpDX.Direct3D.DriverType.Hardware, D3D11.DeviceCreationFlags.Debug))
             {
                 m_device = defaultDevice.QueryInterface<D3D11.Device2>();
             }
+
+            var rasterizerDesc = new D3D11.RasterizerStateDescription()
+            {
+                CullMode = D3D11.CullMode.None,
+                FillMode = D3D11.FillMode.Solid
+            };
+
             m_deviceContext = m_device.ImmediateContext2;
-
-            var rasterizerDesc = new D3D11.RasterizerStateDescription();
-            rasterizerDesc.CullMode = D3D11.CullMode.None;
-            rasterizerDesc.FillMode = D3D11.FillMode.Solid;
-
-            m_deviceContext.Rasterizer.State =
-              new D3D11.RasterizerState(m_device, rasterizerDesc);
+            m_deviceContext.Rasterizer.State = new D3D11.RasterizerState(m_device, rasterizerDesc);
 
             var swapChainDescription = new DXGI.SwapChainDescription1()
             {
@@ -98,36 +99,58 @@
             {
                 nativeObject.SwapChain = m_swapChain;
             }
-            m_backBufferTexture =
-              m_swapChain.GetBackBuffer<D3D11.Texture2D>(0);
 
-            m_backBufferView =
-              new D3D11.RenderTargetView(m_device, m_backBufferTexture);
+            m_backBufferTexture = m_swapChain.GetBackBuffer<D3D11.Texture2D>(0);
+            m_backBufferView = new D3D11.RenderTargetView(m_device, m_backBufferTexture);
 
-            m_deviceContext.Rasterizer.SetViewport(
-              0,
-              0,
-              (int)m_swapChainPanel.ActualWidth,
-              (int)m_swapChainPanel.ActualHeight);
+            m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
 
-            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
-            {
-                this.RenderScene();
-            };
+            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
+
 
             m_isDXInitialized = true;
         }
 
+        Windows.Foundation.Point m_tmpPoint = new Windows.Foundation.Point();
         void RecreateViewConstants()
         {
+            //    //360 degree horizontal rotation
+            //    XMFLOAT3 front = {front.x = cos(XMConvertToRadians(m_mouseRot.x)) * cos(XMConvertToRadians(m_mouseRot.y)),
+            //                      front.y = sin(XMConvertToRadians(m_mouseRot.y)),
+            //                      front.z = sin(XMConvertToRadians(m_mouseRot.x)) * cos(XMConvertToRadians(m_mouseRot.y)) };
+            //    //update frontVector
+            //    m_front = XMVector3Normalize(XMVectorSet(front.x, front.y, front.z, 0));
+            //    //update rightVector
+            //    m_right = XMVector3Normalize(XMVector3Cross(m_front, m_up));
+
+            //    //update viewMatrix
+            //    m_view = XMMatrixLookAtLH(m_position, m_position + m_front, m_up);
+
+            {
+                var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
+                if (m_tmpPoint != pointerPosition)
+                {
+                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.X) * 0.2f;
+                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Y) * 0.2f;
+                    m_tmpPoint = pointerPosition;
+                }
+            }
+
+            Vector3 front = new Vector3(
+                MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)),
+                MathF.Sin(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)),
+                MathF.Sin(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)));
+            m_front = Vector3.Normalize(front);
+            m_right = Vector3.Normalize(Vector3.Cross(m_front, m_up));
+
             var view = Matrix.LookAtLH(
                 m_cameraPosition,
-                m_cameraPosition + Vector3.ForwardLH * 10,
-                Vector3.Up);
+                m_cameraPosition + m_front,
+                m_up);
 
             var proj = Matrix.PerspectiveFovLH(
                 MathUtil.DegreesToRadians(80),
-                (int)m_swapChainPanel.ActualWidth / (int)m_swapChainPanel.ActualHeight,
+                (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight),
                 0.1f, 1000);
 
             var viewProj = Matrix.Multiply(view, proj);
@@ -181,6 +204,8 @@
         }
         void RenderScene()
         {
+            RecreateViewConstants();
+
             m_deviceContext.OutputMerger.SetRenderTargets(this.m_backBufferView);
 
             m_deviceContext.ClearRenderTargetView(
