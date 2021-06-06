@@ -130,10 +130,9 @@
     <Compile Include="Assets\Control\Control_Serialization.cs" />
     <Compile Include="Assets\Control\Control_Settings.cs" />
     <Compile Include="Assets\Control\Control_TreeView.cs" />
-    <Compile Include="Assets\Engine\BufferExtensions.cs" />
     <Compile Include="Assets\Engine\ConstantsBuffer.cs" />
-    <Compile Include="Assets\Engine\MatrixExtensions.cs" />
     <Compile Include="Assets\Engine\MeshBufferInfo.cs" />
+    <Compile Include="Assets\Engine\Obj.cs" />
     <Compile Include="Assets\Engine\SwapChainPanelRenderer.cs" />
     <Compile Include="Assets\Example.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
@@ -166,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Engine\Shader.hlsl" />
+    <Content Include="Assets\Engine\ShaderSimple.hlsl" />
     <Content Include="Assets\Icons\LargeTile.scale-100.png" />
     <Content Include="Assets\Icons\LargeTile.scale-200.png" />
     <Content Include="Assets\Icons\LargeTile.scale-400.png" />
@@ -198,6 +198,7 @@
     <Content Include="Assets\Icons\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\Settings.txt" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="ShaderSimple.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

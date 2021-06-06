@@ -12,46 +12,49 @@
     using Windows.UI.Xaml.Controls;
     using D3D11 = SharpDX.Direct3D11;
     using DXGI = SharpDX.DXGI;
-    using Vector3 = System.Numerics.Vector3;
+    using Quaternion = SharpDX.Quaternion;
+    using Vector2 = SharpDX.Vector2;
+    using Vector3 = SharpDX.Vector3;
+    using Vector4 = SharpDX.Vector4;
 
     internal class SwapChainPanelRenderer
     {
-        D3D11.Device2 device;
-        D3D11.DeviceContext deviceContext;
-        DXGI.SwapChain2 swapChain;
-        D3D11.Texture2D backBufferTexture;
-        D3D11.RenderTargetView backBufferView;
-        D3D11.VertexShader vertexShader;
-        D3D11.PixelShader pixelShader;
-        SwapChainPanel swapChainPanel;
-        bool isDXInitialized;
+        D3D11.Device2 m_device;
+        D3D11.DeviceContext m_deviceContext;
+        DXGI.SwapChain2 m_swapChain;
+        D3D11.Texture2D m_backBufferTexture;
+        D3D11.RenderTargetView m_backBufferView;
+        D3D11.VertexShader m_vertexShader;
+        D3D11.PixelShader m_pixelShader;
+        SwapChainPanel m_swapChainPanel;
+        bool m_isDXInitialized;
 
 
-        Dictionary<Guid, MeshBufferInfo> bufferMap;
-        Vector3 cameraPosition;
-        Vector3 yawPitchRoll;
-        D3D11.Buffer viewConstantsBuffer;
-        ViewConstantsBuffer viewConstants;
+        Dictionary<Guid, MeshBufferInfo> m_bufferMap;
+        Vector3 m_cameraPosition;
+        float m_front;
+        float m_right;
+        D3D11.Buffer m_viewConstantsBuffer;
+        ViewConstantsBuffer m_viewConstants;
 
-        static readonly string PIXEL_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
         static readonly string VERTEX_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
+        static readonly string PIXEL_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
 
 
 
         internal SwapChainPanelRenderer(SwapChainPanel swapChainPanel)
         {
-            this.swapChainPanel = swapChainPanel;
-            this.bufferMap = new Dictionary<Guid, MeshBufferInfo>();
-            this.yawPitchRoll = new Vector3();
+            m_swapChainPanel = swapChainPanel;
+            m_bufferMap = new Dictionary<Guid, MeshBufferInfo>();
         }
 
         public void Initialise()
         {
-            this.swapChainPanel.SizeChanged += this.OnSwapChainPanelSizeChanged;
+            m_swapChainPanel.SizeChanged += this.OnSwapChainPanelSizeChanged;
 
-            this.InitialiseDirect3D();
+            InitialiseDirect3D();
 
-            this.InitialiseScene();
+            InitialiseScene();
         }
         void InitialiseDirect3D()
         {
@@ -59,24 +62,24 @@
               SharpDX.Direct3D.DriverType.Hardware,
               D3D11.DeviceCreationFlags.Debug))
             {
-                this.device = defaultDevice.QueryInterface<D3D11.Device2>();
+                m_device = defaultDevice.QueryInterface<D3D11.Device2>();
             }
-            this.deviceContext = this.device.ImmediateContext2;
+            m_deviceContext = m_device.ImmediateContext2;
 
             var rasterizerDesc = new D3D11.RasterizerStateDescription();
             rasterizerDesc.CullMode = D3D11.CullMode.None;
-            rasterizerDesc.FillMode = D3D11.FillMode.Wireframe;
+            rasterizerDesc.FillMode = D3D11.FillMode.Solid;
 
-            this.deviceContext.Rasterizer.State =
-              new D3D11.RasterizerState(this.device, rasterizerDesc);
+            m_deviceContext.Rasterizer.State =
+              new D3D11.RasterizerState(m_device, rasterizerDesc);
 
             var swapChainDescription = new DXGI.SwapChainDescription1()
             {
                 AlphaMode = DXGI.AlphaMode.Ignore,
                 BufferCount = 2,
                 Format = DXGI.Format.R8G8B8A8_UNorm,
-                Height = (int)(this.swapChainPanel.RenderSize.Height),
-                Width = (int)(this.swapChainPanel.RenderSize.Width),
+                Height = (int)(m_swapChainPanel.RenderSize.Height),
+                Width = (int)(m_swapChainPanel.RenderSize.Width),
                 SampleDescription = new DXGI.SampleDescription(1, 0),
                 Scaling = DXGI.Scaling.Stretch,
                 Stereo = false,
@@ -84,78 +87,59 @@
                 Usage = DXGI.Usage.RenderTargetOutput
             };
 
-            using (var dxgiDevice3 = this.device.QueryInterface<DXGI.Device3>())
+            using (var dxgiDevice3 = m_device.QueryInterface<DXGI.Device3>())
             using (var dxgiFactory3 = dxgiDevice3.Adapter.GetParent<DXGI.Factory3>())
             {
-                var swapChain1 = new DXGI.SwapChain1(dxgiFactory3, this.device, ref swapChainDescription);
-                this.swapChain = swapChain1.QueryInterface<DXGI.SwapChain2>();
+                var swapChain1 = new DXGI.SwapChain1(dxgiFactory3, m_device, ref swapChainDescription);
+                m_swapChain = swapChain1.QueryInterface<DXGI.SwapChain2>();
             }
 
-            using (var nativeObject = ComObject.As<DXGI.ISwapChainPanelNative>(this.swapChainPanel))
+            using (var nativeObject = ComObject.As<DXGI.ISwapChainPanelNative>(m_swapChainPanel))
             {
-                nativeObject.SwapChain = this.swapChain;
+                nativeObject.SwapChain = m_swapChain;
             }
-            this.backBufferTexture =
-              this.swapChain.GetBackBuffer<D3D11.Texture2D>(0);
+            m_backBufferTexture =
+              m_swapChain.GetBackBuffer<D3D11.Texture2D>(0);
 
-            this.backBufferView =
-              new D3D11.RenderTargetView(this.device, this.backBufferTexture);
+            m_backBufferView =
+              new D3D11.RenderTargetView(m_device, m_backBufferTexture);
 
-            deviceContext.Rasterizer.SetViewport(
+            m_deviceContext.Rasterizer.SetViewport(
               0,
               0,
-              (int)swapChainPanel.ActualWidth,
-              (int)swapChainPanel.ActualHeight);
+              (int)m_swapChainPanel.ActualWidth,
+              (int)m_swapChainPanel.ActualHeight);
 
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
                 this.RenderScene();
             };
 
-            isDXInitialized = true;
-        }
-        internal void MoveCameraForwardBack(float amount)
-        {
-            this.cameraPosition = new Vector3(this.cameraPosition.X,
-             this.cameraPosition.Y,
-             this.cameraPosition.Z + amount);
-
-            this.RecreateViewConstants();
-        }
-
-        internal void RotateCameraLeft(float angle)
-        {
-            this.yawPitchRoll.Y -= angle;
-            this.RecreateViewConstants();
-        }
-        internal void RotateCameraUp(float angle)
-        {
-            this.yawPitchRoll.X -= angle;
-            this.RecreateViewConstants();
+            m_isDXInitialized = true;
         }
 
         void RecreateViewConstants()
         {
-            var view = Matrix4x4.CreateLookAt(
-                this.cameraPosition,
-                new Vector3(this.cameraPosition.X, this.cameraPosition.Y, this.cameraPosition.Z + 10),
-                new Vector3(0, 1, 0));
+            var view = Matrix.LookAtLH(
+                m_cameraPosition,
+                m_cameraPosition + Vector3.ForwardLH * 10,
+                Vector3.Up);
 
-            view = Matrix4x4.Multiply(
-              view,
-              Matrix4x4.CreateFromYawPitchRoll(this.yawPitchRoll.Y, this.yawPitchRoll.X, this.yawPitchRoll.Z));
+            var proj = Matrix.PerspectiveFovLH(
+                MathUtil.DegreesToRadians(80),
+                (int)m_swapChainPanel.ActualWidth / (int)m_swapChainPanel.ActualHeight,
+                0.1f, 1000);
 
-            this.viewConstants = new ViewConstantsBuffer()
-            {
-                view = view.ToRawMatrix(),
-                projection = Matrix4x4.CreateOrthographic(2, 1, 0.8f, 3).ToRawMatrix()
-            };
+            var viewProj = Matrix.Multiply(view, proj);
+
+            m_viewConstants = new ViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
         }
         void InitialiseScene()
         {
             var inputElements = new D3D11.InputElement[] {
-                new D3D11.InputElement(
-                    "POSITION", 0, DXGI.Format.R16G16B16A16_SNorm, 0) };
+                new D3D11.InputElement("POSITION", 0, DXGI.Format.R32G32B32_Float, 0, 0),
+                new D3D11.InputElement("TEXCOORD", 0, DXGI.Format.R32G32_Float, D3D11.InputElement.AppendAligned, 0),
+                new D3D11.InputElement("NORMAL", 0, DXGI.Format.R32G32B32_Float, D3D11.InputElement.AppendAligned, 0)};
 
             D3D11.InputLayout vertexLayout = null;
 
@@ -163,160 +147,224 @@
             using (var vsResult = ShaderBytecode.CompileFromFile(
               VERTEX_SHADER_FILE, "VS", "vs_4_0", ShaderFlags.Debug))
             {
-                vertexShader = new D3D11.VertexShader(device, vsResult.Bytecode.Data);
+                m_vertexShader = new D3D11.VertexShader(m_device, vsResult.Bytecode.Data);
 
                 vertexLayout = new D3D11.InputLayout(
-                  device, vsResult.Bytecode, inputElements);
+                  m_device, vsResult.Bytecode, inputElements);
             }
+            m_deviceContext.VertexShader.Set(m_vertexShader);
+            m_deviceContext.InputAssembler.InputLayout = vertexLayout;
 
             using (var psResult = ShaderBytecode.CompileFromFile(
               PIXEL_SHADER_FILE, "PS", "ps_4_0", ShaderFlags.Debug))
             {
-                pixelShader = new D3D11.PixelShader(device, psResult.Bytecode.Data);
+                m_pixelShader = new D3D11.PixelShader(m_device, psResult.Bytecode.Data);
             }
-            deviceContext.VertexShader.Set(vertexShader);
+            m_deviceContext.PixelShader.Set(m_pixelShader);
 
-            deviceContext.PixelShader.Set(pixelShader);
 
-            deviceContext.InputAssembler.InputLayout = vertexLayout;
-
-            deviceContext.InputAssembler.PrimitiveTopology =
+            m_deviceContext.InputAssembler.PrimitiveTopology =
               SharpDX.Direct3D.PrimitiveTopology.TriangleList;
 
-            this.cameraPosition = new Vector3(0, 0.5f, 0);
-            this.yawPitchRoll = new Vector3();
+            m_cameraPosition = new Vector3(0, 0.5f, -10);
 
-            this.RecreateViewConstants();
+            RecreateViewConstants();
 
-            this.viewConstantsBuffer = D3D11.Buffer.Create(
-              this.device,
+            m_viewConstantsBuffer = D3D11.Buffer.Create(
+              m_device,
               D3D11.BindFlags.ConstantBuffer,
-              ref this.viewConstants);
+              ref m_viewConstants);
 
-            this.deviceContext.VertexShader.SetConstantBuffer(0, this.viewConstantsBuffer);
+            m_deviceContext.VertexShader.SetConstantBuffer(0, m_viewConstantsBuffer);
+
+            CreateCube();
         }
         void RenderScene()
         {
-            this.deviceContext.OutputMerger.SetRenderTargets(this.backBufferView);
+            m_deviceContext.OutputMerger.SetRenderTargets(this.m_backBufferView);
 
-            this.deviceContext.ClearRenderTargetView(
-              this.backBufferView, new RawColor4(0.5f, 0.2f, 0.2f, 1));
+            m_deviceContext.ClearRenderTargetView(
+            m_backBufferView, new RawColor4(0.5f, 0.2f, 0.2f, 1));
 
-            this.deviceContext.UpdateSubresource<ViewConstantsBuffer>(
-              ref this.viewConstants,
-              this.viewConstantsBuffer);
+            m_deviceContext.UpdateSubresource<ViewConstantsBuffer>(
+              ref m_viewConstants,
+              m_viewConstantsBuffer);
 
-            lock (this.bufferMap)
+            lock (m_bufferMap)
             {
-                foreach (var entry in this.bufferMap)
+                foreach (var entry in m_bufferMap)
                 {
-                    this.deviceContext.VertexShader.SetConstantBuffer(
-                      1, entry.Value.constantsBuffer);
+                    m_deviceContext.VertexShader.SetConstantBuffer(1, entry.Value.constantsBuffer);
 
-                    this.deviceContext.InputAssembler.SetVertexBuffers(
-                      0,
-                      new D3D11.VertexBufferBinding(
+                    m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(
                         entry.Value.vertexBuffer, (int)entry.Value.vertexStride, 0));
 
-                    this.deviceContext.InputAssembler.SetIndexBuffer(
+                    m_deviceContext.InputAssembler.SetIndexBuffer(
                       entry.Value.indexBuffer, (DXGI.Format)entry.Value.indexFormat, 0);
 
-                    this.deviceContext.DrawIndexed(entry.Value.indexCount, 0, 0);
+                    m_deviceContext.DrawIndexed(entry.Value.indexCount, 0, 0);
                 }
             }
-            this.swapChain.Present(0, DXGI.PresentFlags.None);
+            m_swapChain.Present(0, DXGI.PresentFlags.None);
         }
 
-        async void OnSurfacesChanged()
+        void CreateCube()
         {
-            if (this.isDXInitialized)
+            Obj obj = new Obj();
+            float hs = 0.5f;
+
+
+            // quad - with pos, uv & normals
+            obj.Vertices = new List<CVertex>{
+                // Front Face
+                new CVertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
+			    new CVertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
+			    new CVertex(+hs, +hs, -hs, 1, 0, 0, 0, 1),	//Top		Right
+			    new CVertex(+hs, -hs, -hs, 1, 1, 0, 0, 1),	//Bottom	Right
+
+			    // Left Face
+			    new CVertex(-hs, -hs, +hs, 0, 1, 1, 0, 0),	//Bottom	Left
+			    new CVertex(-hs, +hs, +hs, 0, 0, 1, 0, 0),	//Top		Left
+			    new CVertex(-hs, +hs, -hs, 1, 0, 1, 0, 0),	//Top		Right
+			    new CVertex(-hs, -hs, -hs, 1, 1, 1, 0, 0),	//Bottom	Right
+
+			    // Back Face
+			    new CVertex(+hs, -hs, +hs, 0, 1, 0, 0, -1),	//Bottom	Left
+			    new CVertex(+hs, +hs, +hs, 0, 0, 0, 0, -1),	//Top		Left
+			    new CVertex(-hs, +hs, +hs, 1, 0, 0, 0, -1),	//Top		Right
+			    new CVertex(-hs, -hs, +hs, 1, 1, 0, 0, -1),	//Bottom	Right
+
+			    // Right Face
+			    new CVertex(+hs, -hs, -hs, 0, 1, -1, 0, 0),	//Bottom	Left
+			    new CVertex(+hs, +hs, -hs, 0, 0, -1, 0, 0),	//Top		Left
+			    new CVertex(+hs, +hs, +hs, 1, 0, -1, 0, 0),	//Top		Right
+			    new CVertex(+hs, -hs, +hs, 1, 1, -1, 0, 0),	//Bottom	Right
+
+			    // Top Face
+			    new CVertex(-hs, +hs, -hs, 0, 0, 0, -1, 0),	//Top		Right
+			    new CVertex(-hs, +hs, +hs, 1, 0, 0, -1, 0),	//Bottom	Right
+			    new CVertex(+hs, +hs, +hs, 1, 1, 0, -1, 0),	//Bottom	Left
+			    new CVertex(+hs, +hs, -hs, 0, 1, 0, -1, 0),	//Top		Left
+
+			    // Base Face					 	
+			    new CVertex(-hs, -hs, +hs, 1, 1, 0, 1, 0),	//Bottom	Left
+			    new CVertex(-hs, -hs, -hs, 0, 1, 0, 1, 0),	//Top		Left
+			    new CVertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
+			    new CVertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};	//Bottom	Right
+
+            obj.Indices = new List<ushort>{
+                // Front Face
+                0, 1, 2,
+                0, 2, 3,
+			    // Left Face
+			    4, 5, 6,
+                4, 6, 7,
+			    // Back Face
+			    8, 9, 10,
+                8, 10, 11,
+			    // Right Face
+			    12, 13, 14,
+                12, 14, 15,
+			    // Top Face
+			    16, 17, 18,
+                16, 18, 19,
+			    // Bottom Face
+			    20, 21, 22,
+                20, 22, 23 };
+
+            obj.VertexStride = (uint)Utilities.SizeOf<CVertex>();
+            obj.IndexStride = (uint)sizeof(int);
+
+
+
+            var bufferInfo = new MeshBufferInfo();
+
+            unsafe
             {
-                //if (mesh != null)
-                //    this.AddSurface(mesh);
-                //lock (this.bufferMap)
-                //{
-                //    this.bufferMap.Remove(surface.Id);
-                //}
+                fixed (CVertex* p = obj.Vertices.ToArray())
+                {
+                    IntPtr ptr = (IntPtr)p;
+                    int byteWidth = (int)(obj.Vertices.Count * obj.VertexStride);
+                    bufferInfo.vertexBuffer = new D3D11.Buffer(
+                      m_device,
+                      ptr,
+                      new D3D11.BufferDescription(byteWidth, D3D11.BindFlags.VertexBuffer, D3D11.ResourceUsage.Default));
+                }
+            }
+            bufferInfo.vertexCount = obj.Vertices.Count;
+            bufferInfo.vertexStride = obj.VertexStride;
+
+            unsafe
+            {
+                fixed (ushort* p = obj.Indices.ToArray())
+                {
+                    IntPtr ptr = (IntPtr)p;
+                    int byteWidth = (int)(obj.Indices.Count * obj.IndexStride);
+                    bufferInfo.indexBuffer = new D3D11.Buffer(
+                      m_device,
+                      ptr,
+                      new D3D11.BufferDescription(byteWidth, D3D11.BindFlags.IndexBuffer, D3D11.ResourceUsage.Default));
+                }
+            }
+            bufferInfo.indexFormat = Windows.Graphics.DirectX.DirectXPixelFormat.R16UInt;
+            bufferInfo.indexCount = obj.Indices.Count;
+
+
+
+            Matrix scale = Matrix.Scaling(new Vector3(1, 1, 1));
+            Matrix rotation;
+            Matrix translation = Matrix.Translation(new Vector3(0, 0.5f, 10));
+
+            Quaternion quaternion = new Quaternion(new Vector4(0, 0, 0, 1));
+            Matrix.RotationQuaternion(ref quaternion, out rotation);
+
+            Matrix worldMatrix = scale * rotation * translation;
+
+            var world = Matrix.Transpose(worldMatrix);
+            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = world };
+
+            bufferInfo.constantsBuffer = D3D11.Buffer.Create(
+              m_device,
+              D3D11.BindFlags.ConstantBuffer,
+              ref cb);
+
+            lock (m_bufferMap)
+            {
+                m_bufferMap.Add(obj.Id, bufferInfo);
             }
         }
-        void AddSurface()
-        {
-            //var bufferInfo = new MeshBufferInfo();
-            //var byteSize = 0;
-
-            //var vertexPtr = mesh.VertexPositions.Data.AsIntPtr(out byteSize);
-
-            //bufferInfo.vertexBuffer = new D3D11.Buffer(
-            //  this.device,
-            //  vertexPtr,
-            //  new D3D11.BufferDescription(
-            //    byteSize, D3D11.BindFlags.VertexBuffer, D3D11.ResourceUsage.Default));
-
-            //bufferInfo.vertexCount = (int)mesh.VertexPositions.ElementCount;
-            //bufferInfo.vertexStride = mesh.VertexPositions.Stride;
-
-            //var indicesPtr = mesh.TriangleIndices.Data.AsIntPtr(out byteSize);
-
-            //bufferInfo.indexBuffer = new D3D11.Buffer(
-            //  this.device,
-            //  indicesPtr,
-            //  new D3D11.BufferDescription(
-            //    byteSize, D3D11.BindFlags.IndexBuffer, D3D11.ResourceUsage.Default));
-
-            //bufferInfo.indexFormat = mesh.TriangleIndices.Format;
-            //bufferInfo.indexCount = (int)mesh.TriangleIndices.ElementCount;
-
-            //var coordTransform = mesh.CoordinateSystem.TryGetTransformTo(
-            //  this.coordinateSystem);
-
-            //PerModelConstantsBuffer cb = new PerModelConstantsBuffer();
-            //var scale = Matrix4x4.CreateScale(mesh.VertexPositionScale);
-            //var world = Matrix4x4.Transpose(Matrix4x4.Multiply(scale, coordTransform.Value));
-
-            //cb.modelToWorld = world.ToRawMatrix();
-
-            //bufferInfo.constantsBuffer = D3D11.Buffer.Create(
-            //  this.device,
-            //  D3D11.BindFlags.ConstantBuffer,
-            //  ref cb);
-
-            //lock (this.bufferMap)
-            //{
-            //    this.bufferMap[mesh.SurfaceInfo.Id] = bufferInfo;
-            //}
-        }
-
-
 
 
         void OnSwapChainPanelSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (this.isDXInitialized)
+            if (this.m_isDXInitialized)
             {
                 var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
 
-                Utilities.Dispose(ref this.backBufferView);
-                Utilities.Dispose(ref this.backBufferTexture);
+                Utilities.Dispose(ref this.m_backBufferView);
+                Utilities.Dispose(ref this.m_backBufferTexture);
 
-                swapChain.ResizeBuffers(
-                  swapChain.Description.BufferCount,
+                m_swapChain.ResizeBuffers(
+                  m_swapChain.Description.BufferCount,
                   (int)e.NewSize.Width,
                   (int)e.NewSize.Height,
-                  swapChain.Description1.Format,
-                  swapChain.Description1.Flags);
+                  m_swapChain.Description1.Format,
+                  m_swapChain.Description1.Flags);
 
-                this.backBufferTexture =
-                  D3D11.Resource.FromSwapChain<D3D11.Texture2D>(this.swapChain, 0);
+                this.m_backBufferTexture =
+                  D3D11.Resource.FromSwapChain<D3D11.Texture2D>(this.m_swapChain, 0);
 
-                this.backBufferView = new D3D11.RenderTargetView(this.device, this.backBufferTexture);
+                this.m_backBufferView = new D3D11.RenderTargetView(this.m_device, this.m_backBufferTexture);
 
-                swapChain.SourceSize = newSize;
+                m_swapChain.SourceSize = newSize;
 
-                deviceContext.Rasterizer.SetViewport(
+                m_deviceContext.Rasterizer.SetViewport(
                   0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height);
             }
         }
 
     }
+
+
 }
 
