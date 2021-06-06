@@ -34,13 +34,6 @@ namespace Editor
 
             m_control = new Control_Output(_main, _status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors, x_AppBarToggleButton_Debug_ErrorPause, x_AppBarToggleButton_Debug_ClearPlay);
 
-            m_control.Log("Hi");
-            Test();
-            Test();
-            m_control.Log("Hi2", EMessageType.WARNING);
-            m_control.Log("Hi3", EMessageType.ERROR);
-
-
             DispatcherTimer dispatcher = new DispatcherTimer();
             dispatcher.Interval = TimeSpan.FromMilliseconds(42);
             dispatcher.Tick += Tick;
@@ -84,7 +77,7 @@ namespace Editor
             if (i < 15)
                 m_control.Log("This is a Message");
             if (i > 15)
-                m_control.Log("This is another Message...");
+                Test();
         }
 
         void Test()
