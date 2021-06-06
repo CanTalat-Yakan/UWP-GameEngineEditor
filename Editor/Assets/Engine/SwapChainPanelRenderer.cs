@@ -76,7 +76,7 @@
 
             var swapChainDescription = new DXGI.SwapChainDescription1()
             {
-                AlphaMode = DXGI.AlphaMode.Ignore,
+                AlphaMode = DXGI.AlphaMode.Premultiplied,
                 BufferCount = 2,
                 Format = DXGI.Format.R8G8B8A8_UNorm,
                 Height = (int)(m_swapChainPanel.RenderSize.Height),
@@ -114,18 +114,6 @@
         Windows.Foundation.Point m_tmpPoint = new Windows.Foundation.Point();
         void RecreateViewConstants()
         {
-            //    //360 degree horizontal rotation
-            //    XMFLOAT3 front = {front.x = cos(XMConvertToRadians(m_mouseRot.x)) * cos(XMConvertToRadians(m_mouseRot.y)),
-            //                      front.y = sin(XMConvertToRadians(m_mouseRot.y)),
-            //                      front.z = sin(XMConvertToRadians(m_mouseRot.x)) * cos(XMConvertToRadians(m_mouseRot.y)) };
-            //    //update frontVector
-            //    m_front = XMVector3Normalize(XMVectorSet(front.x, front.y, front.z, 0));
-            //    //update rightVector
-            //    m_right = XMVector3Normalize(XMVector3Cross(m_front, m_up));
-
-            //    //update viewMatrix
-            //    m_view = XMMatrixLookAtLH(m_position, m_position + m_front, m_up);
-
             {
                 var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
                 if (m_tmpPoint != pointerPosition)
@@ -209,7 +197,7 @@
             m_deviceContext.OutputMerger.SetRenderTargets(this.m_backBufferView);
 
             m_deviceContext.ClearRenderTargetView(
-            m_backBufferView, new RawColor4(0.5f, 0.2f, 0.2f, 1));
+            m_backBufferView, new RawColor4(0.4f, 0.74f, 0.86f, 0.1f));
 
             m_deviceContext.UpdateSubresource<ViewConstantsBuffer>(
               ref m_viewConstants,
