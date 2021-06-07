@@ -75,7 +75,8 @@ namespace Editor
 
         void Slider_MouseSensitivity_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            m_swapChainRenderer.m_MovementSpeed = (float)x_Slider_MouseSensitivity.Value * 0.01f;
+            if (m_swapChainRenderer != null)
+                m_swapChainRenderer.m_MovementSpeed = (float)x_Slider_MouseSensitivity.Value * 0.01f;
         }
     }
 }
