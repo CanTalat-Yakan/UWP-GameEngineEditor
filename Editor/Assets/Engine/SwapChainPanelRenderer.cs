@@ -27,7 +27,7 @@
         D3D11.VertexShader m_vertexShader;
         D3D11.PixelShader m_pixelShader;
         SwapChainPanel m_swapChainPanel;
-        bool m_isDXInitialized;
+        internal bool m_IsDXInitialized;
 
         Dictionary<Guid, MeshBufferInfo> m_bufferMap;
 
@@ -42,7 +42,7 @@
 
         internal bool m_IsRightButtonPressed = false;
         internal float m_MouseSensitivity = 0.2f;
-        internal float m_MovementSpeed = 1;
+        internal float m_MovementSpeed = 0.01f;
         internal bool m_W = false;
         internal bool m_S = false;
         internal bool m_A = false;
@@ -76,8 +76,8 @@
 
             var rasterizerDesc = new D3D11.RasterizerStateDescription()
             {
-                CullMode = D3D11.CullMode.None,
-                FillMode = D3D11.FillMode.Wireframe
+                FillMode = D3D11.FillMode.Solid,
+                CullMode = D3D11.CullMode.Back
             };
 
             m_deviceContext = m_device.ImmediateContext2;
@@ -115,7 +115,7 @@
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
 
 
-            m_isDXInitialized = true;
+            m_IsDXInitialized = true;
         }
 
         void RecreateViewConstants()
@@ -165,9 +165,10 @@
                 (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight),
                 0.1f, 1000);
 
-            var viewProj = view * proj;
-            m_viewConstants = new ViewConstantsBuffer() { VP = Matrix.Transpose(viewProj), WCP = m_cameraPosition };
+            var viewProj = Matrix.Transpose(view * proj);
+            m_viewConstants = new ViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
         }
+
         void InitialiseScene()
         {
             var inputElements = new D3D11.InputElement[] {
@@ -211,8 +212,11 @@
 
             m_deviceContext.VertexShader.SetConstantBuffer(0, m_viewConstantsBuffer);
 
-            CreateCube();
+            CreateCube(Vector3.Zero);
+            CreateCube(Vector3.Right * 2);
+            CreateCube(new Vector3(0, 2, 4));
         }
+
         void RenderScene()
         {
             RecreateViewConstants();
@@ -221,7 +225,8 @@
 
             m_deviceContext.ClearRenderTargetView(
                 m_backBufferView,
-                new RawColor4(0.4f, 0.74f, 0.86f, 1));
+                new RawColor4(0.4f, 0.74f, 0.86f, 1)); 
+
 
             m_deviceContext.UpdateSubresource(
               ref m_viewConstants,
@@ -237,13 +242,14 @@
                     m_deviceContext.InputAssembler.SetIndexBuffer(entry.Value.indexBuffer, (DXGI.Format)entry.Value.indexFormat, 0);
 
                     m_deviceContext.DrawIndexed(entry.Value.indexCount, 0, 0);
+
                 }
             }
             m_swapChain.Present(0, DXGI.PresentFlags.None);
         }
 
 
-        void CreateCube()
+        void CreateCube(Vector3 _v)
         {
             Obj obj = new Obj();
             float hs = 0.5f;
@@ -350,7 +356,7 @@
 
             Matrix scale = Matrix.Scaling(new Vector3(1, 1, 1));
             Matrix rotation = Matrix.RotationQuaternion(new Quaternion(0, 0, 0, 1));
-            Matrix translation = Matrix.Translation(new Vector3(0, 0, 0));
+            Matrix translation = Matrix.Translation(_v);
 
             var worldMatrix = Matrix.Transpose(scale * rotation * translation);
             PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = worldMatrix };
@@ -369,7 +375,7 @@
 
         void OnSwapChainPanelSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (this.m_isDXInitialized)
+            if (this.m_IsDXInitialized)
             {
                 var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
 
