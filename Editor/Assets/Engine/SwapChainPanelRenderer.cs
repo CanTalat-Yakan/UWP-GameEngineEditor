@@ -117,7 +117,7 @@
 
             m_isDXInitialized = true;
         }
-        Matrix ViewProjection = new Matrix();
+
         void RecreateViewConstants()
         {
             if (m_IsRightButtonPressed)
@@ -166,8 +166,7 @@
                 0.1f, 1000);
 
             var viewProj = view * proj;
-            ViewProjection = viewProj;
-            m_viewConstants = new ViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
+            m_viewConstants = new ViewConstantsBuffer() { VP = Matrix.Transpose(viewProj), WCP = m_cameraPosition };
         }
         void InitialiseScene()
         {
@@ -353,8 +352,8 @@
             Matrix rotation = Matrix.RotationQuaternion(new Quaternion(0, 0, 0, 1));
             Matrix translation = Matrix.Translation(new Vector3(0, 0, 0));
 
-            var worldMatrix = (scale * rotation * translation);
-            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = Matrix.Transpose(worldMatrix) };
+            var worldMatrix = Matrix.Transpose(scale * rotation * translation);
+            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = worldMatrix };
 
             bufferInfo.constantsBuffer = D3D11.Buffer.Create(
               m_device,
