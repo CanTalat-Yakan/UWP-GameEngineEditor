@@ -6,50 +6,46 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using SharpDX;
-using SharpDX.Direct3D11;
-//using SharpDX.Toolkit.Graphics;
-using SharpDX.Direct2D1;
-using SharpDX.DirectWrite;
-
-using System.ComponentModel;
-using System.Numerics;
-using Windows.Perception.Spatial;
-using Windows.Perception.Spatial.Surfaces;
-using Windows.UI.Popups;
 using Editor.Assets.Engine;
-using Vector3 = System.Numerics.Vector3;
-using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace Editor
 {
-    public sealed partial class View_Port : Page, INotifyPropertyChanged
+    public sealed partial class View_Port : Page
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        SwapChainPanelRenderer m_swapChainRenderer;
+        internal SwapChainPanelRenderer m_swapChainRenderer;
 
         public View_Port(View_Main _main)
         {
-            InitializeComponent();
-            Loaded += Init;
+            this.InitializeComponent();
         }
 
-        void Init(object sender, RoutedEventArgs e)
+        void SwapChain_Init(object sender, RoutedEventArgs e)
         {
-            m_swapChainRenderer = new SwapChainPanelRenderer(this.x_SwapChainPanel_ViewPort);
-            m_swapChainRenderer.Initialise();
+            m_swapChainRenderer = new SwapChainPanelRenderer(x_SwapChainPanel_ViewPort);
+            m_swapChainRenderer.Initialise(this);
         }
+        void ViewPort_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            Pointer ptr = e.Pointer;
 
-        void FirePropertyChanged([CallerMemberName] string memberName = null) { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName)); }
+            if (ptr.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+                Windows.UI.Input.PointerPoint ptrPt = e.GetCurrentPoint((Grid)sender);
+
+                if (ptrPt.Properties.IsRightButtonPressed)
+                    m_swapChainRenderer.m_isRightButtonPressed = true;
+            }
+
+            e.Handled = true;
+        }
     }
 }

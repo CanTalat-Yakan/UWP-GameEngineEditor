@@ -9,7 +9,7 @@
     xmlns:developerTools="using:Microsoft.Toolkit.Uwp.DeveloperTools"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid PointerMoved="ViewPort_PointerMoved" Loaded="SwapChain_Init">
         <developerTools:AlignmentGrid Opacity="0.15" LineBrush="DimGray" HorizontalStep="35" VerticalStep="35" />
         <developerTools:AlignmentGrid Opacity="0.75" LineBrush="DimGray" HorizontalStep="105" VerticalStep="105"/>
         <Grid Height="10000"/>
