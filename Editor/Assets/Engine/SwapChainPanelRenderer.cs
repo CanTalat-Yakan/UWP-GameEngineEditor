@@ -29,15 +29,26 @@
         SwapChainPanel m_swapChainPanel;
         bool m_isDXInitialized;
 
-
         Dictionary<Guid, MeshBufferInfo> m_bufferMap;
+
         Vector3 m_cameraPosition;
-        Vector3 m_cameraMouseRot = new Vector3(0, 0, 0);
-        Vector3 m_front = new Vector3(0, 0, 10);
-        Vector3 m_right = new Vector3(1, 0, 0);
+        Vector3 m_cameraMouseRot = Vector3.Zero;
+        Vector3 m_front = Vector3.ForwardLH;
+        Vector3 m_right = Vector3.Right;
         Vector3 m_up = Vector3.Up;
+        Windows.Foundation.Point? m_tmpPoint = new Windows.Foundation.Point();
         D3D11.Buffer m_viewConstantsBuffer;
         ViewConstantsBuffer m_viewConstants;
+
+        internal bool m_IsRightButtonPressed = false;
+        internal float m_MouseSensitivity = 0.2f;
+        internal float m_MovementSpeed = 1;
+        internal bool m_W = false;
+        internal bool m_S = false;
+        internal bool m_A = false;
+        internal bool m_D = false;
+        internal bool m_E = false;
+        internal bool m_Q = false;
 
         static readonly string VERTEX_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
         static readonly string PIXEL_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
@@ -66,7 +77,7 @@
             var rasterizerDesc = new D3D11.RasterizerStateDescription()
             {
                 CullMode = D3D11.CullMode.None,
-                FillMode = D3D11.FillMode.Solid
+                FillMode = D3D11.FillMode.Wireframe
             };
 
             m_deviceContext = m_device.ImmediateContext2;
@@ -106,29 +117,38 @@
 
             m_isDXInitialized = true;
         }
-
-        Windows.Foundation.Point? m_tmpPoint = new Windows.Foundation.Point();
-        internal bool m_isRightButtonPressed = false;
+        Matrix ViewProjection = new Matrix();
         void RecreateViewConstants()
         {
-            if (m_isRightButtonPressed)
+            if (m_IsRightButtonPressed)
             {
                 var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
+
                 if (m_tmpPoint is null)
                     m_tmpPoint = pointerPosition;
 
                 if (m_tmpPoint.Value != pointerPosition)
                 {
-                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.Value.X) * 0.2f;
-                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Value.Y) * 0.2f;
+                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.Value.X) * m_MouseSensitivity;
+                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Value.Y) * m_MouseSensitivity;
                     m_tmpPoint = pointerPosition;
-                    m_isRightButtonPressed = false;
                 }
+
+
+                if (m_W) m_cameraPosition += m_MovementSpeed * m_front;
+                if (m_S) m_cameraPosition -= m_MovementSpeed * m_front;
+                if (m_A) m_cameraPosition += m_MovementSpeed * m_right;
+                if (m_D) m_cameraPosition -= m_MovementSpeed * m_right;
+                if (m_E) m_cameraPosition += m_MovementSpeed * m_up;
+                if (m_Q) m_cameraPosition -= m_MovementSpeed * m_up;
+                if (m_E && m_W) m_cameraPosition += m_MovementSpeed * Vector3.Cross(m_right, m_front);
+                if (m_Q && m_S) m_cameraPosition -= m_MovementSpeed * Vector3.Cross(m_right, m_front);
             }
             else
                 m_tmpPoint = null;
 
-            Vector3 front = new Vector3(
+
+            var front = new Vector3(
                 MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)),
                 MathF.Sin(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)),
                 MathF.Sin(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)));
@@ -145,8 +165,8 @@
                 (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight),
                 0.1f, 1000);
 
-            var viewProj = Matrix.Multiply(view, proj);
-
+            var viewProj = view * proj;
+            ViewProjection = viewProj;
             m_viewConstants = new ViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
         }
         void InitialiseScene()
@@ -181,7 +201,7 @@
             m_deviceContext.InputAssembler.PrimitiveTopology =
               SharpDX.Direct3D.PrimitiveTopology.TriangleList;
 
-            m_cameraPosition = new Vector3(0, 0.5f, -10);
+            m_cameraPosition = new Vector3(-3, 0.5f, 0);
 
             RecreateViewConstants();
 
@@ -198,12 +218,13 @@
         {
             RecreateViewConstants();
 
-            m_deviceContext.OutputMerger.SetRenderTargets(this.m_backBufferView);
+            m_deviceContext.OutputMerger.SetRenderTargets(m_backBufferView);
 
             m_deviceContext.ClearRenderTargetView(
-            m_backBufferView, new RawColor4(0.4f, 0.74f, 0.86f, 0.1f));
+                m_backBufferView,
+                new RawColor4(0.4f, 0.74f, 0.86f, 1));
 
-            m_deviceContext.UpdateSubresource<ViewConstantsBuffer>(
+            m_deviceContext.UpdateSubresource(
               ref m_viewConstants,
               m_viewConstantsBuffer);
 
@@ -213,11 +234,8 @@
                 {
                     m_deviceContext.VertexShader.SetConstantBuffer(1, entry.Value.constantsBuffer);
 
-                    m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(
-                        entry.Value.vertexBuffer, (int)entry.Value.vertexStride, 0));
-
-                    m_deviceContext.InputAssembler.SetIndexBuffer(
-                      entry.Value.indexBuffer, (DXGI.Format)entry.Value.indexFormat, 0);
+                    m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(entry.Value.vertexBuffer, (int)entry.Value.vertexStride, 0));
+                    m_deviceContext.InputAssembler.SetIndexBuffer(entry.Value.indexBuffer, (DXGI.Format)entry.Value.indexFormat, 0);
 
                     m_deviceContext.DrawIndexed(entry.Value.indexCount, 0, 0);
                 }
@@ -225,13 +243,11 @@
             m_swapChain.Present(0, DXGI.PresentFlags.None);
         }
 
+
         void CreateCube()
         {
             Obj obj = new Obj();
             float hs = 0.5f;
-
-
-            // quad - with pos, uv & normals
             obj.Vertices = new List<CVertex>{
                 // Front Face
                 new CVertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
@@ -290,7 +306,7 @@
                 20, 22, 23 };
 
             obj.VertexStride = (uint)Utilities.SizeOf<CVertex>();
-            obj.IndexStride = (uint)sizeof(int);
+            obj.IndexStride = sizeof(int);
 
 
 
@@ -305,7 +321,10 @@
                     bufferInfo.vertexBuffer = new D3D11.Buffer(
                       m_device,
                       ptr,
-                      new D3D11.BufferDescription(byteWidth, D3D11.BindFlags.VertexBuffer, D3D11.ResourceUsage.Default));
+                      new D3D11.BufferDescription(
+                          byteWidth,
+                          D3D11.BindFlags.VertexBuffer,
+                          D3D11.ResourceUsage.Default));
                 }
             }
             bufferInfo.vertexCount = obj.Vertices.Count;
@@ -320,25 +339,22 @@
                     bufferInfo.indexBuffer = new D3D11.Buffer(
                       m_device,
                       ptr,
-                      new D3D11.BufferDescription(byteWidth, D3D11.BindFlags.IndexBuffer, D3D11.ResourceUsage.Default));
+                      new D3D11.BufferDescription(
+                          byteWidth,
+                          D3D11.BindFlags.IndexBuffer,
+                          D3D11.ResourceUsage.Default));
                 }
             }
             bufferInfo.indexFormat = Windows.Graphics.DirectX.DirectXPixelFormat.R16UInt;
             bufferInfo.indexCount = obj.Indices.Count;
 
 
-
             Matrix scale = Matrix.Scaling(new Vector3(1, 1, 1));
-            Matrix rotation;
-            Matrix translation = Matrix.Translation(new Vector3(0, 0.5f, 10));
+            Matrix rotation = Matrix.RotationQuaternion(new Quaternion(0, 0, 0, 1));
+            Matrix translation = Matrix.Translation(new Vector3(0, 0, 0));
 
-            Quaternion quaternion = new Quaternion(new Vector4(0, 0, 0, 1));
-            Matrix.RotationQuaternion(ref quaternion, out rotation);
-
-            Matrix worldMatrix = scale * rotation * translation;
-
-            var world = Matrix.Transpose(worldMatrix);
-            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = world };
+            var worldMatrix = (scale * rotation * translation);
+            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = Matrix.Transpose(worldMatrix) };
 
             bufferInfo.constantsBuffer = D3D11.Buffer.Create(
               m_device,
@@ -379,9 +395,6 @@
                   0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height);
             }
         }
-
     }
-
-
 }
 

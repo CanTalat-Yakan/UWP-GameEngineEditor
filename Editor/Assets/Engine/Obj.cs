@@ -11,7 +11,6 @@ namespace Editor.Assets.Engine
     {
         public Guid Id;
 
-        public IBuffer Data;
         public List<CVertex> Vertices;
         public uint VertexStride;
         public List<ushort> Indices;

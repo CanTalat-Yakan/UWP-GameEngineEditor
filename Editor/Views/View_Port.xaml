@@ -6,14 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:developerTools="using:Microsoft.Toolkit.Uwp.DeveloperTools"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid PointerMoved="ViewPort_PointerMoved" Loaded="SwapChain_Init">
-        <developerTools:AlignmentGrid Opacity="0.15" LineBrush="DimGray" HorizontalStep="35" VerticalStep="35" />
-        <developerTools:AlignmentGrid Opacity="0.75" LineBrush="DimGray" HorizontalStep="105" VerticalStep="105"/>
+    <Grid MinHeight="1" MinWidth="1">
         <Grid Height="10000"/>
         <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
+        <TextBlock x:Name="x_TextBlock_Debug"/>
+        <Slider Width="800" VerticalAlignment="Bottom" 
+                x:Name="x_Slider_MouseSensitivity" ValueChanged="Slider_MouseSensitivity_ValueChanged"/>
     </Grid>
 
 </Page>
