@@ -50,7 +50,7 @@
             m_bufferMap = new Dictionary<Guid, MeshBufferInfo>();
         }
 
-        public void Initialise()
+        public void Initialise(View_Port _view)
         {
             m_swapChainPanel.SizeChanged += this.OnSwapChainPanelSizeChanged;
 
@@ -61,9 +61,7 @@
         void InitialiseDirect3D()
         {
             using (var defaultDevice = new D3D11.Device(SharpDX.Direct3D.DriverType.Hardware, D3D11.DeviceCreationFlags.Debug))
-            {
                 m_device = defaultDevice.QueryInterface<D3D11.Device2>();
-            }
 
             var rasterizerDesc = new D3D11.RasterizerStateDescription()
             {
@@ -76,11 +74,11 @@
 
             var swapChainDescription = new DXGI.SwapChainDescription1()
             {
-                AlphaMode = DXGI.AlphaMode.Premultiplied,
+                AlphaMode = DXGI.AlphaMode.Ignore,
                 BufferCount = 2,
                 Format = DXGI.Format.R8G8B8A8_UNorm,
-                Height = (int)(m_swapChainPanel.RenderSize.Height),
-                Width = (int)(m_swapChainPanel.RenderSize.Width),
+                Height = (int)m_swapChainPanel.RenderSize.Height,
+                Width = (int)m_swapChainPanel.RenderSize.Width,
                 SampleDescription = new DXGI.SampleDescription(1, 0),
                 Scaling = DXGI.Scaling.Stretch,
                 Stereo = false,
@@ -96,9 +94,7 @@
             }
 
             using (var nativeObject = ComObject.As<DXGI.ISwapChainPanelNative>(m_swapChainPanel))
-            {
                 nativeObject.SwapChain = m_swapChain;
-            }
 
             m_backBufferTexture = m_swapChain.GetBackBuffer<D3D11.Texture2D>(0);
             m_backBufferView = new D3D11.RenderTargetView(m_device, m_backBufferTexture);
@@ -111,18 +107,26 @@
             m_isDXInitialized = true;
         }
 
-        Windows.Foundation.Point m_tmpPoint = new Windows.Foundation.Point();
+        Windows.Foundation.Point? m_tmpPoint = new Windows.Foundation.Point();
+        internal bool m_isRightButtonPressed = false;
         void RecreateViewConstants()
         {
+            if (m_isRightButtonPressed)
             {
                 var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
-                if (m_tmpPoint != pointerPosition)
-                {
-                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.X) * 0.2f;
-                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Y) * 0.2f;
+                if (m_tmpPoint is null)
                     m_tmpPoint = pointerPosition;
+
+                if (m_tmpPoint.Value != pointerPosition)
+                {
+                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.Value.X) * 0.2f;
+                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Value.Y) * 0.2f;
+                    m_tmpPoint = pointerPosition;
+                    m_isRightButtonPressed = false;
                 }
             }
+            else
+                m_tmpPoint = null;
 
             Vector3 front = new Vector3(
                 MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)),
