@@ -134,7 +134,6 @@
     <Compile Include="Assets\Engine\MeshBufferInfo.cs" />
     <Compile Include="Assets\Engine\Obj.cs" />
     <Compile Include="Assets\Engine\SwapChainPanelRenderer.cs" />
-    <Compile Include="Assets\Example.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
       <DependentUpon>View_Files.xaml</DependentUpon>
     </Compile>
