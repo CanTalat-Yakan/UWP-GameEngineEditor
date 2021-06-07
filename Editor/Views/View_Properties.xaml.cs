@@ -1,8 +1,10 @@
 ﻿using Editor.Assets.Control;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -20,8 +22,9 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Editor
 {
-    public sealed partial class View_Properties : UserControl
+    public sealed partial class View_Properties : UserControl, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         internal Control_Properties m_Control;
 
         public View_Properties(View_Main _main)
@@ -31,10 +34,8 @@ namespace Editor
             m_Control = new Control_Properties();
         }
 
-        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e)
-        {
-            m_Control.SelectImage(Img_SelectTexture, TxtBlck_TexturePath);
-        }
 
+        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e) { m_Control.SelectImage(Img_SelectTexture, TxtBlck_TexturePath); }
+        void FirePropertyChanged([CallerMemberName] string memberName = null) { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName)); }
     }
 }
