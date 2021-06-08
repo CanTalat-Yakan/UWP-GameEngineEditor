@@ -24,12 +24,14 @@ namespace Editor
     {
         internal SwapChainPanelRenderer m_swapChainRenderer;
         internal View_Main m_main;
+        internal TextBlock m_debugFPS;
 
         public View_Port(View_Main _main)
         {
-            m_main = _main;
-
             this.InitializeComponent();
+
+            m_main = _main;
+            m_debugFPS = x_TextBlock_Debug_FPS;
 
             Loaded += SwapChain_Init;
 
@@ -73,12 +75,6 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.D) m_swapChainRenderer.m_D = false;
             if (e.VirtualKey == Windows.System.VirtualKey.E) m_swapChainRenderer.m_E = false;
             if (e.VirtualKey == Windows.System.VirtualKey.Q) m_swapChainRenderer.m_Q = false;
-        }
-
-        void Slider_MouseSensitivity_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-            if (m_swapChainRenderer != null)
-                m_swapChainRenderer.m_MovementSpeed = (float)x_Slider_MouseSensitivity.Value * 0.01f;
         }
     }
 }

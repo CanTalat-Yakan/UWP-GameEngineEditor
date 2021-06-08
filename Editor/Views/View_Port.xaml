@@ -11,9 +11,7 @@
     <Grid MinHeight="1" MinWidth="1">
         <Grid Height="10000"/>
         <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
-        <TextBlock x:Name="x_TextBlock_Debug"/>
-        <Slider Width="800" VerticalAlignment="Bottom" Value="1"
-                x:Name="x_Slider_MouseSensitivity" ValueChanged="Slider_MouseSensitivity_ValueChanged"/>
+        <TextBlock x:Name="x_TextBlock_Debug_FPS" HorizontalAlignment="Right" VerticalAlignment="Center" Text="FPS: 120" Margin="50"/>
     </Grid>
 
 </Page>

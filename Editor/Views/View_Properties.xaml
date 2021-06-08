@@ -73,17 +73,17 @@
                                         <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <my:NumberBox x:Name="x_NumberBox_Position_X" Text="0"/>
+                                    <my:NumberBox x:Name="x_NumberBox_Position_X" Text="0" Width="64"/>
                                     <Grid Margin="5,0,0,0" Width="15">
                                         <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <my:NumberBox x:Name="x_NumberBox_Position_Y" Text="0"/>
+                                    <my:NumberBox x:Name="x_NumberBox_Position_Y" Text="0" Width="64"/>
                                     <Grid Margin="5,0,0,0" Width="15">
                                         <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                         <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Grid>
-                                    <my:NumberBox x:Name="x_NumberBox_Position_Z" Text="0"/>
+                                    <my:NumberBox x:Name="x_NumberBox_Position_Z" Text="0" Width="64"/>
                                 </StackPanel>
                             </StackPanel>
 
@@ -93,17 +93,17 @@
                                     <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Rotation_X" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Rotation_X" Text="0" Width="64"/>
                                 <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Rotation_Y" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Rotation_Y" Text="0" Width="64"/>
                                 <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Rotation_Z" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Rotation_Z" Text="0" Width="64"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
@@ -112,17 +112,17 @@
                                     <Rectangle Fill="IndianRed" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="X" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Scale_X" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Scale_X" Text="0" Width="64"/>
                                 <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="SeaGreen" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Y" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Scale_Y" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Scale_Y" Text="0" Width="64"/>
                                 <Grid Margin="5,0,0,0" Width="15">
                                     <Rectangle Fill="DodgerBlue" RadiusX="2" RadiusY="2"/>
                                     <TextBlock Text="Z" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                 </Grid>
-                                <my:NumberBox x:Name="x_NumberBox_Scale_Z" Text="0"/>
+                                <my:NumberBox x:Name="x_NumberBox_Scale_Z" Text="0" Width="64"/>
                             </StackPanel>
                         </StackPanel>
                     </controls:Expander>

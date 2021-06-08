@@ -149,10 +149,12 @@
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
 
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
+            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { m_view.m_debugFPS.Text = "Frames: " + a++.ToString(); };
 
 
             m_IsDXInitialized = true;
         }
+        int a = 0;
 
         void RecreateViewConstants()
         {
@@ -183,6 +185,8 @@
                 if (m_E && m_S) m_cameraPosition += m_MovementSpeed * m_localUp;
                 if (m_Q && m_S) m_cameraPosition -= m_MovementSpeed * m_localUp;
             }
+            m_view.m_main.m_Layout.m_ViewProperties.Pos = m_cameraPosition;
+            m_view.m_main.m_Layout.m_ViewProperties.Rot = m_cameraMouseRot;
 
 
             var front = new Vector3(
