@@ -25,6 +25,7 @@
         D3D11.Texture2D m_backBufferTexture;
         D3D11.RenderTargetView m_backBufferView;
         D3D11.Texture2D m_depthStencilTexture;
+        D3D11.Texture2DDescription m_depthStencilTextureDescription;
         D3D11.DepthStencilView m_depthStencilView;
         D3D11.VertexShader m_vertexShader;
         D3D11.PixelShader m_pixelShader;
@@ -69,6 +70,7 @@
         public void Initialise(View_Port _view)
         {
             m_view = _view;
+
             m_swapChainPanel.SizeChanged += this.OnSwapChainPanelSizeChanged;
 
             InitialiseDirect3D();
@@ -116,30 +118,33 @@
             m_backBufferTexture = m_swapChain.GetBackBuffer<D3D11.Texture2D>(0);
             m_backBufferView = new D3D11.RenderTargetView(m_device, m_backBufferTexture);
 
-            var zBufferTextureDescription = new D3D11.Texture2DDescription
+
+            m_depthStencilTextureDescription = new D3D11.Texture2DDescription
             {
                 Format = DXGI.Format.D16_UNorm,
                 ArraySize = 1,
                 MipLevels = 1,
-                Width = (int)m_swapChainPanel.ActualWidth,
-                Height = (int)m_swapChainPanel.ActualHeight,
+                Width = swapChainDescription.Width,
+                Height = swapChainDescription.Height,
                 SampleDescription = new DXGI.SampleDescription(1, 0),
                 Usage = D3D11.ResourceUsage.Default,
                 BindFlags = D3D11.BindFlags.DepthStencil,
                 CpuAccessFlags = D3D11.CpuAccessFlags.None,
                 OptionFlags = D3D11.ResourceOptionFlags.None
             };
-            using (var zBufferTexture = new D3D11.Texture2D(m_device, zBufferTextureDescription))
-                m_depthStencilView = new D3D11.DepthStencilView(m_device, zBufferTexture);
+            using (m_depthStencilTexture = new D3D11.Texture2D(m_device, m_depthStencilTextureDescription))
+                m_depthStencilView = new D3D11.DepthStencilView(m_device, m_depthStencilTexture);
+
             D3D11.DepthStencilStateDescription desc = new D3D11.DepthStencilStateDescription()
             {
-                IsDepthEnabled = false,
-                DepthComparison = D3D11.Comparison.Always,
-                DepthWriteMask = D3D11.DepthWriteMask.Zero,
+                IsDepthEnabled = true,
+                DepthComparison = D3D11.Comparison.Less,
+                DepthWriteMask = D3D11.DepthWriteMask.All,
             };
             D3D11.DepthStencilState state = new D3D11.DepthStencilState(m_device, desc);
-            m_deviceContext.OutputMerger.SetRenderTargets(m_depthStencilView, m_backBufferView);
             m_deviceContext.OutputMerger.SetDepthStencilState(state);
+            m_deviceContext.OutputMerger.SetRenderTargets(m_depthStencilView, m_backBufferView);
+
 
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
 
@@ -254,17 +259,15 @@
         {
             RecreateViewConstants();
 
-            m_deviceContext.OutputMerger.SetRenderTargets(m_backBufferView);
 
             Windows.UI.Color col = m_view.m_main.m_Layout.m_ViewProperties.m_Color.SelectedColor;
             m_deviceContext.ClearRenderTargetView(
                 m_backBufferView,
-                new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1));
-                //new RawColor4(0.4f, 0.74f, 0.86f, 1));
+                new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1)); //new RawColor4(0.4f, 0.74f, 0.86f, 1));
 
-            m_deviceContext.ClearDepthStencilView(
-                m_depthStencilView,
-                D3D11.DepthStencilClearFlags.Depth, 1f, 0);
+            m_deviceContext.ClearDepthStencilView(m_depthStencilView, D3D11.DepthStencilClearFlags.Depth, 1f, 0);
+
+            m_deviceContext.OutputMerger.SetRenderTargets(m_depthStencilView, m_backBufferView);
 
 
             m_deviceContext.UpdateSubresource(
@@ -414,30 +417,36 @@
 
         void OnSwapChainPanelSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (this.m_IsDXInitialized)
-            {
-                var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
+            if (!m_IsDXInitialized)
+                return;
 
-                Utilities.Dispose(ref this.m_backBufferView);
-                Utilities.Dispose(ref this.m_backBufferTexture);
 
-                m_swapChain.ResizeBuffers(
-                  m_swapChain.Description.BufferCount,
-                  (int)e.NewSize.Width,
-                  (int)e.NewSize.Height,
-                  m_swapChain.Description1.Format,
-                  m_swapChain.Description1.Flags);
+            var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
 
-                this.m_backBufferTexture =
-                  D3D11.Resource.FromSwapChain<D3D11.Texture2D>(this.m_swapChain, 0);
+            Utilities.Dispose(ref m_backBufferView);
+            Utilities.Dispose(ref m_backBufferTexture);
+            Utilities.Dispose(ref m_depthStencilView);
+            Utilities.Dispose(ref m_depthStencilTexture);
 
-                this.m_backBufferView = new D3D11.RenderTargetView(this.m_device, this.m_backBufferTexture);
+            m_swapChain.ResizeBuffers(
+              m_swapChain.Description.BufferCount,
+              (int)e.NewSize.Width,
+              (int)e.NewSize.Height,
+              m_swapChain.Description1.Format,
+              m_swapChain.Description1.Flags);
 
-                m_swapChain.SourceSize = newSize;
+            m_backBufferTexture = D3D11.Resource.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
+            m_backBufferView = new D3D11.RenderTargetView(m_device, m_backBufferTexture);
 
-                m_deviceContext.Rasterizer.SetViewport(
-                  0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height);
-            }
+            m_depthStencilTextureDescription.Width = (int)e.NewSize.Width;
+            m_depthStencilTextureDescription.Height = (int)e.NewSize.Height;
+            using (m_depthStencilTexture = new D3D11.Texture2D(m_device, m_depthStencilTextureDescription))
+                m_depthStencilView = new D3D11.DepthStencilView(m_device, m_depthStencilTexture);
+
+
+            m_swapChain.SourceSize = newSize;
+
+            m_deviceContext.Rasterizer.SetViewport(0, 0, (int)e.NewSize.Width, (int)e.NewSize.Height);
         }
     }
 }
