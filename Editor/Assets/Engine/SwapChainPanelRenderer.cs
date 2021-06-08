@@ -5,6 +5,7 @@
     using SharpDX.Mathematics.Interop;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Numerics;
     using Windows.Storage.Streams;
@@ -55,6 +56,9 @@
         internal bool m_D = false;
         internal bool m_E = false;
         internal bool m_Q = false;
+        internal bool m_C = false;
+
+        internal int m_frames = 0;
 
         static readonly string VERTEX_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
         static readonly string PIXEL_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
@@ -148,13 +152,29 @@
 
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
 
-            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
-            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { m_view.m_debugFPS.Text = "Frames: " + a++.ToString(); };
 
+            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
+
+            Stopwatch watch = new Stopwatch();
+            float time = 0;
+            Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
+            {
+                watch.Stop();
+
+                time += watch.ElapsedMilliseconds;
+
+                m_view.m_debugFrames.Text = "Time: " + time.ToString();
+                m_view.m_debugFrames.Text += "\nFrames: " + m_frames++.ToString();
+                m_view.m_debugFrames.Text += "\nFPS: " + m_view.m_Fps;
+                m_view.m_debugFrames.Text += "\nDelta: " + watch.ElapsedMilliseconds.ToString();
+
+
+                watch.Reset();
+                watch.Start();
+            };
 
             m_IsDXInitialized = true;
         }
-        int a = 0;
 
         void RecreateViewConstants()
         {
@@ -261,6 +281,11 @@
 
         void RenderScene()
         {
+
+
+            if (m_C)
+                CreateCube(new Vector3(new Random().Next(-10, 10), new Random().Next(-10, 10), new Random().Next(-10, 10)));
+
             RecreateViewConstants();
 
 

@@ -6,12 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:my="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid MinHeight="1" MinWidth="1">
         <Grid Height="10000"/>
         <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
-        <TextBlock x:Name="x_TextBlock_Debug_FPS" HorizontalAlignment="Right" VerticalAlignment="Center" Text="FPS: 120" Margin="50"/>
+
+        <controls:TabbedCommandBarItem HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
+            <AppBarButton Label="Info">
+                <AppBarButton.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <TextBlock x:Name="x_TextBlock_Debug_FPS"/>
+                    </Flyout>
+                </AppBarButton.Flyout>
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+        </controls:TabbedCommandBarItem>
     </Grid>
 
 </Page>

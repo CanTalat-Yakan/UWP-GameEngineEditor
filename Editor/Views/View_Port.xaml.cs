@@ -24,20 +24,31 @@ namespace Editor
     {
         internal SwapChainPanelRenderer m_swapChainRenderer;
         internal View_Main m_main;
-        internal TextBlock m_debugFPS;
+        internal TextBlock m_debugFrames;
 
         public View_Port(View_Main _main)
         {
             this.InitializeComponent();
 
             m_main = _main;
-            m_debugFPS = x_TextBlock_Debug_FPS;
+            m_debugFrames = x_TextBlock_Debug_FPS;
 
             Loaded += SwapChain_Init;
 
             PointerMoved += ViewPort_PointerMoved;
             Window.Current.CoreWindow.KeyDown += Grid_KeyDown;
             Window.Current.CoreWindow.KeyUp += Grid_KeyUp;
+
+            DispatcherTimer timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
+            timer.Tick += FPS;
+            timer.Start();
+        }
+        int m_tmpFrames;
+        internal int m_Fps;
+        void FPS(object sender, object e)
+        {
+            m_Fps = m_swapChainRenderer.m_frames - m_tmpFrames;
+            m_tmpFrames = m_swapChainRenderer.m_frames;
         }
 
         void SwapChain_Init(object sender, RoutedEventArgs e)
@@ -66,6 +77,7 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.D) m_swapChainRenderer.m_D = true;
             if (e.VirtualKey == Windows.System.VirtualKey.E) m_swapChainRenderer.m_E = true;
             if (e.VirtualKey == Windows.System.VirtualKey.Q) m_swapChainRenderer.m_Q = true;
+            if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = true;
         }
         void Grid_KeyUp(CoreWindow sender, KeyEventArgs e)
         {
@@ -75,6 +87,7 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.D) m_swapChainRenderer.m_D = false;
             if (e.VirtualKey == Windows.System.VirtualKey.E) m_swapChainRenderer.m_E = false;
             if (e.VirtualKey == Windows.System.VirtualKey.Q) m_swapChainRenderer.m_Q = false;
+            if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = false;
         }
     }
 }
