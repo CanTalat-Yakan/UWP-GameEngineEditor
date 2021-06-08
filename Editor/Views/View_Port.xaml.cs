@@ -23,9 +23,12 @@ namespace Editor
     public sealed partial class View_Port : Page
     {
         internal SwapChainPanelRenderer m_swapChainRenderer;
+        internal View_Main m_main;
 
         public View_Port(View_Main _main)
         {
+            m_main = _main;
+
             this.InitializeComponent();
 
             Loaded += SwapChain_Init;

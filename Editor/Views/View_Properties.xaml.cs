@@ -26,12 +26,14 @@ namespace Editor
     {
         public event PropertyChangedEventHandler PropertyChanged;
         internal Control_Properties m_Control;
+        internal Microsoft.Toolkit.Uwp.UI.Controls.ColorPickerButton m_Color;
 
         public View_Properties(View_Main _main)
         {
             this.InitializeComponent();
 
             m_Control = new Control_Properties();
+            m_Color = x_ColorPickerButton;
         }
 
 
