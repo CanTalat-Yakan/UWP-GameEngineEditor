@@ -47,8 +47,7 @@ namespace Editor
 
             if (ptr.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
             {
-                Windows.UI.Input.PointerPoint ptrPt = e.GetCurrentPoint((UIElement)sender);
-
+                Windows.UI.Input.PointerPoint ptrPt = e.GetCurrentPoint(null);
                 m_swapChainRenderer.m_IsRightButtonPressed = ptrPt.Properties.IsRightButtonPressed;
             }
 

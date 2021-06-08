@@ -33,12 +33,15 @@
 
         Dictionary<Guid, MeshBufferInfo> m_bufferMap;
 
-        Vector3 m_cameraPosition;
+        Vector3 m_cameraPosition = Vector3.Zero;
         Vector3 m_cameraMouseRot = Vector3.Zero;
+        Vector2 m_mouseAxis = Vector2.Zero;
         Vector3 m_front = Vector3.ForwardLH;
         Vector3 m_right = Vector3.Right;
         Vector3 m_up = Vector3.Up;
+        Vector3 m_localUp = Vector3.Up;
         Windows.Foundation.Point? m_tmpPoint = new Windows.Foundation.Point();
+        Windows.Foundation.Point m_pointerPosition = new Windows.Foundation.Point();
         D3D11.Buffer m_viewConstantsBuffer;
         ViewConstantsBuffer m_viewConstants;
 
@@ -127,7 +130,6 @@
             };
             using (var zBufferTexture = new D3D11.Texture2D(m_device, zBufferTextureDescription))
                 m_depthStencilView = new D3D11.DepthStencilView(m_device, zBufferTexture);
-            m_deviceContext.OutputMerger.SetTargets(m_depthStencilView, m_backBufferView);
             D3D11.DepthStencilStateDescription desc = new D3D11.DepthStencilStateDescription()
             {
                 IsDepthEnabled = false,
@@ -135,6 +137,7 @@
                 DepthWriteMask = D3D11.DepthWriteMask.Zero,
             };
             D3D11.DepthStencilState state = new D3D11.DepthStencilState(m_device, desc);
+            m_deviceContext.OutputMerger.SetRenderTargets(m_depthStencilView, m_backBufferView);
             m_deviceContext.OutputMerger.SetDepthStencilState(state);
 
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
@@ -147,19 +150,20 @@
 
         void RecreateViewConstants()
         {
+            m_pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
+
+            m_mouseAxis.X = (float)(m_pointerPosition.X - m_tmpPoint.Value.X);
+            m_mouseAxis.Y = (float)(m_pointerPosition.Y - m_tmpPoint.Value.Y);
+
+            m_tmpPoint = m_pointerPosition;
+
+
             if (m_IsRightButtonPressed)
             {
-                var pointerPosition = Windows.UI.Core.CoreWindow.GetForCurrentThread().PointerPosition;
+                m_cameraMouseRot.X -= m_mouseAxis.X * m_MouseSensitivity;
+                m_cameraMouseRot.Y -= m_mouseAxis.Y * m_MouseSensitivity;
 
-                if (m_tmpPoint is null)
-                    m_tmpPoint = pointerPosition;
-
-                if (m_tmpPoint.Value != pointerPosition)
-                {
-                    m_cameraMouseRot.X -= (float)(pointerPosition.X - m_tmpPoint.Value.X) * m_MouseSensitivity;
-                    m_cameraMouseRot.Y -= (float)(pointerPosition.Y - m_tmpPoint.Value.Y) * m_MouseSensitivity;
-                    m_tmpPoint = pointerPosition;
-                }
+                m_cameraMouseRot.Y = Math.Clamp(m_cameraMouseRot.Y, -89, 89);
 
 
                 if (m_W) m_cameraPosition += m_MovementSpeed * m_front;
@@ -168,11 +172,11 @@
                 if (m_D) m_cameraPosition -= m_MovementSpeed * m_right;
                 if (m_E) m_cameraPosition += m_MovementSpeed * m_up;
                 if (m_Q) m_cameraPosition -= m_MovementSpeed * m_up;
-                if (m_E && m_W) m_cameraPosition += m_MovementSpeed * Vector3.Cross(m_right, m_front);
-                if (m_Q && m_S) m_cameraPosition -= m_MovementSpeed * Vector3.Cross(m_right, m_front);
+                if (m_E && m_W) m_cameraPosition += m_MovementSpeed * m_localUp;
+                if (m_Q && m_W) m_cameraPosition -= m_MovementSpeed * m_localUp;
+                if (m_E && m_S) m_cameraPosition += m_MovementSpeed * m_localUp;
+                if (m_Q && m_S) m_cameraPosition -= m_MovementSpeed * m_localUp;
             }
-            else
-                m_tmpPoint = null;
 
 
             var front = new Vector3(
@@ -181,6 +185,7 @@
                 MathF.Sin(MathUtil.DegreesToRadians(m_cameraMouseRot.X)) * MathF.Cos(MathUtil.DegreesToRadians(m_cameraMouseRot.Y)));
             m_front = Vector3.Normalize(front);
             m_right = Vector3.Normalize(Vector3.Cross(m_front, m_up));
+            m_localUp = Vector3.Normalize(Vector3.Cross(m_right, m_front));
 
             var view = Matrix.LookAtLH(
                 m_cameraPosition,
@@ -252,10 +257,10 @@
 
             m_deviceContext.ClearRenderTargetView(
                 m_backBufferView,
-                new RawColor4(0.4f, 0.74f, 0.86f, 1)); 
+                new RawColor4(0.4f, 0.74f, 0.86f, 1));
 
             m_deviceContext.ClearDepthStencilView(
-                m_depthStencilView, 
+                m_depthStencilView,
                 D3D11.DepthStencilClearFlags.Depth, 1f, 0);
 
 
