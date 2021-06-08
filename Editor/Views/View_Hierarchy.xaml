@@ -10,19 +10,16 @@
     d:DesignWidth="400">
 
     <Grid>
-        <Grid>
-            <ListViewHeaderItem Content="Main">
-                <ListViewHeaderItem.ContextFlyout>
-                    <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy_Header"/>
-                </ListViewHeaderItem.ContextFlyout>
-            </ListViewHeaderItem>
+        <ListViewHeaderItem Content="Main">
+            <ListViewHeaderItem.ContextFlyout>
+                <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy_Header"/>
+            </ListViewHeaderItem.ContextFlyout>
+        </ListViewHeaderItem>
 
-            <TreeView x:Name="x_TreeView_Hierarchy" Margin="0,50,0,0" SelectionMode="Single">
-                <TreeView.ContextFlyout>
-                    <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy"/>
-                </TreeView.ContextFlyout>
-            </TreeView>
-        </Grid>
-
+        <TreeView x:Name="x_TreeView_Hierarchy" Margin="0,50,0,0" SelectionMode="Single">
+            <TreeView.ContextFlyout>
+                <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy"/>
+            </TreeView.ContextFlyout>
+        </TreeView>
     </Grid>
 </UserControl>

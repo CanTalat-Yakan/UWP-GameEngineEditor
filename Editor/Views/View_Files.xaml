@@ -15,26 +15,8 @@
         <controls:DockPanel>
 
             <controls:TabbedCommandBarItem Header="Project" controls:DockPanel.Dock="Top">
-                <AppBarButton Icon="Undo" Label="Undo"/>
-                <AppBarButton Icon="Redo" Label="Redo"/>
-                <AppBarButton Icon="Paste" Label="Paste"/>
-                <AppBarSeparator/>
-                <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
-                <AppBarToggleButton IsChecked="True" Label="3D Models">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
-                <AppBarToggleButton IsChecked="True" Label="Add-ons">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
-            </controls:TabbedCommandBarItem>
-
-            <Grid>
-                <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False" >
-                    <TreeView.ContextFlyout>
+                <AppBarButton Icon="Add">
+                    <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutSubItem Text="Create">
                                 <MenuFlyoutItem Text="New Folder"/>
@@ -56,8 +38,25 @@
                             <MenuFlyoutSeparator/>
                             <MenuFlyoutItem Text="Refresh"/>
                         </MenuFlyout>
-                    </TreeView.ContextFlyout>
-                </TreeView>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarSeparator/>
+
+                <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
+                <AppBarToggleButton IsChecked="True" Label="3D Models">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+                <AppBarToggleButton IsChecked="True" Label="Add-ons">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+            </controls:TabbedCommandBarItem>
+
+            <Grid>
+                <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
             </Grid>
         </controls:DockPanel>
     </Grid>
