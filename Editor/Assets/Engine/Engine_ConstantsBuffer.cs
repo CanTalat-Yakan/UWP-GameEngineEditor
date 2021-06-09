@@ -16,13 +16,13 @@
         public RawMatrix World;
     }
 
-    public struct CVertex
+    public struct Vertex
     {
         public Vector3 pos;
         public Vector2 texCoord;
         public Vector3 normal;
 
-        public CVertex(
+        public Vertex(
             float x, float y, float z,
             float u, float v,
             float nx, float ny, float nz)

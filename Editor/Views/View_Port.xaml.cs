@@ -22,7 +22,7 @@ namespace Editor
 {
     public sealed partial class View_Port : Page
     {
-        internal SwapChainPanelRenderer m_swapChainRenderer;
+        internal Engine_SwapChainPanelRenderer m_swapChainRenderer;
         internal View_Main m_main;
         internal TextBlock m_debugFrames;
 
@@ -53,7 +53,7 @@ namespace Editor
 
         void SwapChain_Init(object sender, RoutedEventArgs e)
         {
-            m_swapChainRenderer = new SwapChainPanelRenderer(x_SwapChainPanel_ViewPort);
+            m_swapChainRenderer = new Engine_SwapChainPanelRenderer(x_SwapChainPanel_ViewPort);
             m_swapChainRenderer.Initialise(this);
         }
 

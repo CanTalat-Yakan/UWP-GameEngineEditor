@@ -130,10 +130,10 @@
     <Compile Include="Assets\Control\Control_Serialization.cs" />
     <Compile Include="Assets\Control\Control_Settings.cs" />
     <Compile Include="Assets\Control\Control_TreeView.cs" />
-    <Compile Include="Assets\Engine\ConstantsBuffer.cs" />
-    <Compile Include="Assets\Engine\MeshBufferInfo.cs" />
-    <Compile Include="Assets\Engine\Obj.cs" />
-    <Compile Include="Assets\Engine\SwapChainPanelRenderer.cs" />
+    <Compile Include="Assets\Engine\Engine_ConstantsBuffer.cs" />
+    <Compile Include="Assets\Engine\Engine_MeshBufferInfo.cs" />
+    <Compile Include="Assets\Engine\Engine_Obj.cs" />
+    <Compile Include="Assets\Engine\Engine_SwapChainPanelRenderer.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
       <DependentUpon>View_Files.xaml</DependentUpon>
     </Compile>

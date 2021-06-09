@@ -7,16 +7,16 @@ using Windows.Storage.Streams;
 
 namespace Editor.Assets.Engine
 {    
-    public class Obj
+    public class Engine_Obj
     {
         public Guid Id;
 
-        public List<CVertex> Vertices;
+        public List<Vertex> Vertices;
         public uint VertexStride;
         public List<ushort> Indices;
         public uint IndexStride;
 
-        public Obj()
+        public Engine_Obj()
         {
             Id = Guid.NewGuid();
         }

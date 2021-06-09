@@ -18,7 +18,7 @@
     using Vector3 = SharpDX.Vector3;
     using Vector4 = SharpDX.Vector4;
 
-    internal class SwapChainPanelRenderer
+    internal class Engine_SwapChainPanelRenderer
     {
         D3D11.Device2 m_device;
         D3D11.DeviceContext m_deviceContext;
@@ -33,7 +33,7 @@
         SwapChainPanel m_swapChainPanel;
         internal bool m_IsDXInitialized;
 
-        Dictionary<Guid, MeshBufferInfo> m_bufferMap;
+        Dictionary<Guid, Engine_MeshBufferInfo> m_bufferMap;
 
         Vector3 m_cameraPosition = Vector3.Zero;
         Vector3 m_cameraMouseRot = Vector3.Zero;
@@ -65,10 +65,10 @@
 
 
 
-        internal SwapChainPanelRenderer(SwapChainPanel swapChainPanel)
+        internal Engine_SwapChainPanelRenderer(SwapChainPanel swapChainPanel)
         {
             m_swapChainPanel = swapChainPanel;
-            m_bufferMap = new Dictionary<Guid, MeshBufferInfo>();
+            m_bufferMap = new Dictionary<Guid, Engine_MeshBufferInfo>();
         }
         View_Port m_view;
         public void Initialise(View_Port _view)
@@ -322,44 +322,44 @@
 
         void CreateCube(Vector3 _v)
         {
-            Obj obj = new Obj();
+            Engine_Obj obj = new Engine_Obj();
             float hs = 0.5f;
-            obj.Vertices = new List<CVertex>{
+            obj.Vertices = new List<Vertex>{
                 // Front Face
-                new CVertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
-			    new CVertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
-			    new CVertex(+hs, +hs, -hs, 1, 0, 0, 0, 1),	//Top		Right
-			    new CVertex(+hs, -hs, -hs, 1, 1, 0, 0, 1),	//Bottom	Right
+                new Vertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
+			    new Vertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
+			    new Vertex(+hs, +hs, -hs, 1, 0, 0, 0, 1),	//Top		Right
+			    new Vertex(+hs, -hs, -hs, 1, 1, 0, 0, 1),	//Bottom	Right
 
 			    // Left Face
-			    new CVertex(-hs, -hs, +hs, 0, 1, 1, 0, 0),	//Bottom	Left
-			    new CVertex(-hs, +hs, +hs, 0, 0, 1, 0, 0),	//Top		Left
-			    new CVertex(-hs, +hs, -hs, 1, 0, 1, 0, 0),	//Top		Right
-			    new CVertex(-hs, -hs, -hs, 1, 1, 1, 0, 0),	//Bottom	Right
+			    new Vertex(-hs, -hs, +hs, 0, 1, 1, 0, 0),	//Bottom	Left
+			    new Vertex(-hs, +hs, +hs, 0, 0, 1, 0, 0),	//Top		Left
+			    new Vertex(-hs, +hs, -hs, 1, 0, 1, 0, 0),	//Top		Right
+			    new Vertex(-hs, -hs, -hs, 1, 1, 1, 0, 0),	//Bottom	Right
 
 			    // Back Face
-			    new CVertex(+hs, -hs, +hs, 0, 1, 0, 0, -1),	//Bottom	Left
-			    new CVertex(+hs, +hs, +hs, 0, 0, 0, 0, -1),	//Top		Left
-			    new CVertex(-hs, +hs, +hs, 1, 0, 0, 0, -1),	//Top		Right
-			    new CVertex(-hs, -hs, +hs, 1, 1, 0, 0, -1),	//Bottom	Right
+			    new Vertex(+hs, -hs, +hs, 0, 1, 0, 0, -1),	//Bottom	Left
+			    new Vertex(+hs, +hs, +hs, 0, 0, 0, 0, -1),	//Top		Left
+			    new Vertex(-hs, +hs, +hs, 1, 0, 0, 0, -1),	//Top		Right
+			    new Vertex(-hs, -hs, +hs, 1, 1, 0, 0, -1),	//Bottom	Right
 
 			    // Right Face
-			    new CVertex(+hs, -hs, -hs, 0, 1, -1, 0, 0),	//Bottom	Left
-			    new CVertex(+hs, +hs, -hs, 0, 0, -1, 0, 0),	//Top		Left
-			    new CVertex(+hs, +hs, +hs, 1, 0, -1, 0, 0),	//Top		Right
-			    new CVertex(+hs, -hs, +hs, 1, 1, -1, 0, 0),	//Bottom	Right
+			    new Vertex(+hs, -hs, -hs, 0, 1, -1, 0, 0),	//Bottom	Left
+			    new Vertex(+hs, +hs, -hs, 0, 0, -1, 0, 0),	//Top		Left
+			    new Vertex(+hs, +hs, +hs, 1, 0, -1, 0, 0),	//Top		Right
+			    new Vertex(+hs, -hs, +hs, 1, 1, -1, 0, 0),	//Bottom	Right
 
 			    // Top Face
-			    new CVertex(-hs, +hs, -hs, 0, 0, 0, -1, 0),	//Top		Right
-			    new CVertex(-hs, +hs, +hs, 1, 0, 0, -1, 0),	//Bottom	Right
-			    new CVertex(+hs, +hs, +hs, 1, 1, 0, -1, 0),	//Bottom	Left
-			    new CVertex(+hs, +hs, -hs, 0, 1, 0, -1, 0),	//Top		Left
+			    new Vertex(-hs, +hs, -hs, 0, 0, 0, -1, 0),	//Top		Right
+			    new Vertex(-hs, +hs, +hs, 1, 0, 0, -1, 0),	//Bottom	Right
+			    new Vertex(+hs, +hs, +hs, 1, 1, 0, -1, 0),	//Bottom	Left
+			    new Vertex(+hs, +hs, -hs, 0, 1, 0, -1, 0),	//Top		Left
 
 			    // Base Face					 	
-			    new CVertex(-hs, -hs, +hs, 1, 1, 0, 1, 0),	//Bottom	Left
-			    new CVertex(-hs, -hs, -hs, 0, 1, 0, 1, 0),	//Top		Left
-			    new CVertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
-			    new CVertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};	//Bottom	Right
+			    new Vertex(-hs, -hs, +hs, 1, 1, 0, 1, 0),	//Bottom	Left
+			    new Vertex(-hs, -hs, -hs, 0, 1, 0, 1, 0),	//Top		Left
+			    new Vertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
+			    new Vertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};	//Bottom	Right
 
             obj.Indices = new List<ushort>{
                 // Front Face
@@ -381,16 +381,16 @@
 			    20, 21, 22,
                 20, 22, 23 };
 
-            obj.VertexStride = (uint)Utilities.SizeOf<CVertex>();
+            obj.VertexStride = (uint)Utilities.SizeOf<Vertex>();
             obj.IndexStride = sizeof(int);
 
 
 
-            var bufferInfo = new MeshBufferInfo();
+            var bufferInfo = new Engine_MeshBufferInfo();
 
             unsafe
             {
-                fixed (CVertex* p = obj.Vertices.ToArray())
+                fixed (Vertex* p = obj.Vertices.ToArray())
                 {
                     IntPtr ptr = (IntPtr)p;
                     int byteWidth = (int)(obj.Vertices.Count * obj.VertexStride);
