@@ -78,6 +78,8 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.E) m_swapChainRenderer.m_E = true;
             if (e.VirtualKey == Windows.System.VirtualKey.Q) m_swapChainRenderer.m_Q = true;
             if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = true;
+            if (e.VirtualKey == Windows.System.VirtualKey.Shift) m_swapChainRenderer.m_Shift = true;
+            if (e.VirtualKey == Windows.System.VirtualKey.Control) m_swapChainRenderer.m_Ctrl = true;
         }
         void Grid_KeyUp(CoreWindow sender, KeyEventArgs e)
         {
@@ -88,6 +90,8 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.E) m_swapChainRenderer.m_E = false;
             if (e.VirtualKey == Windows.System.VirtualKey.Q) m_swapChainRenderer.m_Q = false;
             if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = false;
+            if (e.VirtualKey == Windows.System.VirtualKey.Shift) m_swapChainRenderer.m_Shift = false;
+            if (e.VirtualKey == Windows.System.VirtualKey.Control) m_swapChainRenderer.m_Ctrl = false;
         }
     }
 }

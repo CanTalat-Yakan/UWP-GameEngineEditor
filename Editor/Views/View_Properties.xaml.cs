@@ -27,6 +27,7 @@ namespace Editor
         public event PropertyChangedEventHandler PropertyChanged;
         internal Control_Properties m_Control;
         internal Microsoft.Toolkit.Uwp.UI.Controls.ColorPickerButton m_Color;
+
         SharpDX.Vector3 m_pos;
         internal SharpDX.Vector3 Pos
         {
@@ -39,6 +40,13 @@ namespace Editor
         {
             get { return m_rot = new SharpDX.Vector3((float)x_NumberBox_Rotation_X.Value, (float)x_NumberBox_Rotation_Y.Value, (float)x_NumberBox_Rotation_Z.Value); }
             set { x_NumberBox_Rotation_X.Value = value.X; x_NumberBox_Rotation_Y.Value = value.Y; x_NumberBox_Rotation_Z.Value = value.Z; }
+        }
+
+        SharpDX.Vector3 m_scale;
+        internal SharpDX.Vector3 Sca
+        {
+            get { return m_scale = new SharpDX.Vector3((float)x_NumberBox_Scale_X.Value, (float)x_NumberBox_Scale_Y.Value, (float)x_NumberBox_Scale_Z.Value); }
+            set { x_NumberBox_Scale_X.Value = value.X; x_NumberBox_Scale_Y.Value = value.Y; x_NumberBox_Scale_Z.Value = value.Z; }
         }
 
 

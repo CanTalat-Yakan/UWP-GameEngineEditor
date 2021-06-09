@@ -56,6 +56,8 @@
         internal bool m_D = false;
         internal bool m_E = false;
         internal bool m_Q = false;
+        internal bool m_Shift = false;
+        internal bool m_Ctrl = false;
         internal bool m_C = false;
 
         internal int m_frames = 0;
@@ -168,7 +170,6 @@
                 m_view.m_debugFrames.Text += "\nFPS: " + m_view.m_Fps;
                 m_view.m_debugFrames.Text += "\nDelta: " + watch.ElapsedMilliseconds.ToString();
 
-
                 watch.Reset();
                 watch.Start();
             };
@@ -193,20 +194,24 @@
 
                 m_cameraMouseRot.Y = Math.Clamp(m_cameraMouseRot.Y, -89, 89);
 
+                float speed = m_MovementSpeed;
+                if (m_Shift) speed *= 2;
+                if (m_Ctrl) speed *= 0.5f;
 
-                if (m_W) m_cameraPosition += m_MovementSpeed * m_front;
-                if (m_S) m_cameraPosition -= m_MovementSpeed * m_front;
-                if (m_A) m_cameraPosition += m_MovementSpeed * m_right;
-                if (m_D) m_cameraPosition -= m_MovementSpeed * m_right;
-                if (m_E) m_cameraPosition += m_MovementSpeed * m_up;
-                if (m_Q) m_cameraPosition -= m_MovementSpeed * m_up;
-                if (m_E && m_W) m_cameraPosition += m_MovementSpeed * m_localUp;
-                if (m_Q && m_W) m_cameraPosition -= m_MovementSpeed * m_localUp;
-                if (m_E && m_S) m_cameraPosition += m_MovementSpeed * m_localUp;
-                if (m_Q && m_S) m_cameraPosition -= m_MovementSpeed * m_localUp;
+                if (m_W) m_cameraPosition += speed * m_front;
+                if (m_S) m_cameraPosition -= speed * m_front;
+                if (m_A) m_cameraPosition += speed * m_right;
+                if (m_D) m_cameraPosition -= speed * m_right;
+                if (m_E) m_cameraPosition += speed * m_up;
+                if (m_Q) m_cameraPosition -= speed * m_up;
+                if (m_E && m_W) m_cameraPosition += speed * m_localUp;
+                if (m_Q && m_W) m_cameraPosition -= speed * m_localUp;
+                if (m_E && m_S) m_cameraPosition += speed * m_localUp;
+                if (m_Q && m_S) m_cameraPosition -= speed * m_localUp;
             }
             m_view.m_main.m_Layout.m_ViewProperties.Pos = m_cameraPosition;
             m_view.m_main.m_Layout.m_ViewProperties.Rot = m_cameraMouseRot;
+            m_view.m_main.m_Layout.m_ViewProperties.Sca = Vector3.One;
 
 
             var front = new Vector3(
@@ -281,8 +286,6 @@
 
         void RenderScene()
         {
-
-
             if (m_C)
                 CreateCube(new Vector3(new Random().Next(-10, 10), new Random().Next(-10, 10), new Random().Next(-10, 10)));
 
