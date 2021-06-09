@@ -1,4 +1,4 @@
-﻿namespace Editor.Assets.Engine
+﻿namespace Editor.Assets.Engine.Helper
 {
   using Windows.Graphics.DirectX;
   using D3D11 = SharpDX.Direct3D11;

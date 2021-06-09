@@ -17,8 +17,11 @@
     using Vector2 = SharpDX.Vector2;
     using Vector3 = SharpDX.Vector3;
     using Vector4 = SharpDX.Vector4;
+    using Editor.Assets.Engine.Core;
+    using Editor.Assets.Engine.Helper;
+    using Editor.Assets.Engine.Utilities;
 
-    internal class Engine_SwapChainPanelRenderer
+    internal class Engine_Main
     {
         D3D11.Device2 m_device;
         D3D11.DeviceContext m_deviceContext;
@@ -62,12 +65,11 @@
 
         internal int m_frames = 0;
 
-        static readonly string VERTEX_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
-        static readonly string PIXEL_SHADER_FILE = @"Assets//Engine//Shader.hlsl";
+        static readonly string SHADER_FILE = @"Assets//Engine//Resources//Shader.hlsl";
 
 
 
-        internal Engine_SwapChainPanelRenderer(SwapChainPanel swapChainPanel)
+        internal Engine_Main(SwapChainPanel swapChainPanel)
         {
             m_swapChainPanel = swapChainPanel;
             m_bufferMap = new Dictionary<Guid, Engine_MeshBufferInfo>();
@@ -247,7 +249,7 @@
 
 
             using (var vsResult = ShaderBytecode.CompileFromFile(
-              VERTEX_SHADER_FILE, "VS", "vs_4_0", ShaderFlags.Debug))
+              SHADER_FILE, "VS", "vs_4_0", ShaderFlags.Debug))
             {
                 m_vertexShader = new D3D11.VertexShader(m_device, vsResult.Bytecode.Data);
 
@@ -258,7 +260,7 @@
             m_deviceContext.InputAssembler.InputLayout = vertexLayout;
 
             using (var psResult = ShaderBytecode.CompileFromFile(
-              PIXEL_SHADER_FILE, "PS", "ps_4_0", ShaderFlags.Debug))
+              SHADER_FILE, "PS", "ps_4_0", ShaderFlags.Debug))
             {
                 m_pixelShader = new D3D11.PixelShader(m_device, psResult.Bytecode.Data);
             }
@@ -325,7 +327,7 @@
 
         void CreateCube(Vector3 _v)
         {
-            Engine_Obj obj = new Engine_Obj();
+            Engine_Mesh obj = new Engine_Mesh();
             float hs = 0.5f;
             obj.Vertices = new List<Vertex>{
                 // Front Face
@@ -384,7 +386,7 @@
 			    20, 21, 22,
                 20, 22, 23 };
 
-            obj.VertexStride = (uint)Utilities.SizeOf<Vertex>();
+            obj.VertexStride = (uint)SharpDX.Utilities.SizeOf<Vertex>();
             obj.IndexStride = sizeof(int);
 
 
@@ -455,10 +457,10 @@
 
             var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
 
-            Utilities.Dispose(ref m_backBufferView);
-            Utilities.Dispose(ref m_backBufferTexture);
-            Utilities.Dispose(ref m_depthStencilView);
-            Utilities.Dispose(ref m_depthStencilTexture);
+            SharpDX.Utilities.Dispose(ref m_backBufferView);
+            SharpDX.Utilities.Dispose(ref m_backBufferTexture);
+            SharpDX.Utilities.Dispose(ref m_depthStencilView);
+            SharpDX.Utilities.Dispose(ref m_depthStencilTexture);
 
             m_swapChain.ResizeBuffers(
               m_swapChain.Description.BufferCount,

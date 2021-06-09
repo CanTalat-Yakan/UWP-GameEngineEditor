@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
+using Editor.Assets.Engine.Helper;
 
-namespace Editor.Assets.Engine
+namespace Editor.Assets.Engine.Core
 {    
-    public class Engine_Obj
+    public class Engine_Mesh
     {
         public Guid Id;
 
@@ -16,7 +17,7 @@ namespace Editor.Assets.Engine
         public List<ushort> Indices;
         public uint IndexStride;
 
-        public Engine_Obj()
+        public Engine_Mesh()
         {
             Id = Guid.NewGuid();
         }

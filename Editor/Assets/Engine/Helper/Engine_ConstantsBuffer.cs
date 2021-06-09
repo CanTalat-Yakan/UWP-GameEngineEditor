@@ -1,4 +1,4 @@
-﻿namespace Editor.Assets.Engine
+﻿namespace Editor.Assets.Engine.Helper
 {
     using SharpDX.Mathematics.Interop;
     using Vector2 = SharpDX.Vector2;
