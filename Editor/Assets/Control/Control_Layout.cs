@@ -57,9 +57,9 @@ namespace Editor.Assets.Control
             Grid.SetColumn(splitV2, 1);
 
             Grid grid = new Grid() { ColumnSpacing = 16 };
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(3, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1.4d, GridUnitType.Star) });
 
 
             Grid collumn0 = new Grid() { RowSpacing = 16 };
