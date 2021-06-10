@@ -26,13 +26,13 @@ namespace Editor
 
         View_Main m_main;
 
-        public View_Output(View_Main _main, TextBlock _status)
+        public View_Output(View_Main _main)
         {
             this.InitializeComponent();
 
             m_main = _main;
 
-            m_control = new Control_Output(_main, _status, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors, x_AppBarToggleButton_Debug_ErrorPause, x_AppBarToggleButton_Debug_ClearPlay);
+            m_control = new Control_Output(_main, x_Stackpanel_Output, x_ScrollViewer_Output, x_AppBarToggleButton_Output_Collapse, x_AppBarToggleButton_Filter_Messages, x_AppBarToggleButton_Filter_Warnings, x_AppBarToggleButton_Filter_Errors, x_AppBarToggleButton_Debug_ErrorPause, x_AppBarToggleButton_Debug_ClearPlay);
 
             DispatcherTimer dispatcher = new DispatcherTimer();
             dispatcher.Interval = TimeSpan.FromMilliseconds(42);

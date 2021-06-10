@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Editor.Assets.Control;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.System;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -25,15 +27,19 @@ namespace Editor
     {
         internal Control_GameMode m_GameMode;
         internal Control_Layout m_Layout;
+        internal TextBlock m_Status_Content;
 
         public View_Main()
         {
             this.InitializeComponent();
 
+            m_Status_Content = x_TextBlock_Status_Content;
+            GetName();
+
             m_Layout = new Control_Layout(
                 this, 
                 x_Grid_Main,
-                new View_Output(this, x_TextBlock_Status_Content), 
+                new View_Output(this), 
                 new View_Hierarchy(this), 
                 new View_Files(this), 
                 new View_Properties(this), 
@@ -58,5 +64,13 @@ namespace Editor
         private void AppBarButton_Status_Kill_Click(object sender, RoutedEventArgs e) { m_GameMode.Kill(); }
         private void AppBarToggleButton_Status_Light(object sender, RoutedEventArgs e) { RequestedTheme = RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : RequestedTheme = ElementTheme.Light; }
 
+        async void GetName()
+        {
+            var users = await User.FindAllAsync(UserType.LocalUser);
+            var nameFirst = await users.FirstOrDefault().GetPropertyAsync(KnownUserProperties.FirstName);
+            var nameLast = await users.FirstOrDefault().GetPropertyAsync(KnownUserProperties.LastName);
+
+            x_MenuBar_Name.DisplayName = $"{nameFirst} {nameLast}";
+        }
     }
 }

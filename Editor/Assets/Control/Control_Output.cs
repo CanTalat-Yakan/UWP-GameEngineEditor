@@ -45,10 +45,10 @@ namespace Editor.Assets.Control
         AppBarToggleButton m_pauseError;
         internal AppBarToggleButton m_ClearPlay;
 
-        internal Control_Output(View_Main _main, TextBlock _status, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError, AppBarToggleButton _clearPlay)
+        internal Control_Output(View_Main _main, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError, AppBarToggleButton _clearPlay)
         {
             m_main = _main;
-            m_status = _status;
+            m_status = m_main.m_Status_Content;
             m_stack = _stack;
             m_scroll = _scroll;
             m_collapse = _collapse;
@@ -107,7 +107,7 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        internal void Log(string _m, EMessageType _t = EMessageType.MESSAGE, [CallerLineNumber] int _l = 0, [CallerMemberName] string _c = null, [CallerFilePath] string _s = null)
+        public void Log(string _m, EMessageType _t = EMessageType.MESSAGE, [CallerLineNumber] int _l = 0, [CallerMemberName] string _c = null, [CallerFilePath] string _s = null)
         {
             SMessageInfo message = new SMessageInfo() { Script = _s, Method = _c, Line = _l, Message = _m, Type = _t };
 
