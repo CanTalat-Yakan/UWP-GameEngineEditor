@@ -15,7 +15,7 @@
         <controls:DockPanel>
 
             <controls:TabbedCommandBarItem Header="Project" controls:DockPanel.Dock="Top">
-                <AppBarButton Icon="Add">
+                <AppBarButton Icon="Add" Label="Add">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutSubItem Text="Create">
