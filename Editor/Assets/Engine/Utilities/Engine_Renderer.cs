@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Editor.Assets.Engine.Core
+namespace Editor.Assets.Engine.Utilities
 {
-    class Engine_Time
+    class Engine_Renderer
     {
     }
 }

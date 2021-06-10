@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Editor.Assets.Engine.Helper;
 
-namespace Editor.Assets.Engine.Core
+namespace Editor.Assets.Engine.Utilities
 {    
     public class Engine_Mesh
     {
         public Guid Id;
 
-        public List<Vertex> Vertices;
+        public List<Engine_Vertex> Vertices;
         public uint VertexStride;
         public List<ushort> Indices;
         public uint IndexStride;
