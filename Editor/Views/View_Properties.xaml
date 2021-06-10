@@ -16,7 +16,7 @@
             <StackPanel Spacing="3">
                 <StackPanel Margin="8,5,0,5">
                     <Grid>
-                        <CheckBox IsChecked="True"/>
+                        <CheckBox IsChecked="True" Margin="0,0,0,-5.5"/>
                         <TextBox Text="GameObject" Margin="25,5,5,0"/>
                     </Grid>
 
@@ -120,7 +120,7 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                            
+
                         </StackPanel>
                     </controls:Expander>
                 </Grid>
@@ -153,28 +153,20 @@
                             <!--STRING-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="String:" Width="80" VerticalAlignment="Bottom"/>
-                                <TextBox Text="Example" MaxWidth="250"/>
+                                <TextBox Text="Example" MaxWidth="212"/>
                             </StackPanel>
                             <!--VECTOR 2-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Vector 2:" Width="80" VerticalAlignment="Bottom"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0" Margin="0,0,4,0"/>
+                                <my:NumberBox Text="0" Margin="0,0,4,0"/>
                             </StackPanel>
                             <!--VECTOR 3-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Vector 3:" Width="80" VerticalAlignment="Bottom"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
-                            </StackPanel>
-                            <!--VECTOR 4-->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Vector 4:" Width="80" VerticalAlignment="Bottom"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
-                                <my:NumberBox Text="0"/>
+                                <my:NumberBox Text="0" Margin="0,0,4,0"/>
+                                <my:NumberBox Text="0" Margin="0,0,4,0"/>
+                                <my:NumberBox Text="0" Margin="0,0,4,0"/>
                             </StackPanel>
                             <!--SLIDER-->
                             <StackPanel Orientation="Horizontal">
@@ -185,7 +177,7 @@
                             <!--BOOL-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Bool:" Width="80" VerticalAlignment="Bottom"/>
-                                <CheckBox Margin="0,0,0,-6"/>
+                                <CheckBox Margin="0,0,0,-5.5"/>
                             </StackPanel>
                             <!--TEXTURE-->
                             <StackPanel Orientation="Horizontal">
