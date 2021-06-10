@@ -100,6 +100,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -132,13 +133,14 @@
     <Compile Include="Assets\Control\Control_TreeView.cs" />
     <Compile Include="Assets\Engine\Helper\Engine_ConstantsBuffer.cs" />
     <Compile Include="Assets\Engine\Helper\Engine_MeshBufferInfo.cs" />
-    <Compile Include="Assets\Engine\Core\Engine_Mesh.cs" />
+    <Compile Include="Assets\Engine\Helper\Engine_Vertex.cs" />
+    <Compile Include="Assets\Engine\Utilities\Engine_Mesh.cs" />
     <Compile Include="Assets\Engine\Engine_Main.cs" />
     <Compile Include="Assets\Engine\Utilities\Engine_Mouse.cs" />
-    <Compile Include="Assets\Engine\Utilities\Engine_ObjLoader.cs" />
-    <Compile Include="Assets\Engine\Core\Engine_Renderer.cs" />
+    <Compile Include="Assets\Engine\Helper\Engine_ObjLoader.cs" />
+    <Compile Include="Assets\Engine\Utilities\Engine_Renderer.cs" />
     <Compile Include="Assets\Engine\Utilities\Engine_Scene.cs" />
-    <Compile Include="Assets\Engine\Core\Engine_Time.cs" />
+    <Compile Include="Assets\Engine\Utilities\Engine_Time.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
       <DependentUpon>View_Files.xaml</DependentUpon>
     </Compile>
