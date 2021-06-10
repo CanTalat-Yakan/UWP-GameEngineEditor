@@ -17,7 +17,6 @@
     using Vector2 = SharpDX.Vector2;
     using Vector3 = SharpDX.Vector3;
     using Vector4 = SharpDX.Vector4;
-    using Editor.Assets.Engine.Core;
     using Editor.Assets.Engine.Helper;
     using Editor.Assets.Engine.Utilities;
 
@@ -163,8 +162,6 @@
             float time = 0;
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
-                watch.Stop();
-
                 time += watch.ElapsedMilliseconds;
 
                 m_view.m_debugFrames.Text = "Time: " + time.ToString();
@@ -172,8 +169,7 @@
                 m_view.m_debugFrames.Text += "\nFPS: " + m_view.m_Fps;
                 m_view.m_debugFrames.Text += "\nDelta: " + watch.ElapsedMilliseconds.ToString();
 
-                watch.Reset();
-                watch.Start();
+                watch.Restart();
             };
 
             m_IsDXInitialized = true;
@@ -329,42 +325,42 @@
         {
             Engine_Mesh obj = new Engine_Mesh();
             float hs = 0.5f;
-            obj.Vertices = new List<Vertex>{
+            obj.Vertices = new List<Engine_Vertex>{
                 // Front Face
-                new Vertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
-			    new Vertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
-			    new Vertex(+hs, +hs, -hs, 1, 0, 0, 0, 1),	//Top		Right
-			    new Vertex(+hs, -hs, -hs, 1, 1, 0, 0, 1),	//Bottom	Right
+                new Engine_Vertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
+			    new Engine_Vertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
+			    new Engine_Vertex(+hs, +hs, -hs, 1, 0, 0, 0, 1),	//Top		Right
+			    new Engine_Vertex(+hs, -hs, -hs, 1, 1, 0, 0, 1),	//Bottom	Right
 
 			    // Left Face
-			    new Vertex(-hs, -hs, +hs, 0, 1, 1, 0, 0),	//Bottom	Left
-			    new Vertex(-hs, +hs, +hs, 0, 0, 1, 0, 0),	//Top		Left
-			    new Vertex(-hs, +hs, -hs, 1, 0, 1, 0, 0),	//Top		Right
-			    new Vertex(-hs, -hs, -hs, 1, 1, 1, 0, 0),	//Bottom	Right
+			    new Engine_Vertex(-hs, -hs, +hs, 0, 1, 1, 0, 0),	//Bottom	Left
+			    new Engine_Vertex(-hs, +hs, +hs, 0, 0, 1, 0, 0),	//Top		Left
+			    new Engine_Vertex(-hs, +hs, -hs, 1, 0, 1, 0, 0),	//Top		Right
+			    new Engine_Vertex(-hs, -hs, -hs, 1, 1, 1, 0, 0),	//Bottom	Right
 
 			    // Back Face
-			    new Vertex(+hs, -hs, +hs, 0, 1, 0, 0, -1),	//Bottom	Left
-			    new Vertex(+hs, +hs, +hs, 0, 0, 0, 0, -1),	//Top		Left
-			    new Vertex(-hs, +hs, +hs, 1, 0, 0, 0, -1),	//Top		Right
-			    new Vertex(-hs, -hs, +hs, 1, 1, 0, 0, -1),	//Bottom	Right
+			    new Engine_Vertex(+hs, -hs, +hs, 0, 1, 0, 0, -1),	//Bottom	Left
+			    new Engine_Vertex(+hs, +hs, +hs, 0, 0, 0, 0, -1),	//Top		Left
+			    new Engine_Vertex(-hs, +hs, +hs, 1, 0, 0, 0, -1),	//Top		Right
+			    new Engine_Vertex(-hs, -hs, +hs, 1, 1, 0, 0, -1),	//Bottom	Right
 
 			    // Right Face
-			    new Vertex(+hs, -hs, -hs, 0, 1, -1, 0, 0),	//Bottom	Left
-			    new Vertex(+hs, +hs, -hs, 0, 0, -1, 0, 0),	//Top		Left
-			    new Vertex(+hs, +hs, +hs, 1, 0, -1, 0, 0),	//Top		Right
-			    new Vertex(+hs, -hs, +hs, 1, 1, -1, 0, 0),	//Bottom	Right
+			    new Engine_Vertex(+hs, -hs, -hs, 0, 1, -1, 0, 0),	//Bottom	Left
+			    new Engine_Vertex(+hs, +hs, -hs, 0, 0, -1, 0, 0),	//Top		Left
+			    new Engine_Vertex(+hs, +hs, +hs, 1, 0, -1, 0, 0),	//Top		Right
+			    new Engine_Vertex(+hs, -hs, +hs, 1, 1, -1, 0, 0),	//Bottom	Right
 
 			    // Top Face
-			    new Vertex(-hs, +hs, -hs, 0, 0, 0, -1, 0),	//Top		Right
-			    new Vertex(-hs, +hs, +hs, 1, 0, 0, -1, 0),	//Bottom	Right
-			    new Vertex(+hs, +hs, +hs, 1, 1, 0, -1, 0),	//Bottom	Left
-			    new Vertex(+hs, +hs, -hs, 0, 1, 0, -1, 0),	//Top		Left
+			    new Engine_Vertex(-hs, +hs, -hs, 0, 0, 0, -1, 0),	//Top		Right
+			    new Engine_Vertex(-hs, +hs, +hs, 1, 0, 0, -1, 0),	//Bottom	Right
+			    new Engine_Vertex(+hs, +hs, +hs, 1, 1, 0, -1, 0),	//Bottom	Left
+			    new Engine_Vertex(+hs, +hs, -hs, 0, 1, 0, -1, 0),	//Top		Left
 
 			    // Base Face					 	
-			    new Vertex(-hs, -hs, +hs, 1, 1, 0, 1, 0),	//Bottom	Left
-			    new Vertex(-hs, -hs, -hs, 0, 1, 0, 1, 0),	//Top		Left
-			    new Vertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
-			    new Vertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};	//Bottom	Right
+			    new Engine_Vertex(-hs, -hs, +hs, 1, 1, 0, 1, 0),	//Bottom	Left
+			    new Engine_Vertex(-hs, -hs, -hs, 0, 1, 0, 1, 0),	//Top		Left
+			    new Engine_Vertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
+			    new Engine_Vertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};	//Bottom	Right
 
             obj.Indices = new List<ushort>{
                 // Front Face
@@ -386,7 +382,7 @@
 			    20, 21, 22,
                 20, 22, 23 };
 
-            obj.VertexStride = (uint)SharpDX.Utilities.SizeOf<Vertex>();
+            obj.VertexStride = (uint)SharpDX.Utilities.SizeOf<Engine_Vertex>();
             obj.IndexStride = sizeof(int);
 
 
@@ -395,7 +391,7 @@
 
             unsafe
             {
-                fixed (Vertex* p = obj.Vertices.ToArray())
+                fixed (Engine_Vertex* p = obj.Vertices.ToArray())
                 {
                     IntPtr ptr = (IntPtr)p;
                     int byteWidth = (int)(obj.Vertices.Count * obj.VertexStride);
