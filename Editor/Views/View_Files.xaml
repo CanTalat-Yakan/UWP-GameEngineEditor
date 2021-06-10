@@ -14,7 +14,7 @@
     <Grid>
         <controls:DockPanel>
 
-            <controls:TabbedCommandBarItem Header="Project" controls:DockPanel.Dock="Top">
+            <controls:TabbedCommandBarItem Padding="0,-4,0,8" Margin="0,0,0,-8" Header="Project" controls:DockPanel.Dock="Top">
                 <AppBarButton Icon="Add" Label="Add">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
