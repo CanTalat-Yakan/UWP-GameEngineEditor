@@ -9,51 +9,48 @@
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
-    d:DesignWidth="800">
+    d:DesignWidth="500">
 
     <Grid>
-        <controls:DockPanel>
-
-            <controls:TabbedCommandBarItem Padding="0,-4,0,8" Margin="0,0,0,-8" Header="Project" controls:DockPanel.Dock="Top">
-                <AppBarButton Icon="Add" Label="Add">
-                    <AppBarButton.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutSubItem Text="Create">
-                                <MenuFlyoutItem Text="New Folder"/>
-                                <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem Text="Scene"/>
-                                <MenuFlyoutItem Text="Script"/>
-                                <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem Text="Material"/>
-                                <MenuFlyoutSubItem Text="Shader">
-                                    <MenuFlyoutItem Text="Standard"/>
-                                    <MenuFlyoutItem Text="Unlit"/>
-                                </MenuFlyoutSubItem>
-                            </MenuFlyoutSubItem>
+        <controls:TabbedCommandBarItem Padding="0,-4,0,8" Header="Project">
+            <AppBarButton Icon="Add" Label="Add">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutSubItem Text="Create">
+                            <MenuFlyoutItem Text="New Folder"/>
                             <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="Open in Explorer"/>
-                            <MenuFlyoutItem Text="Refresh"/>
-                        </MenuFlyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarSeparator/>
+                            <MenuFlyoutItem Text="Scene"/>
+                            <MenuFlyoutItem Text="Script"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Material"/>
+                            <MenuFlyoutSubItem Text="Shader">
+                                <MenuFlyoutItem Text="Standard"/>
+                                <MenuFlyoutItem Text="Unlit"/>
+                            </MenuFlyoutSubItem>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Open in Explorer"/>
+                        <MenuFlyoutItem Text="Refresh"/>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+            <AppBarSeparator/>
 
-                <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
-                <AppBarToggleButton IsChecked="True" Label="3D Models">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
-                <AppBarToggleButton IsChecked="True" Label="Add-ons">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
-            </controls:TabbedCommandBarItem>
+            <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
+            <AppBarToggleButton IsChecked="True" Label="3D Models">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            <AppBarToggleButton IsChecked="True" Label="Add-ons">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+        </controls:TabbedCommandBarItem>
 
-            <Grid>
-                <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
-            </Grid>
-        </controls:DockPanel>
+        <Grid Padding="0,32,0,0">
+            <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
+        </Grid>
     </Grid>
 </UserControl>

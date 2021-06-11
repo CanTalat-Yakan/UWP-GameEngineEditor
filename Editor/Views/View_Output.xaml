@@ -14,10 +14,8 @@
 
     <Grid>
         <!--CONTENT-->
-        <controls:DockPanel>
-
             <!--Tools-->
-            <controls:TabbedCommandBarItem Padding="0,-4,0,8" Margin="0,0,0,-8" controls:DockPanel.Dock="Top" Header="Messages">
+            <controls:TabbedCommandBarItem Padding="0,-4,0,8" Header="Messages">
                 <AppBarButton Label="Clear" Icon="Delete" 
                               Click="AppBarButton_Output_Clear"/>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Output_Collapse" IsChecked="True" Label="Collapse" Icon="List" 
@@ -41,10 +39,9 @@
             </controls:TabbedCommandBarItem>
 
             <!--Messages-->
-            <ScrollViewer x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
-                <StackPanel x:Name="x_Stackpanel_Output" Orientation="Vertical"/>
-            </ScrollViewer>
-        </controls:DockPanel>
+            <ScrollViewer Padding="0,32,0,0" x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
+            <StackPanel x:Name="x_Stackpanel_Output" Orientation="Vertical"/>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

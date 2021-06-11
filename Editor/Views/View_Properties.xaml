@@ -16,7 +16,7 @@
             <StackPanel>
                 <StackPanel Margin="8,4,0,4">
                     <Grid>
-                        <CheckBox IsChecked="True" Margin="0,0,0,-5.5"/>
+                        <CheckBox IsChecked="True" Margin="0,0,0,-4"/>
                         <TextBox Text="GameObject" Margin="24,4,4,0"/>
                     </Grid>
 
@@ -30,7 +30,7 @@
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Header="Tag" HorizontalAlignment="Stretch" Grid.Column="0">
+                        <ComboBox Header="Tag" FontSize="13.5" HorizontalAlignment="Stretch" Grid.Column="0">
                             <ComboBoxItem Tag="0" Content="Untagged" IsSelected="True"/>
                             <ComboBoxItem Tag="1" Content="MainCamera"/>
                             <ComboBoxItem Tag="2" Content="Respawn"/>
@@ -43,7 +43,7 @@
                                 <TextBlock Text="+" FontSize="28" Margin="-5,-17,-7,-10" Opacity="0.65" HorizontalAlignment="Center"/>
                             </Button.Content>
                         </Button>
-                        <ComboBox Header="Layer" HorizontalAlignment="Stretch" Grid.Column="2">
+                        <ComboBox Header="Layer" FontSize="13.5" HorizontalAlignment="Stretch" Grid.Column="2">
                             <ComboBoxItem Tag="0" Content="Default" IsSelected="True"/>
                             <ComboBoxItem Tag="1" Content="Transparent FX"/>
                             <ComboBoxItem Tag="2" Content="Ignore Raycast"/>

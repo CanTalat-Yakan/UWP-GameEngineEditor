@@ -47,13 +47,13 @@ namespace Editor.Assets.Control
 
         Grid CreateLayout(params Grid[] _panel)
         {
-            GridSplitter splitH = new GridSplitter() { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 0, -16, 0), Opacity = 0.5f };
+            GridSplitter splitH = new GridSplitter() { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 0, -16, 0), Opacity = 0.5f,CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
             Grid.SetColumn(splitH, 0);
-            GridSplitter splitH2 = new GridSplitter() { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 0, -16, 0), Opacity = 0.5f };
+            GridSplitter splitH2 = new GridSplitter() { HorizontalAlignment = HorizontalAlignment.Right, Margin = new Thickness(0, 0, -16, 0), Opacity = 0.5f, CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
             Grid.SetColumn(splitH2, 1);
-            GridSplitter splitV = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Margin = new Thickness(0, 0, 0, -16), Opacity = 0.5f };
+            GridSplitter splitV = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Margin = new Thickness(0, 0, 0, -16), Opacity = 0.5f, CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
             Grid.SetColumn(splitV, 0);
-            GridSplitter splitV2 = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Margin = new Thickness(0, 0, 0, -16), Opacity = 0.5f };
+            GridSplitter splitV2 = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Margin = new Thickness(0, 0, 0, -16), Opacity = 0.5f,  CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
             Grid.SetColumn(splitV2, 1);
 
             Grid grid = new Grid() { ColumnSpacing = 16 };
@@ -63,13 +63,13 @@ namespace Editor.Assets.Control
 
 
             Grid collumn0 = new Grid() { RowSpacing = 16 };
-            collumn0.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(3, GridUnitType.Star) });
-            collumn0.RowDefinitions.Add(new RowDefinition());
+            collumn0.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(3, GridUnitType.Star), MinHeight = 40 });
+            collumn0.RowDefinitions.Add(new RowDefinition() { MinHeight = 40 });
 
             Grid collumn1 = new Grid() { RowSpacing = 16 };
             Grid.SetColumn(collumn1, 1);
-            collumn1.RowDefinitions.Add(new RowDefinition());
-            collumn1.RowDefinitions.Add(new RowDefinition());
+            collumn1.RowDefinitions.Add(new RowDefinition() { MinHeight = 40 });
+            collumn1.RowDefinitions.Add(new RowDefinition() { MinHeight = 40 });
 
 
             Grid collumn2 = new Grid() { RowSpacing = 16 };
