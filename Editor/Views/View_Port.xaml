@@ -12,7 +12,9 @@
 
     <Grid MinHeight="1" MinWidth="1">
         <Grid Height="10000"/>
-        <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
+        <Grid BorderThickness="2" BorderBrush="Orange">
+            <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
+        </Grid>
 
         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
             <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;"/>
