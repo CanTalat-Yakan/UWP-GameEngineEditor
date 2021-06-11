@@ -32,7 +32,21 @@ namespace Editor.Assets.Control
                 }
                 _path.Text = file.Name;
             }
+        }
 
+        internal async void SelectFile(TextBlock _path)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+            picker.FileTypeFilter.Add("*");
+
+            Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                _path.Text = file.Name;
+            }
         }
 
     }
