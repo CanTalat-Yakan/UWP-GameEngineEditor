@@ -13,7 +13,7 @@
     <Page.Resources>
         <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml"/>
     </Page.Resources>
-    
+
     <Grid>
         <controls:DockPanel>
 
@@ -117,7 +117,10 @@
                     </MenuBarItem>
                 </MenuBar>
 
-                <PersonPicture x:Name="x_MenuBar_Name" Width="30" Margin="0,0,4,0" HorizontalAlignment="Right"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                    <TextBlock Text="Pre-Alpha" VerticalAlignment="Center" Opacity="0.2"/>
+                    <PersonPicture x:Name="x_MenuBar_Name" Width="30" Margin="0,0,4,0"/>
+                </StackPanel>
             </Grid>
 
             <!--STATUS -->
