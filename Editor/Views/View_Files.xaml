@@ -30,12 +30,8 @@
                                     <MenuFlyoutItem Text="Unlit"/>
                                 </MenuFlyoutSubItem>
                             </MenuFlyoutSubItem>
+                            <MenuFlyoutSeparator/>
                             <MenuFlyoutItem Text="Open in Explorer"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="Open"/>
-                            <MenuFlyoutItem Text="Delete"/>
-                            <MenuFlyoutItem Text="Rename"/>
-                            <MenuFlyoutSeparator/>
                             <MenuFlyoutItem Text="Refresh"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
