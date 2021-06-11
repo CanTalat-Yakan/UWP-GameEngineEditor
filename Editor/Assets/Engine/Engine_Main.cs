@@ -228,7 +228,7 @@
                 m_up);
 
             var proj = Matrix.PerspectiveFovLH(
-                MathUtil.DegreesToRadians(80),
+                MathUtil.DegreesToRadians(90),
                 (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight),
                 0.1f, 1000);
 
