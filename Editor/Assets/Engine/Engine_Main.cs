@@ -92,7 +92,9 @@
             var rasterizerDesc = new D3D11.RasterizerStateDescription()
             {
                 FillMode = D3D11.FillMode.Solid,
-                CullMode = D3D11.CullMode.Back
+                CullMode = D3D11.CullMode.Back,
+                IsAntialiasedLineEnabled = true,
+                IsMultisampleEnabled = true,
             };
 
             m_deviceContext = m_device.ImmediateContext2;
