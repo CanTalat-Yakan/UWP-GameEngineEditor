@@ -117,10 +117,8 @@
                     </MenuBarItem>
                 </MenuBar>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
-                    <TextBlock Text="Pre-Alpha" VerticalAlignment="Center" Opacity="0.2"/>
-                    <PersonPicture x:Name="x_MenuBar_Name" Width="30" Margin="0,0,4,0"/>
-                </StackPanel>
+                    <TextBlock Text="Early Access" VerticalAlignment="Center" Opacity="0.2" HorizontalAlignment="Center"/>
+                    <PersonPicture x:Name="x_MenuBar_Name" Width="30" Margin="0,0,4,0" HorizontalAlignment="Right"/>
             </Grid>
 
             <!--STATUS -->
@@ -133,8 +131,6 @@
                                             Click="AppBarToggleButton_Status_Pause_Click"/>
                         <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
                                       Click="AppBarButton_Status_Forward_Click"/>
-                        <AppBarButton x:Name="x_AppBarButton_Status_Repeat" Icon="RepeatAll" Label="Repeat" IsEnabled="False"
-                                      Click="AppBarButton_Status_Repeat_Click"/>
                     </CommandBar.PrimaryCommands>
 
                     <CommandBar.SecondaryCommands>
