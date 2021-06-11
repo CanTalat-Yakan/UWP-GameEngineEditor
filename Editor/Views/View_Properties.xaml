@@ -129,7 +129,7 @@
                 <Grid>
                 </Grid>
                 <Grid>
-                    <controls:Expander Header="ExampleScript" HorizontalContentAlignment="Stretch" IsExpanded="{Binding ElementName=x_ChckBx_ExpanderExample, Path=IsChecked}" IsEnabled="{Binding ElementName=x_ChckBx_ExpanderExample, Path=IsChecked}">
+                    <controls:Expander Header="ExampleScript" HorizontalContentAlignment="Stretch" IsExpanded="{Binding ElementName=x_CheckBox_ExpanderExample, Path=IsChecked}" IsEnabled="{Binding ElementName=x_ChckBx_ExpanderExample, Path=IsChecked}">
                         <!--//Content-->
                         <StackPanel Spacing="10" Margin="10,4,0,20">
                             <!--COLOR-->
@@ -148,7 +148,7 @@
                             <!--FLOAT-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Float:" Width="80" VerticalAlignment="Bottom"/>
-                                <my:NumberBox Text="0" SpinButtonPlacementMode="Inline"/>
+                                <my:NumberBox Text="0" SpinButtonPlacementMode="Compact"/>
                             </StackPanel>
                             <!--STRING-->
                             <StackPanel Orientation="Horizontal">
@@ -171,8 +171,8 @@
                             <!--SLIDER-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Slider:" Width="80" VerticalAlignment="Bottom"/>
-                                <Slider x:Name="x_Sldr_Example" Width="192"/>
-                                <TextBlock x:Name="x_TxtBlck_Example" Padding="4,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=x_Sldr_Example, Path=Value}"/>
+                                <Slider x:Name="x_Slider_Example" Width="192" Margin="0,0,0,-5.5"/>
+                                <TextBlock x:Name="x_TextBlock_Example" Padding="4,0,0,0" VerticalAlignment="Center" Text="{Binding ElementName=x_Slider_Example, Path=Value}"/>
                             </StackPanel>
                             <!--BOOL-->
                             <StackPanel Orientation="Horizontal">
@@ -182,11 +182,11 @@
                             <!--TEXTURE-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Texture:" Width="80" VerticalAlignment="Bottom"/>
-                                <Grid Width="48" Height="48" BorderThickness="1" BorderBrush="{ThemeResource SystemControlHighlightAccentBrush}">
+                                <Grid Width="48" Height="48" BorderThickness="1" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                                     <Image Name="Img_SelectTexture" Stretch="UniformToFill"/>
                                     <AppBarButton Click="AppBarButton_Click_SelectImagePath"/>
                                 </Grid>
-                                <TextBlock x:Name="TxtBlck_TexturePath" Margin="4,0,0,0" Text="None" VerticalAlignment="Bottom"/>
+                                <TextBlock x:Name="x_TextBlock_TexturePath" Margin="4,0,0,0" Text="None" VerticalAlignment="Bottom"/>
                             </StackPanel>
                             <!--ENUM-->
                             <StackPanel Orientation="Horizontal">
@@ -209,8 +209,8 @@
                                     <!--REFERENCE-->
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="Reference:" Width="80" VerticalAlignment="Bottom"/>
-                                        <Button Content="..."/>
-                                        <TextBlock Margin="4,0,0,0" Text="None(Type)" VerticalAlignment="Bottom"/>
+                                        <Button Content="..." Click="AppBarButton_Click_SelectFilePath"/>
+                                        <TextBlock x:Name="x_TextBlock_FilePath" Margin="4,0,0,0" Text="None(Type)" VerticalAlignment="Bottom"/>
                                     </StackPanel>
                                     <!--BUTTON-->
                                     <StackPanel Orientation="Horizontal">
@@ -221,11 +221,16 @@
                             </controls:Expander>
                         </StackPanel>
                     </controls:Expander>
-                    <CheckBox x:Name="x_ChckBx_ExpanderExample" IsChecked="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,-80,0"/>
+                    <CheckBox x:Name="x_CheckBox_ExpanderExample" IsChecked="True" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,-80,0"/>
                 </Grid>
 
-                <Button Content="Add Component" Margin="10,10,10,10" HorizontalAlignment="Center"/>
-
+                <Button Content="Add Component" Margin="10,10,10,10" HorizontalAlignment="Center">
+                    <Button.Flyout>
+                        <Flyout>
+                            <AutoSuggestBox/>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
             </StackPanel>
         </ScrollViewer>
 

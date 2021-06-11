@@ -59,7 +59,8 @@ namespace Editor
         }
 
 
-        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e) { m_Control.SelectImage(Img_SelectTexture, TxtBlck_TexturePath); }
+        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e) { m_Control.SelectImage(Img_SelectTexture, x_TextBlock_TexturePath); }
+        void AppBarButton_Click_SelectFilePath(object sender, RoutedEventArgs e) { m_Control.SelectFile(x_TextBlock_FilePath); }
         void FirePropertyChanged([CallerMemberName] string memberName = null) { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName)); }
     }
 }
