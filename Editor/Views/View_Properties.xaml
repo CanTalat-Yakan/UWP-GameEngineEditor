@@ -13,7 +13,7 @@
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel Spacing="3">
+            <StackPanel>
                 <StackPanel Margin="8,4,0,4">
                     <Grid>
                         <CheckBox IsChecked="True" Margin="0,0,0,-5.5"/>
@@ -182,7 +182,7 @@
                             <!--TEXTURE-->
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Texture:" Width="80" VerticalAlignment="Bottom"/>
-                                <Grid Width="48" Height="48" BorderThickness="1" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumBrush}">
+                                <Grid Width="48" Height="48" BorderThickness="1" CornerRadius="2" BorderBrush="{ThemeResource SystemControlForegroundBaseMediumBrush}">
                                     <Image Name="Img_SelectTexture" Stretch="UniformToFill"/>
                                     <AppBarButton Click="AppBarButton_Click_SelectImagePath"/>
                                 </Grid>
