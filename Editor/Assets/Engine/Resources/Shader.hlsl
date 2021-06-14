@@ -15,6 +15,9 @@ struct appdata
     float3 normal : NORMAL;
 };
 
+Texture2D ObjTexture : register(t0);
+SamplerState ObjSamplerState : register(s0);
+
 struct VS_OUTPUT
 {
     float4 pos : SV_POSITION;
@@ -39,5 +42,7 @@ VS_OUTPUT VS(appdata v)
 
 float4 PS(VS_OUTPUT i) : SV_TARGET
 {
-    return float4(i.worldPos, 1);
+    float4 col = ObjTexture.Sample(ObjSamplerState, i.uv);
+    
+    return col + float4(i.worldPos, 1);
 }
