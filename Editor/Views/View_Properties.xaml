@@ -61,7 +61,7 @@
                 <NavigationViewItemSeparator/>
 
                 <!--TRANSFORM-->
-                <Grid>
+                <Grid Margin="0,0,0,4">
                     <controls:Expander Header="Transform" IsExpanded="True" HorizontalContentAlignment="Stretch">
 
                         <!--//Content-->
