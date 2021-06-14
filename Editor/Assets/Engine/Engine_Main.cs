@@ -62,8 +62,6 @@
         internal bool m_Ctrl = false;
         internal bool m_C = false;
 
-        internal int m_frames = 0;
-
         static readonly string SHADER_FILE = @"Assets//Engine//Resources//Shader.hlsl";
 
 
@@ -160,16 +158,22 @@
 
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) => { this.RenderScene(); };
 
+            DateTime now = DateTime.Now;
+            DateTime d = DateTime.Now;
             Stopwatch watch = new Stopwatch();
-            float time = 0;
+            float time = 0, delta = 0;
+            int frames = 0, fps = 0, tmpFps = 0;
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
                 time += watch.ElapsedMilliseconds;
+                ++fps;
+                if (now.Second != DateTime.Now.Second) { tmpFps = fps; fps = 0; now = DateTime.Now; }
+                if (frames % 24 == 0) delta = MathF.Round((float)(watch.Elapsed.TotalMilliseconds));
 
                 m_view.m_debugFrames.Text = "Time: " + time.ToString();
-                m_view.m_debugFrames.Text += "\nFrames: " + m_frames++.ToString();
-                m_view.m_debugFrames.Text += "\nFPS: " + m_view.m_Fps;
-                m_view.m_debugFrames.Text += "\nDelta: " + watch.ElapsedMilliseconds.ToString();
+                m_view.m_debugFrames.Text += "\nFrames: " + frames++.ToString();
+                m_view.m_debugFrames.Text += "\nFPS: " + tmpFps.ToString();
+                m_view.m_debugFrames.Text += "\nDelta: " + delta.ToString();
 
                 watch.Restart();
             };
@@ -279,14 +283,16 @@
 
             m_deviceContext.VertexShader.SetConstantBuffer(0, m_viewConstantsBuffer);
 
-            CreateCube(Vector3.Zero);
+            CreateCube(Vector3.Zero + Vector3.Right);
+            CreateCube(Vector3.Zero + Vector3.ForwardLH);
+            CreateCube(Vector3.One);
             CreateCube(Vector3.Right * 2);
             CreateCube(new Vector3(0, 2, 4));
         }
 
         void RenderScene()
         {
-            if (m_C)
+            if (m_C && m_IsRightButtonPressed)
                 CreateCube(new Vector3(new Random().Next(-10, 10), new Random().Next(-10, 10), new Random().Next(-10, 10)));
 
             RecreateViewConstants();

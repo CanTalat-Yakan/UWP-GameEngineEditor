@@ -38,17 +38,6 @@ namespace Editor
             PointerMoved += ViewPort_PointerMoved;
             Window.Current.CoreWindow.KeyDown += Grid_KeyDown;
             Window.Current.CoreWindow.KeyUp += Grid_KeyUp;
-
-            DispatcherTimer timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += FPS;
-            timer.Start();
-        }
-        int m_tmpFrames;
-        internal int m_Fps;
-        void FPS(object sender, object e)
-        {
-            m_Fps = m_swapChainRenderer.m_frames - m_tmpFrames;
-            m_tmpFrames = m_swapChainRenderer.m_frames;
         }
 
         void SwapChain_Init(object sender, RoutedEventArgs e)

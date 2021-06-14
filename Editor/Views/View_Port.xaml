@@ -10,7 +10,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid MinHeight="1" MinWidth="1">
+    <Grid>
         <Grid Height="10000"/>
         <Grid BorderThickness="2" BorderBrush="Orange">
             <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
