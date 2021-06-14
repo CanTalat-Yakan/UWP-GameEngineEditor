@@ -58,13 +58,13 @@ namespace Editor.Assets.Control
 
             Grid grid = new Grid() { ColumnSpacing = 16 };
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(6, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1.4d, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190, GridUnitType.Pixel) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(310, GridUnitType.Pixel) });
 
 
             Grid collumn0 = new Grid() { RowSpacing = 16 };
             collumn0.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(3, GridUnitType.Star), MinHeight = 40 });
-            collumn0.RowDefinitions.Add(new RowDefinition() { MinHeight = 40 });
+            collumn0.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(200, GridUnitType.Pixel), MinHeight = 40 });
 
             Grid collumn1 = new Grid() { RowSpacing = 16 };
             Grid.SetColumn(collumn1, 1);
