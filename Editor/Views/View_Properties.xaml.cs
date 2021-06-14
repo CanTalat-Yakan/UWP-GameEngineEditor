@@ -32,21 +32,21 @@ namespace Editor
         internal SharpDX.Vector3 Pos
         {
             get { return m_pos = new SharpDX.Vector3((float)x_NumberBox_Position_X.Value, (float)x_NumberBox_Position_Y.Value, (float)x_NumberBox_Position_Z.Value); }
-            set { x_NumberBox_Position_X.Value = value.X; x_NumberBox_Position_Y.Value = value.Y; x_NumberBox_Position_Z.Value = value.Z; }
+            set { x_NumberBox_Position_X.Value = Math.Round(value.X, 5); x_NumberBox_Position_Y.Value = Math.Round(value.Y, 5); x_NumberBox_Position_Z.Value = Math.Round(value.Z, 5); }
         }
 
         SharpDX.Vector3 m_rot;
         internal SharpDX.Vector3 Rot
         {
             get { return m_rot = new SharpDX.Vector3((float)x_NumberBox_Rotation_X.Value, (float)x_NumberBox_Rotation_Y.Value, (float)x_NumberBox_Rotation_Z.Value); }
-            set { x_NumberBox_Rotation_X.Value = value.X; x_NumberBox_Rotation_Y.Value = value.Y; x_NumberBox_Rotation_Z.Value = value.Z; }
+            set { x_NumberBox_Rotation_X.Value = Math.Round(value.X, 5); x_NumberBox_Rotation_Y.Value = Math.Round(value.Y, 5); x_NumberBox_Rotation_Z.Value = Math.Round(value.Z, 5); }
         }
 
         SharpDX.Vector3 m_scale;
         internal SharpDX.Vector3 Sca
         {
             get { return m_scale = new SharpDX.Vector3((float)x_NumberBox_Scale_X.Value, (float)x_NumberBox_Scale_Y.Value, (float)x_NumberBox_Scale_Z.Value); }
-            set { x_NumberBox_Scale_X.Value = value.X; x_NumberBox_Scale_Y.Value = value.Y; x_NumberBox_Scale_Z.Value = value.Z; }
+            set { x_NumberBox_Scale_X.Value = Math.Round(value.X, 4); x_NumberBox_Scale_Y.Value = Math.Round(value.Y, 4); x_NumberBox_Scale_Z.Value = Math.Round(value.Z, 4); }
         }
 
 

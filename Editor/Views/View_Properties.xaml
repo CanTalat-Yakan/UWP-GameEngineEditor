@@ -144,6 +144,7 @@
                                         </Style>
                                     </controls:ColorPickerButton.ColorPickerStyle>
                                 </controls:ColorPickerButton>
+                                <!--<controls:EyedropperToolButton Background="Transparent" Margin="4,0,0,0" Width="20" Padding="-10,0,0,0"></controls:EyedropperToolButton>-->
                             </StackPanel>
                             <!--FLOAT-->
                             <StackPanel Orientation="Horizontal">
