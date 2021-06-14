@@ -468,16 +468,16 @@
 
             m_swapChain.ResizeBuffers(
               m_swapChain.Description.BufferCount,
-              (int)e.NewSize.Width,
-              (int)e.NewSize.Height,
+              Math.Max(1,(int)e.NewSize.Width),
+              Math.Max(1,(int)e.NewSize.Height),
               m_swapChain.Description1.Format,
               m_swapChain.Description1.Flags);
 
             m_backBufferTexture = D3D11.Resource.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
             m_backBufferView = new D3D11.RenderTargetView(m_device, m_backBufferTexture);
 
-            m_depthStencilTextureDescription.Width = (int)e.NewSize.Width;
-            m_depthStencilTextureDescription.Height = (int)e.NewSize.Height;
+            m_depthStencilTextureDescription.Width = Math.Max(1, (int)e.NewSize.Width);
+            m_depthStencilTextureDescription.Height = Math.Max(1, (int)e.NewSize.Height);
             using (m_depthStencilTexture = new D3D11.Texture2D(m_device, m_depthStencilTextureDescription))
                 m_depthStencilView = new D3D11.DepthStencilView(m_device, m_depthStencilTexture);
 

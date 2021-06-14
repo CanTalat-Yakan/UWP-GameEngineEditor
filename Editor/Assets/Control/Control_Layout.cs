@@ -16,7 +16,7 @@ namespace Editor.Assets.Control
     {
         public GridLength Length = new GridLength(1, GridUnitType.Star);
         public double MinWidth = 1;
-        public double MinHeight = 1;
+        public double MinHeight = 40;
         public UIElement Content;
     }
     internal class Control_Layout
@@ -75,7 +75,7 @@ namespace Editor.Assets.Control
         Grid CreateLayout1(params Grid[] _panel)
         {
             var a = PairVertical(
-                new GridDataTemeplate() { Content = _panel[0] },
+                new GridDataTemeplate() { Content = _panel[0], MinHeight = 44 },
                 new GridDataTemeplate() { Content = _panel[1], Length = new GridLength(200, GridUnitType.Pixel) });
 
             var b = PairVertical(
@@ -102,7 +102,8 @@ namespace Editor.Assets.Control
                 HorizontalAlignment = HorizontalAlignment.Right,
                 Margin = new Thickness(0, 0, -16, 0),
                 Opacity = 0.5f,
-                CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover
+                CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover,
+                ResizeBehavior = GridSplitter.GridResizeBehavior.BasedOnAlignment
             };
 
             grid.Children.Add(_left.Content);
@@ -115,10 +116,39 @@ namespace Editor.Assets.Control
         }
         Grid PairHorizontal(GridDataTemeplate _left, GridDataTemeplate _center, GridDataTemeplate _right)
         {
-            var a = PairHorizontal(_left, _center);
-            var b = PairHorizontal(new GridDataTemeplate() { Content = a }, _right);
+            Grid grid = new Grid() { ColumnSpacing = 16 };
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = _left.Length, MinWidth = _left.MinWidth });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = _center.Length, MinWidth = _center.MinWidth });
+            grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = _right.Length, MinWidth = _right.MinWidth });
 
-            return b;
+            GridSplitter splitH = new GridSplitter()
+            {
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = new Thickness(0, 0, -16, 0),
+                Opacity = 0.5f,
+                CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover,
+                ResizeBehavior = GridSplitter.GridResizeBehavior.CurrentAndNext,
+            };
+            GridSplitter splitH2 = new GridSplitter()
+            {
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Margin = new Thickness(0, 0, -16, 0),
+                Opacity = 0.5f,
+                CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover,
+                ResizeBehavior = GridSplitter.GridResizeBehavior.PreviousAndNext,
+            };
+            Grid.SetColumn(splitH2, 1);
+
+            grid.Children.Add(_left.Content);
+            grid.Children.Add(_center.Content);
+            Grid.SetColumn((FrameworkElement)_center.Content, 1);
+            grid.Children.Add(_right.Content);
+            Grid.SetColumn((FrameworkElement)_right.Content, 2);
+            grid.Children.Add(splitH);
+            grid.Children.Add(splitH2);
+
+
+            return grid;
         }
         Grid PairVertical(GridDataTemeplate _top, GridDataTemeplate _bottom)
         {
