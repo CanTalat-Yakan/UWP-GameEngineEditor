@@ -47,9 +47,6 @@
                         <MenuFlyoutItem Text="Play" Icon="Play"/>
                         <MenuFlyoutItem Text="Pause" Icon="Pause"/>
                         <MenuFlyoutItem Text="Step" Icon="Forward"/>
-                        <MenuFlyoutItem Text="Repeat" Icon="RepeatAll"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Settings"/>
                     </MenuBarItem>
 
                     <MenuBarItem Title="Assets">
@@ -57,7 +54,6 @@
                             <MenuFlyoutItem Text="New Folder"/>
                             <MenuFlyoutSeparator/>
                             <MenuFlyoutItem Text="C# Script"/>
-                            <MenuFlyoutSeparator/>
                             <MenuFlyoutSubItem Text="Shader">
                                 <MenuFlyoutItem Text="Unlit"/>
                                 <MenuFlyoutItem Text="Standard"/>
@@ -102,6 +98,16 @@
                         <MenuFlyoutItem Text="Camera"/>
                         <MenuFlyoutItem Text="Mesh"/>
                         <MenuFlyoutItem Text="Light"/>
+                    </MenuBarItem>
+
+                    <MenuBarItem Title="View">
+                        <MenuFlyoutSubItem Text="Layout">
+                            <my:RadioMenuFlyoutItem Text="1" IsChecked="True"/>
+                            <my:RadioMenuFlyoutItem Text="2"/>
+                            <my:RadioMenuFlyoutItem Text="3"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Add..."/>
                     </MenuBarItem>
 
                     <MenuBarItem Title="Help">
