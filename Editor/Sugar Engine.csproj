@@ -239,6 +239,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HelixToolkit">
+      <Version>2.16.1</Version>
+    </PackageReference>
+    <PackageReference Include="HelixToolkit.UWP">
+      <Version>2.16.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
     </PackageReference>
