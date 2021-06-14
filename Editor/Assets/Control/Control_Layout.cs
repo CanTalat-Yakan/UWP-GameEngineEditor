@@ -16,6 +16,7 @@ namespace Editor.Assets.Control
     {
         public string Header;
         public object Content;
+        public Symbol Symbol;
     }
     internal class Control_Layout
     {
@@ -35,12 +36,12 @@ namespace Editor.Assets.Control
             m_main = _main;
 
             m_GridContent = CreateLayout(
-                Wrap(new STabItem() { Header = "Viewport", Content = m_ViewPort = _port },
-                     new STabItem() { Header = "Settings", Content = m_ViewSettings = _settings }),
-                Wrap(new STabItem() { Header = "Output", Content = m_ViewOutput = _output }),
-                Wrap(new STabItem() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy }),
-                Wrap(new STabItem() { Header = "Files", Content = m_ViewFiles = _files }),
-                Wrap(new STabItem() { Header = "Properties", Content = m_ViewProperties = _properties }));
+                Wrap(new STabItem() { Header = "Viewport", Content = m_ViewPort = _port, Symbol = Symbol.View },
+                     new STabItem() { Header = "Settings", Content = m_ViewSettings = _settings, Symbol = Symbol.Setting }),
+                Wrap(new STabItem() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message }),
+                Wrap(new STabItem() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
+                Wrap(new STabItem() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
+                Wrap(new STabItem() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
 
             _content.Children.Add(m_GridContent);
         }
@@ -106,10 +107,10 @@ namespace Editor.Assets.Control
         Grid Wrap(params STabItem[] _i)
         {
             Grid grid = new Grid();
-            TabView tabView = new TabView() { CloseButtonOverlayMode = TabViewCloseButtonOverlayMode.OnPointerOver };
+            TabView tabView = new TabView() { CloseButtonOverlayMode = TabViewCloseButtonOverlayMode.Auto, TabWidthMode = TabViewWidthMode.Compact };
             foreach (STabItem p in _i)
             {
-                TabViewItem item = new TabViewItem() { Header = p.Header, Content = p.Content };
+                TabViewItem item = new TabViewItem() { Header = p.Header, Content = p.Content, IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = p.Symbol } };
                 tabView.TabItems.Add(item);
             }
             grid.Children.Add(tabView);
