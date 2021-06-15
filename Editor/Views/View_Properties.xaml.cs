@@ -28,6 +28,7 @@ namespace Editor
         internal Control_Properties m_Control;
         internal Microsoft.Toolkit.Uwp.UI.Controls.ColorPickerButton m_Color;
 
+        #region Properties
         SharpDX.Vector3 m_pos;
         internal SharpDX.Vector3 Pos
         {
@@ -48,6 +49,7 @@ namespace Editor
             get { return m_scale = new SharpDX.Vector3((float)x_NumberBox_Scale_X.Value, (float)x_NumberBox_Scale_Y.Value, (float)x_NumberBox_Scale_Z.Value); }
             set { x_NumberBox_Scale_X.Value = Math.Round(value.X, 4); x_NumberBox_Scale_Y.Value = Math.Round(value.Y, 4); x_NumberBox_Scale_Z.Value = Math.Round(value.Z, 4); }
         }
+        #endregion
 
 
         public View_Properties(View_Main _main)
@@ -56,6 +58,21 @@ namespace Editor
 
             m_Control = new Control_Properties();
             m_Color = x_ColorPickerButton;
+
+
+            List<Grid> collection = new List<Grid>();
+            collection.Add(m_Control.CreateColorButton());
+            collection.Add(m_Control.CreateNumberInput());
+            collection.Add(m_Control.CreateTextInput());
+            collection.Add(m_Control.CreateVec2Input());
+            collection.Add(m_Control.CreateVec3Input());
+            collection.Add(m_Control.CreateSlider());
+            collection.Add(m_Control.CreateBool());
+            collection.Add(m_Control.CreateTextureSlot());
+            collection.Add(m_Control.CreateReferenceSlot());
+            collection.Add(m_Control.CreateHeader());
+            collection.Add(m_Control.WrapExpander(m_Control.CreateEvent()));
+            x_StackPanel_Properties.Children.Add(m_Control.CreateScript("Another Example", collection.ToArray()));
         }
 
 
