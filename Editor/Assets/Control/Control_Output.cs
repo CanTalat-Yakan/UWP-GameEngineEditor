@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -62,6 +64,14 @@ namespace Editor.Assets.Control
         void SetStatus(SMessageInfo _m)
         {
             m_status.Text = _m.Message;
+        }
+
+        async void OpenMessage(string _path)
+        {
+            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(_path);
+
+            if (file != null)
+                await Launcher.LaunchFileAsync(file);
         }
 
         UIElement CreateMessage(DateTime _d, SMessageInfo _m, int? _i)
