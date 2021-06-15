@@ -36,6 +36,7 @@ namespace Editor
             Loaded += SwapChain_Init;
 
             PointerMoved += ViewPort_PointerMoved;
+            PointerExited += ViewPort_PointerExited;
             Window.Current.CoreWindow.KeyDown += Grid_KeyDown;
             Window.Current.CoreWindow.KeyUp += Grid_KeyUp;
         }
@@ -58,6 +59,7 @@ namespace Editor
 
             e.Handled = true;
         }
+        void ViewPort_PointerExited(object sender, PointerRoutedEventArgs e) { m_swapChainRenderer.m_IsRightButtonPressed = false; }
         void Grid_KeyDown(CoreWindow sender, KeyEventArgs e)
         {
             if (e.VirtualKey == Windows.System.VirtualKey.W) m_swapChainRenderer.m_W = true;

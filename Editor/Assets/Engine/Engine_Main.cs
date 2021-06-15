@@ -326,8 +326,6 @@
                 }
             }
             m_swapChain.Present(0, DXGI.PresentFlags.None);
-
-            m_IsRightButtonPressed = false;
         }
 
 
