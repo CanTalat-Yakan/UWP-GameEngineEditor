@@ -118,7 +118,7 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        internal Grid CreateSlider(string _header = "Slider", float _value = 10)
+        internal Grid CreateSlider(string _header = "Slider", float _value = 0)
         {
             Grid grid = new Grid();
             StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
@@ -198,7 +198,7 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        internal Grid CreateColorButton(string _header = "Color", byte r = 120, byte g = 180, byte b = 210, byte a = 255)
+        internal Grid CreateColorButton(string _header = "Color", byte r = 0, byte g = 0, byte b = 0, byte a = 0)
         {
             Grid grid = new Grid();
             StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
