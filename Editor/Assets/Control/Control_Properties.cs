@@ -56,163 +56,106 @@ namespace Editor.Assets.Control
             }
         }
 
-        internal Grid CreateNumberInput(string _header = "Float", float _number = 0)
+
+
+        internal Grid WrapProperty(string _header, params UIElement[] _content)
         {
             Grid grid = new Grid();
             StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
             TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
-            NumberBox numInput = new NumberBox() { Value = _number, SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Compact };
 
             stack.Children.Add(header);
-            stack.Children.Add(numInput);
+            foreach (var item in _content)
+                stack.Children.Add(item);
             grid.Children.Add(stack);
 
             return grid;
+        }
+
+        internal Grid CreateNumberInput(string _header = "Float", float _number = 0)
+        {
+            NumberBox numInput = new NumberBox() { Value = _number, SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Compact };
+
+            return WrapProperty(_header, numInput);
         }
 
         internal Grid CreateTextInput(string _header = "String", string _text = "Example")
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             TextBox textInput = new TextBox() { Text = _text, MaxWidth = 212 };
 
-            stack.Children.Add(header);
-            stack.Children.Add(textInput);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, textInput);
         }
 
         internal Grid CreateVec2Input(string _header = "Vector2", float _number = 0, float _number2 = 0)
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             NumberBox numInput = new NumberBox() { Value = _number, Margin = new Thickness(0, 0, 4, 0) };
             NumberBox num2Input = new NumberBox() { Value = _number2, Margin = new Thickness(0, 0, 4, 0) };
 
-            stack.Children.Add(header);
-            stack.Children.Add(numInput);
-            stack.Children.Add(num2Input);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, numInput, num2Input);
         }
 
         internal Grid CreateVec3Input(string _header = "Vector3", float _number = 0, float _number2 = 0, float _number3 = 0)
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             NumberBox numInput = new NumberBox() { Value = _number, Margin = new Thickness(0, 0, 4, 0) };
             NumberBox num2Input = new NumberBox() { Value = _number2, Margin = new Thickness(0, 0, 4, 0) };
             NumberBox num3Input = new NumberBox() { Value = _number3, Margin = new Thickness(0, 0, 4, 0) };
 
-            stack.Children.Add(header);
-            stack.Children.Add(numInput);
-            stack.Children.Add(num2Input);
-            stack.Children.Add(num3Input);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, numInput, num2Input, num3Input);
         }
 
         internal Grid CreateSlider(string _header = "Slider", float _value = 0)
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             Slider numInput = new Slider() { Value = _value, Width = 200, Margin = new Thickness(0, 0, 0, -5.5) };
             TextBlock numPreview = new TextBlock() { Padding = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Center };
 
-            stack.Children.Add(header);
-            stack.Children.Add(numInput);
-            stack.Children.Add(numPreview);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, numInput, numPreview);
         }
 
         internal Grid CreateBool(string _header = "Bool", bool _value = false)
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             CheckBox check = new CheckBox() { IsChecked = _value, Margin = new Thickness(0, 0, 0, -5.5) };
 
-            stack.Children.Add(header);
-            stack.Children.Add(check);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, check);
         }
 
         internal Grid CreateTextureSlot(string _header = "Texture")
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
             Grid container = new Grid() { Width = 48, Height = 48, BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(2), BorderBrush = (Brush)Application.Current.Resources["SystemControlForegroundBaseMediumBrush"] };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             Image img = new Image() { Stretch = Stretch.UniformToFill };
             AppBarButton button = new AppBarButton() { };
             TextBlock path = new TextBlock() { Text = "None", Margin = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Bottom };
 
             container.Children.Add(img);
             container.Children.Add(button);
-            stack.Children.Add(header);
-            stack.Children.Add(container);
-            stack.Children.Add(path);
-            grid.Children.Add(stack);
 
-            return grid;
+            return WrapProperty(_header, container, path);
         }
 
         internal Grid CreateReferenceSlot(string _header = "Reference")
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             Button button = new Button() { Content = "..." };
             TextBlock reference = new TextBlock() { Text = "None(type)", Margin = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Bottom };
 
-            stack.Children.Add(header);
-            stack.Children.Add(button);
-            stack.Children.Add(reference);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, button, reference);
         }
 
         internal Grid CreateEvent(string _header = "Button", string _button = "Event")
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             Button button = new Button() { Content = _button };
 
-            stack.Children.Add(header);
-            stack.Children.Add(button);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, button);
         }
 
         internal Grid CreateColorButton(string _header = "Color", byte r = 0, byte g = 0, byte b = 0, byte a = 0)
         {
-            Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal };
-            TextBlock header = new TextBlock() { Text = _header + ":", Width = 80, VerticalAlignment = VerticalAlignment.Bottom };
             Windows.UI.Color col = new Windows.UI.Color();
             col.R = r; col.G = g; col.B = b; col.A = a;
             ColorPickerButton colbutton = new ColorPickerButton() { SelectedColor = col };
 
-            stack.Children.Add(header);
-            stack.Children.Add(colbutton);
-            grid.Children.Add(stack);
-
-            return grid;
+            return WrapProperty(_header, colbutton);
         }
+
+
 
         internal Grid CreateHeader(string _header = "Header")
         {
