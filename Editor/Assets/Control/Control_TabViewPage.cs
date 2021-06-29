@@ -10,6 +10,8 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using TabView = Microsoft.UI.Xaml.Controls.TabView;
+using TabViewItem = Microsoft.UI.Xaml.Controls.TabViewItem;
 namespace Editor.Assets.Control
 {
     public class TabViewItemDataTemplate

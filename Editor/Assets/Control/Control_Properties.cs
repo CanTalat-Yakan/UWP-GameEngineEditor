@@ -136,7 +136,7 @@ namespace Editor.Assets.Control
         internal Grid CreateReferenceSlot(string _header = "Reference")
         {
             Button button = new Button() { Content = "..." };
-            TextBlock reference = new TextBlock() { Text = "None(type)", Margin = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Bottom };
+            TextBlock reference = new TextBlock() { Text = "None (type)", Margin = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Bottom };
 
             return WrapProperty(_header, button, reference);
         }
