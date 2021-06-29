@@ -298,10 +298,10 @@
             RecreateViewConstants();
 
 
-            Windows.UI.Color col = m_view.m_main.m_Layout.m_ViewProperties.m_Color.SelectedColor;
+            //Windows.UI.Color col = m_view.m_main.m_Layout.m_ViewProperties.m_Color.SelectedColor;
             m_deviceContext.ClearRenderTargetView(
-                m_backBufferView,
-                new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1)); //new RawColor4(0.4f, 0.74f, 0.86f, 1));
+                m_backBufferView, new RawColor4(0.4f, 0.74f, 0.86f, 1));
+                //new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1)); //new RawColor4(0.4f, 0.74f, 0.86f, 1));
 
             m_deviceContext.ClearDepthStencilView(m_depthStencilView, D3D11.DepthStencilClearFlags.Depth, 1f, 0);
 
