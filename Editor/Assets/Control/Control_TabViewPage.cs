@@ -28,7 +28,7 @@ namespace Editor.Assets.Control
         {
             m_main = _main;
 
-            m_TabView = new TabView() { TabWidthMode = TabViewWidthMode.Compact, CloseButtonOverlayMode = TabViewCloseButtonOverlayMode.Auto, IsAddTabButtonVisible = false };
+            m_TabView = new TabView() { TabWidthMode = TabViewWidthMode.Equal, CloseButtonOverlayMode = TabViewCloseButtonOverlayMode.Auto, IsAddTabButtonVisible = false };
             m_TabView.AddTabButtonClick += TabView_AddButtonClick;
             //m_TabView.TabCloseRequested += TabView_TabCloseRequested;
 

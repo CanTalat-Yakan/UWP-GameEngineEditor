@@ -36,13 +36,20 @@ namespace Editor.Assets.Control
         {
             m_main = _main;
 
-            m_GridContent = CreateLayout1(
-                Wrap(new TabViewItemDataTemplate() { Header = "Viewport", Content = m_ViewPort = _port, Symbol = Symbol.View },
-                     new TabViewItemDataTemplate() { Header = "Settings", Content = m_ViewSettings = _settings, Symbol = Symbol.Setting }),
-                Wrap(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message }),
-                Wrap(new TabViewItemDataTemplate() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
-                Wrap(new TabViewItemDataTemplate() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
-                Wrap(new TabViewItemDataTemplate() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
+            m_GridContent = CreateLayoutNew(
+                WrapGrid(m_ViewPort = _port),
+                WrapInTabView(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message }, 
+                    new TabViewItemDataTemplate() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
+                WrapGrid(m_ViewHierarchy = _hierarchy),
+                WrapGrid(m_ViewProperties = _properties));
+
+            //m_GridContent = CreateLayout1(
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Viewport", Content = m_ViewPort = _port, Symbol = Symbol.View },
+            //         new TabViewItemDataTemplate() { Header = "Settings", Content = m_ViewSettings = _settings, Symbol = Symbol.Setting }),
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message }),
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
 
             //m_GridContent = CreateLayout2(
             //    Wrap(new TabViewItemDataTemplate() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
@@ -56,22 +63,6 @@ namespace Editor.Assets.Control
             _content.Children.Add(m_GridContent);
         }
 
-        Grid CreateLayout2(params Grid[] _panel)
-        {
-            var a = PairHorizontal(
-                new GridDataTemeplate() { Content = _panel[0], Length = new GridLength(190, GridUnitType.Pixel) },
-                new GridDataTemeplate() { Content = _panel[1] });
-
-            var b = PairVertical(
-                new GridDataTemeplate() { Content = a },
-                new GridDataTemeplate() { Content = _panel[2], Length = new GridLength(200, GridUnitType.Pixel) });
-
-            var c = PairHorizontal(
-                new GridDataTemeplate() { Content = b },
-                new GridDataTemeplate() { Content = _panel[3], Length = new GridLength(310, GridUnitType.Pixel) });
-
-            return c;
-        }
         Grid CreateLayout1(params Grid[] _panel)
         {
             var a = PairVertical(
@@ -89,7 +80,34 @@ namespace Editor.Assets.Control
 
             return c;
         }
+        Grid CreateLayout2(params Grid[] _panel)
+        {
+            var a = PairHorizontal(
+                new GridDataTemeplate() { Content = _panel[0], Length = new GridLength(190, GridUnitType.Pixel) },
+                new GridDataTemeplate() { Content = _panel[1] });
 
+            var b = PairVertical(
+                new GridDataTemeplate() { Content = a },
+                new GridDataTemeplate() { Content = _panel[2], Length = new GridLength(200, GridUnitType.Pixel) });
+
+            var c = PairHorizontal(
+                new GridDataTemeplate() { Content = b },
+                new GridDataTemeplate() { Content = _panel[3], Length = new GridLength(310, GridUnitType.Pixel) });
+
+            return c;
+        }
+        Grid CreateLayoutNew(params Grid[] _panel)
+        {
+            var a = PairVertical(
+                new GridDataTemeplate() { Content = _panel[0], Length = new GridLength(5, GridUnitType.Star) },
+                new GridDataTemeplate() { Content = _panel[1] });
+
+            var b = PairVertical(
+                new GridDataTemeplate() { Content = _panel[2] },
+                new GridDataTemeplate() { Content = _panel[3], Length = new GridLength(5, GridUnitType.Star) });
+
+            return WrapSplitView(a, b);
+        }
 
         Grid PairHorizontal(GridDataTemeplate _left, GridDataTemeplate _right)
         {
@@ -173,11 +191,27 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        Grid Wrap(params TabViewItemDataTemplate[] _i)
+        Grid WrapInTabView(params TabViewItemDataTemplate[] _i)
         {
             Grid grid = new Grid();
             Control_TabViewPage tabViewPage = new Control_TabViewPage(m_main, _i);
             grid.Children.Add(tabViewPage.m_TabView);
+
+            return grid;
+        }
+        Grid WrapSplitView(Grid _content, Grid _pane)
+        {
+            _content.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemChromeAltHighColor"]);
+            Grid grid = new Grid();
+            SplitView split = new SplitView() { IsPaneOpen = true, DisplayMode = SplitViewDisplayMode.CompactInline, PanePlacement = SplitViewPanePlacement.Right, Pane = _pane, Content = _content };
+            grid.Children.Add(split);
+
+            return grid;
+        }
+        Grid WrapGrid(UIElement _content)
+        {
+            Grid grid = new Grid();
+            grid.Children.Add(_content);
 
             return grid;
         }
