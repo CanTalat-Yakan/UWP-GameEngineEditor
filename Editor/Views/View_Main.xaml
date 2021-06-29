@@ -14,146 +14,42 @@
         <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml"/>
     </Page.Resources>
 
-    <Grid>
-        <controls:DockPanel>
-
-            <!--MENU -->
-            <Grid controls:DockPanel.Dock="Top">
-                <MenuBar x:Name="x_MenuBar_Menu">
-                    <MenuBarItem Title="File">
-                        <MenuFlyoutItem Text="New"/>
-                        <MenuFlyoutItem Text="Open Scene"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Save"/>
-                        <MenuFlyoutItem Text="Save As..."/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="New Project..."/>
-                        <MenuFlyoutItem Text="Open Project..."/>
-                        <MenuFlyoutItem Text="Save Project"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Build Settings..."/>
-                        <MenuFlyoutItem Text="Build and Run"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Exit"/>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="Edit">
-                        <MenuFlyoutItem Text="Undo" Icon="Undo"/>
-                        <MenuFlyoutItem Text="Redo" Icon="Redo"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Rename" Icon="Rename"/>
-                        <MenuFlyoutItem Text="Delete" Icon="Delete"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Play" Icon="Play"/>
-                        <MenuFlyoutItem Text="Pause" Icon="Pause"/>
-                        <MenuFlyoutItem Text="Step" Icon="Forward"/>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="Assets">
-                        <MenuFlyoutSubItem Text="Create">
-                            <MenuFlyoutItem Text="New Folder"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="C# Script"/>
-                            <MenuFlyoutSubItem Text="Shader">
-                                <MenuFlyoutItem Text="Unlit"/>
-                                <MenuFlyoutItem Text="Standard"/>
-                            </MenuFlyoutSubItem>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutItem Text="Scene"/>
-                            <MenuFlyoutItem Text="Material"/>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSubItem Text="GameObject">
-                            <MenuFlyoutItem Text="Create Empty"/>
-                            <MenuFlyoutItem Text="Create Empty Child"/>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutSubItem Text="3D Object">
-                                <MenuFlyoutItem Text="Plane"/>
-                                <MenuFlyoutItem Text="Cube"/>
-                                <MenuFlyoutItem Text="Sphere"/>
-                                <MenuFlyoutItem Text="Cylinder"/>
-                                <MenuFlyoutItem Text="Capsule"/>
-                                <MenuFlyoutItem Text="Quad"/>
-                            </MenuFlyoutSubItem>
-                            <MenuFlyoutSeparator/>
-                            <MenuFlyoutSubItem Text="Light">
-                                <MenuFlyoutItem Text="Directional Light"/>
-                                <MenuFlyoutItem Text="Point Light"/>
-                                <MenuFlyoutItem Text="Spot Light"/>
-                                <MenuFlyoutSeparator/>
-                                <MenuFlyoutItem Text="Reflection Probe"/>
-                            </MenuFlyoutSubItem>
-                        </MenuFlyoutSubItem>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="Tools">
-                        <MenuFlyoutSubItem Text="Explore Tools">
-                            <MenuFlyoutItem Text="Templates"/>
-                            <MenuFlyoutItem Text="Packages"/>
-                        </MenuFlyoutSubItem>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="Component">
-                        <MenuFlyoutItem Text="Add..."/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Camera"/>
-                        <MenuFlyoutItem Text="Mesh"/>
-                        <MenuFlyoutItem Text="Light"/>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="View">
-                        <MenuFlyoutSubItem Text="Layout">
-                            <my:RadioMenuFlyoutItem Text="1" IsChecked="True"/>
-                            <my:RadioMenuFlyoutItem Text="2"/>
-                            <my:RadioMenuFlyoutItem Text="3"/>
-                        </MenuFlyoutSubItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Add..."/>
-                    </MenuBarItem>
-
-                    <MenuBarItem Title="Help">
-                        <MenuFlyoutItem Text="About OpenSource-Engine"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Documentation"/>
-                        <MenuFlyoutItem Text="Manual"/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Check for Updates"/>
-                        <MenuFlyoutItem Text="Report Bug..."/>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Software Licenses"/>
-                    </MenuBarItem>
-                </MenuBar>
-
-                    <TextBlock Text="Early Access" VerticalAlignment="Center" Opacity="0.2" HorizontalAlignment="Center"/>
-                    <PersonPicture x:Name="x_MenuBar_Name" Width="30" Margin="0,0,4,0" HorizontalAlignment="Right"/>
-            </Grid>
-
-            <!--STATUS -->
-            <Grid controls:DockPanel.Dock="Bottom">
-                <CommandBar>
-                    <CommandBar.PrimaryCommands>
-                        <AppBarToggleButton Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
+    <NavigationView x:Name="nvSample" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1"/>
+            <NavigationViewItem Icon="Play" Content="Project" IsSelected="True" Tag="SamplePage2" />
+            <NavigationViewItem Icon="Document" Content="Docs" Tag="SamplePage3" />
+        </NavigationView.MenuItems>
+        <Frame x:Name="contentFrame">
+            <controls:DockPanel>
+                <!--STATUS -->
+                <Grid controls:DockPanel.Dock="Bottom">
+                    <CommandBar>
+                        <CommandBar.PrimaryCommands>
+                            <AppBarToggleButton Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
                                             Click="AppBarToggleButton_Status_Play_Click"/>
-                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
+                            <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
                                             Click="AppBarToggleButton_Status_Pause_Click"/>
-                        <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
+                            <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
                                       Click="AppBarButton_Status_Forward_Click"/>
-                    </CommandBar.PrimaryCommands>
+                        </CommandBar.PrimaryCommands>
 
-                    <CommandBar.SecondaryCommands>
-                        <AppBarToggleButton Label="Toggle Theme"
+                        <CommandBar.SecondaryCommands>
+                            <AppBarToggleButton Label="Toggle Theme"
                                             Click="AppBarToggleButton_Status_Light"/>
-                        <AppBarButton x:Name="x_AppBarButton_Status_Kill" Label="Kill Process" IsEnabled="False"
+                            <AppBarButton x:Name="x_AppBarButton_Status_Kill" Label="Kill Process" IsEnabled="False"
                                       Click="AppBarButton_Status_Kill_Click"/>
-                    </CommandBar.SecondaryCommands>
+                        </CommandBar.SecondaryCommands>
 
-                    <CommandBar.Content>
-                        <TextBlock x:Name="x_TextBlock_Status_Content" Text="Engine Ready..." Margin="12,14"/>
-                    </CommandBar.Content>
-                </CommandBar>
-            </Grid>
+                        <CommandBar.Content>
+                            <TextBlock x:Name="x_TextBlock_Status_Content" Text="Engine Ready..." Margin="12,14"/>
+                        </CommandBar.Content>
+                    </CommandBar>
+                </Grid>
 
-            <!--MAIN-->
-            <Grid x:Name="x_Grid_Main" HorizontalAlignment="Stretch"/>
-        </controls:DockPanel>
-    </Grid>
+                <!--MAIN-->
+                <Grid x:Name="x_Grid_Main" HorizontalAlignment="Stretch"/>
+            </controls:DockPanel>
+        </Frame>
+    </NavigationView>
 </Page>

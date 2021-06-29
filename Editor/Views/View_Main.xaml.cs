@@ -34,7 +34,6 @@ namespace Editor
             this.InitializeComponent();
 
             m_Status_Content = x_TextBlock_Status_Content;
-            GetName();
 
             m_Layout = new Control_Layout(
                 this, 
@@ -61,14 +60,5 @@ namespace Editor
         private void AppBarButton_Status_Forward_Click(object sender, RoutedEventArgs e) { m_GameMode.Forward(); }
         private void AppBarButton_Status_Kill_Click(object sender, RoutedEventArgs e) { m_GameMode.Kill(); }
         private void AppBarToggleButton_Status_Light(object sender, RoutedEventArgs e) { RequestedTheme = RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : RequestedTheme = ElementTheme.Light; }
-
-        async void GetName()
-        {
-            var users = await User.FindAllAsync(UserType.LocalUser);
-            var nameFirst = await users.FirstOrDefault().GetPropertyAsync(KnownUserProperties.FirstName);
-            var nameLast = await users.FirstOrDefault().GetPropertyAsync(KnownUserProperties.LastName);
-
-            x_MenuBar_Name.DisplayName = $"{nameFirst} {nameLast}";
-        }
     }
 }
