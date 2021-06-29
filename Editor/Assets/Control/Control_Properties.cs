@@ -13,6 +13,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Text;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using NavigationViewItemSeparator = Windows.UI.Xaml.Controls.NavigationViewItemSeparator;
+using Expander = Microsoft.UI.Xaml.Controls.Expander;
+using ExpandDirection = Microsoft.UI.Xaml.Controls.ExpandDirection;
 
 namespace Editor.Assets.Control
 {
@@ -120,9 +122,9 @@ namespace Editor.Assets.Control
 
         internal Grid CreateTextureSlot(string _header = "Texture")
         {
-            Grid container = new Grid() { Width = 48, Height = 48, BorderThickness = new Thickness(1), CornerRadius = new CornerRadius(2), BorderBrush = (Brush)Application.Current.Resources["SystemControlForegroundBaseMediumBrush"] };
+            Grid container = new Grid() { Width = 48, Height = 48 };
             Image img = new Image() { Stretch = Stretch.UniformToFill };
-            AppBarButton button = new AppBarButton() { };
+            Button button = new Button() { HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch };
             TextBlock path = new TextBlock() { Text = "None", Margin = new Thickness(4, 0, 0, 0), VerticalAlignment = VerticalAlignment.Bottom };
 
             container.Children.Add(img);
@@ -170,8 +172,7 @@ namespace Editor.Assets.Control
         internal Grid WrapExpander(Grid _content, string _header = "Expander")
         {
             Grid grid = new Grid();
-            Expander expander = new Expander() { Header = _header, Margin = new Thickness(14, 0, 0, 0), HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            _content.Margin = new Thickness(0, 4, 0, 10);
+            Expander expander = new Expander() { Header = _header, HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Left };
 
             expander.Content = _content;
             grid.Children.Add(expander);
@@ -182,9 +183,9 @@ namespace Editor.Assets.Control
         internal Grid CreateScript(string _header = "ExampleScript", params Grid[] _properties)
         {
             Grid grid = new Grid();
-            StackPanel stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10, Margin = new Thickness(10, 4, 0, 20) };
-            Expander expander = new Expander() { Header = _header, ExpandDirection = ExpandDirection.Down, HorizontalContentAlignment = HorizontalAlignment.Stretch };
-            CheckBox checkBox = new CheckBox() { IsChecked = true, HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(0, 4, -80, 0) };
+            StackPanel stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 };
+            Expander expander = new Expander() { Header = _header, ExpandDirection = ExpandDirection.Down, HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Left };
+            ToggleSwitch @switch = new ToggleSwitch() { IsOn = true, OffContent = "", OnContent = "", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(0, 4, -69, 0) };
             NavigationViewItemSeparator seperator = new NavigationViewItemSeparator() { VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(-10) };
 
             foreach (var item in _properties)
@@ -192,7 +193,7 @@ namespace Editor.Assets.Control
 
             expander.Content = stack;
             grid.Children.Add(expander);
-            grid.Children.Add(checkBox);
+            grid.Children.Add(@switch);
             grid.Children.Add(seperator);
 
             return grid;

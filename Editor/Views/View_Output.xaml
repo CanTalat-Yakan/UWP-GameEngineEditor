@@ -13,14 +13,16 @@
     d:MinWidth="500">
 
     <Grid>
-        <!--CONTENT-->
-            <!--Tools-->
-            <controls:TabbedCommandBarItem Padding="0,-4,0,8" Header="Messages">
-                <AppBarButton Label="Clear" Icon="Delete" 
+        <CommandBar HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-44,0,0">
+
+            <AppBarButton Label="Clear" Icon="Delete" 
                               Click="AppBarButton_Output_Clear"/>
-                <AppBarToggleButton x:Name="x_AppBarToggleButton_Output_Collapse" IsChecked="True" Label="Collapse" Icon="List" 
+            <AppBarToggleButton x:Name="x_AppBarToggleButton_Output_Collapse" IsChecked="True" Label="Collapse" Icon="List" 
                                     Click="AppBarToggleButton_Output_Collapse_Click"/>
-                <AppBarSeparator />
+
+            <AppBarSeparator />
+
+            <CommandBar.SecondaryCommands>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Debug_ErrorPause" IsChecked="False" Label="Error Pause" Icon="Pause"
                                     Click="AppBarToggleButton_Debug_ErrorPause_Click"/>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Debug_ClearPlay" IsChecked="true" Label="Clear Play" Icon="Clear"
@@ -36,12 +38,11 @@
                 </AppBarToggleButton>
                 <AppBarToggleButton x:Name="x_AppBarToggleButton_Filter_Errors" IsChecked="True" Label="Error" Icon="ReportHacked"
                                     Click="AppBarToggleButton_Filter_Click"/>
-            </controls:TabbedCommandBarItem>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
 
-            <!--Messages-->
-            <ScrollViewer Padding="0,32,0,0" x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
             <StackPanel x:Name="x_Stackpanel_Output" Orientation="Vertical"/>
         </ScrollViewer>
-
     </Grid>
 </UserControl>

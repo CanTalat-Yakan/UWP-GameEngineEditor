@@ -12,7 +12,7 @@
     d:DesignWidth="500">
 
     <Grid>
-        <controls:TabbedCommandBarItem Padding="0,-4,0,8" Header="Project">
+        <CommandBar HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-44,0,0">
             <AppBarButton Icon="Add" Label="Add">
                 <AppBarButton.Flyout>
                     <MenuFlyout>
@@ -34,23 +34,22 @@
                     </MenuFlyout>
                 </AppBarButton.Flyout>
             </AppBarButton>
-            <AppBarSeparator/>
 
-            <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
-            <AppBarToggleButton IsChecked="True" Label="3D Models">
-                <AppBarToggleButton.Icon>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
-                </AppBarToggleButton.Icon>
-            </AppBarToggleButton>
-            <AppBarToggleButton IsChecked="True" Label="Add-ons">
-                <AppBarToggleButton.Icon>
-                    <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
-                </AppBarToggleButton.Icon>
-            </AppBarToggleButton>
-        </controls:TabbedCommandBarItem>
+            <CommandBar.SecondaryCommands>
+                <AppBarToggleButton IsChecked="True" Icon="Pictures" Label="Textures"/>
+                <AppBarToggleButton IsChecked="True" Label="3D Models">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xF158;" />
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+                <AppBarToggleButton IsChecked="True" Label="Add-ons">
+                    <AppBarToggleButton.Icon>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xECAA;" />
+                    </AppBarToggleButton.Icon>
+                </AppBarToggleButton>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
 
-        <Grid Padding="0,32,0,0">
-            <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
-        </Grid>
+        <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
     </Grid>
 </UserControl>

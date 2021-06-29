@@ -26,7 +26,6 @@ namespace Editor
     {
         public event PropertyChangedEventHandler PropertyChanged;
         internal Control_Properties m_Control;
-        internal Microsoft.Toolkit.Uwp.UI.Controls.ColorPickerButton m_Color;
 
         #region Properties
         SharpDX.Vector3 m_pos;
@@ -57,7 +56,6 @@ namespace Editor
             this.InitializeComponent();
 
             m_Control = new Control_Properties();
-            m_Color = x_ColorPickerButton;
 
 
             List<Grid> collection = new List<Grid>();
@@ -76,8 +74,8 @@ namespace Editor
         }
 
 
-        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e) { m_Control.SelectImage(Img_SelectTexture, x_TextBlock_TexturePath); }
-        void AppBarButton_Click_SelectFilePath(object sender, RoutedEventArgs e) { m_Control.SelectFile(x_TextBlock_FilePath); }
+        void AppBarButton_Click_SelectImagePath(object sender, RoutedEventArgs e) { }//m_Control.SelectImage(Img_SelectTexture, x_TextBlock_TexturePath); }
+        void AppBarButton_Click_SelectFilePath(object sender, RoutedEventArgs e) { }//m_Control.SelectFile(x_TextBlock_FilePath); }
         void FirePropertyChanged([CallerMemberName] string memberName = null) { this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName)); }
     }
 }
