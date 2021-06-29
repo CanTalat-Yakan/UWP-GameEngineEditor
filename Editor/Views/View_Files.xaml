@@ -7,12 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
-    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
-    d:DesignWidth="500">
+    d:DesignWidth="800">
 
     <Grid>
-        <CommandBar HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-44,0,0">
+        <CommandBar HorizontalAlignment="Right" VerticalAlignment="Top" Margin="244,-44,0,0">
             <AppBarButton Icon="Add" Label="Add">
                 <AppBarButton.Flyout>
                     <MenuFlyout>
@@ -50,6 +49,6 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
-        <TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
+        <my:TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
     </Grid>
 </UserControl>

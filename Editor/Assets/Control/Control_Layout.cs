@@ -38,7 +38,7 @@ namespace Editor.Assets.Control
 
             m_GridContent = CreateLayoutNew(
                 WrapGrid(m_ViewPort = _port),
-                WrapInTabView(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message }, 
+                WrapInTabView(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message },
                     new TabViewItemDataTemplate() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
                 WrapGrid(m_ViewHierarchy = _hierarchy),
                 WrapGrid(m_ViewProperties = _properties));
@@ -99,12 +99,12 @@ namespace Editor.Assets.Control
         Grid CreateLayoutNew(params Grid[] _panel)
         {
             var a = PairVertical(
-                new GridDataTemeplate() { Content = _panel[0], Length = new GridLength(5, GridUnitType.Star) },
-                new GridDataTemeplate() { Content = _panel[1] });
+                new GridDataTemeplate() { Content = _panel[0], MinHeight = 0, Length = new GridLength(5, GridUnitType.Star) },
+                new GridDataTemeplate() { Content = _panel[1], MinHeight = 0 });
 
             var b = PairVertical(
-                new GridDataTemeplate() { Content = _panel[2] },
-                new GridDataTemeplate() { Content = _panel[3], Length = new GridLength(5, GridUnitType.Star) });
+                new GridDataTemeplate() { Content = _panel[2], MinHeight = 0 },
+                new GridDataTemeplate() { Content = _panel[3], MinHeight = 0, Length = new GridLength(5, GridUnitType.Star) });
 
             return WrapSplitView(a, b);
         }
@@ -170,17 +170,13 @@ namespace Editor.Assets.Control
         }
         Grid PairVertical(GridDataTemeplate _top, GridDataTemeplate _bottom)
         {
-            Grid grid = new Grid() { RowSpacing = 16 };
+            Grid grid = new Grid() { };
             grid.RowDefinitions.Add(new RowDefinition() { Height = _top.Length, MinHeight = _top.MinHeight });
             grid.RowDefinitions.Add(new RowDefinition() { Height = _bottom.Length, MinHeight = _bottom.MinHeight });
 
-            GridSplitter splitV = new GridSplitter()
-            {
-                VerticalAlignment = VerticalAlignment.Bottom,
-                Margin = new Thickness(0, 0, 0, -16),
-                Opacity = 0.5f,
-                CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover
-            };
+            GridSplitter splitV = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Opacity = 0.5f, CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
+
+            ((Grid)_top.Content).Margin = new Thickness(0, 0, 0, 16);
 
             grid.Children.Add(_top.Content);
             grid.Children.Add(_bottom.Content);

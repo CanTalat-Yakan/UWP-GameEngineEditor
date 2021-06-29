@@ -54,7 +54,8 @@ namespace Editor.Assets.Control
             {
                 Header = _i.Header,
                 Content = _i.Content,
-                IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = _i.Symbol }
+                IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = _i.Symbol },
+                IsClosable = false
             };
 
             return newItem;

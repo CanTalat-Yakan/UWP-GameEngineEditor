@@ -9,11 +9,10 @@
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="300"
-    d:DesignWidth="800"
-    d:MinWidth="500">
+    d:DesignWidth="800">
 
     <Grid>
-        <CommandBar HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-44,0,0">
+        <CommandBar HorizontalAlignment="Right" Margin="244,-44,0,0">
 
             <AppBarButton Label="Clear" Icon="Delete" 
                               Click="AppBarButton_Output_Clear"/>
@@ -41,7 +40,7 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
-        <ScrollViewer x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Visible">
+        <ScrollViewer x:Name="x_ScrollViewer_Output" VerticalContentAlignment="Bottom" VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2">
             <StackPanel x:Name="x_Stackpanel_Output" Orientation="Vertical"/>
         </ScrollViewer>
     </Grid>

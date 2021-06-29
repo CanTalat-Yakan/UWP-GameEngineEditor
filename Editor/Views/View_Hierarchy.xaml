@@ -6,20 +6,48 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:my="using:Microsoft.UI.Xaml.Controls"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
     <Grid>
-        <ListViewHeaderItem Content="Main">
+        <ListViewHeaderItem Content="Main Scene" Padding="12,2,0,0">
             <ListViewHeaderItem.ContextFlyout>
                 <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy_Header"/>
             </ListViewHeaderItem.ContextFlyout>
         </ListViewHeaderItem>
 
-        <TreeView x:Name="x_TreeView_Hierarchy" Margin="0,50,0,0" SelectionMode="Single">
-            <TreeView.ContextFlyout>
-                <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy"/>
-            </TreeView.ContextFlyout>
-        </TreeView>
+        <my:TreeView x:Name="x_TreeView_Hierarchy" Margin="0,38,0,0" SelectionMode="Single">
+            <my:TreeView.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Cut" Icon="Cut"/>
+                    <MenuFlyoutItem Text="Copy" Icon="Copy"/>
+                    <MenuFlyoutItem Text="Paste" Icon="Paste"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Rename" Icon="Rename"/>
+                    <MenuFlyoutItem Text="Delete" Icon="Delete"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Create Empty"/>
+                    <MenuFlyoutItem Text="Create Empty Child"/>
+                    <MenuFlyoutSeparator/>
+                    <MenuFlyoutItem Text="Camera"/>
+                    <MenuFlyoutSubItem Text="3D Object">
+                        <MenuFlyoutItem Text="Plane"/>
+                        <MenuFlyoutItem Text="Cube"/>
+                        <MenuFlyoutItem Text="Sphere"/>
+                        <MenuFlyoutItem Text="Cylinder"/>
+                        <MenuFlyoutItem Text="Capsule"/>
+                        <MenuFlyoutItem Text="Quad"/>
+                    </MenuFlyoutSubItem>
+                    <MenuFlyoutSubItem Text="Light">
+                        <MenuFlyoutItem Text="Directional Light"/>
+                        <MenuFlyoutItem Text="Point Light"/>
+                        <MenuFlyoutItem Text="Spot Light"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Reflection Probe"/>
+                    </MenuFlyoutSubItem>
+                </MenuFlyout>
+            </my:TreeView.ContextFlyout>
+        </my:TreeView>
     </Grid>
 </UserControl>
