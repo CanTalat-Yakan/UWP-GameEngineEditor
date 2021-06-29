@@ -231,9 +231,11 @@
                 m_cameraPosition + m_front,
                 m_up);
 
+            var aspect = (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight);
+
             var proj = Matrix.PerspectiveFovLH(
-                MathUtil.DegreesToRadians(90),
-                (float)(m_swapChainPanel.ActualWidth / m_swapChainPanel.ActualHeight),
+                MathUtil.DegreesToRadians(110 / aspect),
+                aspect,
                 0.1f, 1000);
 
             var viewProj = Matrix.Transpose(view * proj);
@@ -301,7 +303,7 @@
             //Windows.UI.Color col = m_view.m_main.m_Layout.m_ViewProperties.m_Color.SelectedColor;
             m_deviceContext.ClearRenderTargetView(
                 m_backBufferView, new RawColor4(0.4f, 0.74f, 0.86f, 1));
-                //new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1)); //new RawColor4(0.4f, 0.74f, 0.86f, 1));
+            //new RawColor4((float)(col.R / 255f), (float)(col.G / 255f), (float)(col.B / 255f), 1)); //new RawColor4(0.4f, 0.74f, 0.86f, 1));
 
             m_deviceContext.ClearDepthStencilView(m_depthStencilView, D3D11.DepthStencilClearFlags.Depth, 1f, 0);
 
@@ -468,8 +470,8 @@
 
             m_swapChain.ResizeBuffers(
               m_swapChain.Description.BufferCount,
-              Math.Max(1,(int)e.NewSize.Width),
-              Math.Max(1,(int)e.NewSize.Height),
+              Math.Max(1, (int)e.NewSize.Width),
+              Math.Max(1, (int)e.NewSize.Height),
               m_swapChain.Description1.Format,
               m_swapChain.Description1.Flags);
 
