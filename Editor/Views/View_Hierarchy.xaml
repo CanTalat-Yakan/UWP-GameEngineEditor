@@ -11,7 +11,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <ListViewHeaderItem Content="Main Scene" Padding="12,2,0,0">
+        <ListViewHeaderItem Content="Main Scene" Padding="12,6,0,0">
             <ListViewHeaderItem.ContextFlyout>
                 <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy_Header"/>
             </ListViewHeaderItem.ContextFlyout>

@@ -14,7 +14,7 @@
         <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml"/>
     </Page.Resources>
 
-    <NavigationView x:Name="nvSample" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
+    <NavigationView x:Name="nvSample"  PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1"/>
             <NavigationViewItem Icon="Play" Content="Project" IsSelected="True" Tag="SamplePage2" />
@@ -48,7 +48,7 @@
                 </Grid>
 
                 <!--MAIN-->
-                <Grid x:Name="x_Grid_Main" HorizontalAlignment="Stretch"/>
+                <Grid Background="{ThemeResource SystemAltMediumLowColor}" x:Name="x_Grid_Main" HorizontalAlignment="Stretch"/>
             </controls:DockPanel>
         </Frame>
     </NavigationView>

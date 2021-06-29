@@ -174,13 +174,16 @@ namespace Editor.Assets.Control
             grid.RowDefinitions.Add(new RowDefinition() { Height = _top.Length, MinHeight = _top.MinHeight });
             grid.RowDefinitions.Add(new RowDefinition() { Height = _bottom.Length, MinHeight = _bottom.MinHeight });
 
-            GridSplitter splitV = new GridSplitter() { VerticalAlignment = VerticalAlignment.Bottom, Opacity = 0.5f, CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
+            GridSplitter splitV = new GridSplitter() { VerticalAlignment = VerticalAlignment.Top, Opacity = 0.5f, CursorBehavior = GridSplitter.SplitterCursorBehavior.ChangeOnGripperHover };
 
-            ((Grid)_top.Content).Margin = new Thickness(0, 0, 0, 16);
+            ((Grid)_bottom.Content).Margin = new Thickness(0, 16, 0, 0);
+            ((Grid)_top.Content).Padding = new Thickness(0, 16, 0, 0);
+            grid.Padding = new Thickness(0, -16, 0, 0);
 
             grid.Children.Add(_top.Content);
             grid.Children.Add(_bottom.Content);
             Grid.SetRow((FrameworkElement)_bottom.Content, 1);
+            Grid.SetRow(splitV, 1);
             grid.Children.Add(splitV);
 
 
@@ -197,7 +200,6 @@ namespace Editor.Assets.Control
         }
         Grid WrapSplitView(Grid _content, Grid _pane)
         {
-            _content.Background = new SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemChromeAltHighColor"]);
             Grid grid = new Grid();
             SplitView split = new SplitView() { IsPaneOpen = true, DisplayMode = SplitViewDisplayMode.CompactInline, PanePlacement = SplitViewPanePlacement.Right, Pane = _pane, Content = _content };
             grid.Children.Add(split);
