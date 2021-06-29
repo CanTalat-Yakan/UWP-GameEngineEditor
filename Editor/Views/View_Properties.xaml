@@ -16,12 +16,10 @@
             <StackPanel>
                 <StackPanel x:Name="x_StackPanel_Properties">
                     <StackPanel Margin="8,4,0,4">
-                        <Grid>
+                        <Grid Margin="0,0,0,4">
                             <CheckBox IsChecked="True" Margin="0,0,0,-4"/>
                             <TextBox Text="GameObject" Margin="24,4,4,0"/>
                         </Grid>
-
-                        <NavigationViewItemSeparator/>
 
                         <Grid HorizontalAlignment="Stretch" ColumnSpacing="2">
                             <Grid.ColumnDefinitions>
