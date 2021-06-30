@@ -53,12 +53,12 @@ namespace Editor.Assets.Control
             //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
 
             //m_GridContent = CreateLayout2(
-            //    Wrap(new TabViewItemDataTemplate() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
-            //    Wrap(new TabViewItemDataTemplate() { Header = "Viewport", Content = m_ViewPort = _port, Symbol = Symbol.View },
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Scene", Content = m_ViewHierarchy = _hierarchy, Symbol = Symbol.List }),
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Viewport", Content = m_ViewPort = _port, Symbol = Symbol.View },
             //         new TabViewItemDataTemplate() { Header = "Settings", Content = m_ViewSettings = _settings, Symbol = Symbol.Setting }),
-            //    Wrap(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message },
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Output", Content = m_ViewOutput = _output, Symbol = Symbol.Message },
             //         new TabViewItemDataTemplate() { Header = "Files", Content = m_ViewFiles = _files, Symbol = Symbol.Document }),
-            //    Wrap(new TabViewItemDataTemplate() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
+            //    WrapInTabView(new TabViewItemDataTemplate() { Header = "Properties", Content = m_ViewProperties = _properties, Symbol = Symbol.Edit }));
 
 
             _content.Children.Add(m_GridContent);
