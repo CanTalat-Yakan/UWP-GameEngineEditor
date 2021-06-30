@@ -51,7 +51,7 @@
 
         internal bool m_IsRightButtonPressed = false;
         internal float m_MouseSensitivity = 0.2f;
-        internal float m_MovementSpeed = 0.01f;
+        internal float m_MovementSpeed = 0.02f;
         internal bool m_W = false;
         internal bool m_S = false;
         internal bool m_A = false;
@@ -161,14 +161,14 @@
             DateTime now = DateTime.Now;
             DateTime d = DateTime.Now;
             Stopwatch watch = new Stopwatch();
-            float time = 0, delta = 0;
+            double time = 0, delta = 0;
             int frames = 0, fps = 0, tmpFps = 0;
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
                 time += watch.ElapsedMilliseconds;
                 ++fps;
                 if (now.Second != DateTime.Now.Second) { tmpFps = fps; fps = 0; now = DateTime.Now; }
-                if (frames % 24 == 0) delta = MathF.Round((float)(watch.Elapsed.TotalMilliseconds));
+                if (frames % 24 == 0) delta = Math.Floor(watch.Elapsed.TotalMilliseconds);
 
                 m_view.m_debugFrames.Text = "Time: " + time.ToString();
                 m_view.m_debugFrames.Text += "\nFrames: " + frames++.ToString();
@@ -194,13 +194,13 @@
             if (m_IsRightButtonPressed)
             {
                 m_cameraMouseRot.X -= m_mouseAxis.X * m_MouseSensitivity;
+                m_cameraMouseRot.X %= 360;
                 m_cameraMouseRot.Y -= m_mouseAxis.Y * m_MouseSensitivity;
-
                 m_cameraMouseRot.Y = Math.Clamp(m_cameraMouseRot.Y, -89, 89);
 
                 float speed = m_MovementSpeed;
-                if (m_Shift) speed *= 2;
-                if (m_Ctrl) speed *= 0.5f;
+                if (m_Shift) speed *= 4;
+                if (m_Ctrl) speed *= 0.25f;
 
                 if (m_W) m_cameraPosition += speed * m_front;
                 if (m_S) m_cameraPosition -= speed * m_front;
@@ -436,7 +436,7 @@
             bufferInfo.indexCount = obj.Indices.Count;
 
 
-            Matrix scale = Matrix.Scaling(new Vector3(1, 1, 1));
+            Matrix scale = Matrix.Scaling(new Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3)));
             Matrix rotation = Matrix.RotationQuaternion(new Quaternion(0, 0, 0, 1));
             Matrix translation = Matrix.Translation(_v);
 

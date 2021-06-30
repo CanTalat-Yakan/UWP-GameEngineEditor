@@ -8,14 +8,14 @@
     mc:Ignorable="d"
     xmlns:my="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
     MinWidth="820">
 
     <Page.Resources>
         <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml"/>
     </Page.Resources>
 
-    <NavigationView x:Name="nvSample"  PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
+    <NavigationView x:Name="nvSample" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1"/>
             <NavigationViewItem Icon="Play" Content="Project" IsSelected="True" Tag="SamplePage2" />
@@ -36,10 +36,16 @@
                         </CommandBar.PrimaryCommands>
 
                         <CommandBar.SecondaryCommands>
-                            <AppBarToggleButton Label="Toggle Theme"
-                                            Click="AppBarToggleButton_Status_Light"/>
-                            <AppBarButton x:Name="x_AppBarButton_Status_Kill" Label="Kill Process" IsEnabled="False"
-                                      Click="AppBarButton_Status_Kill_Click"/>
+                            <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_OpenPane" Label="Open Pane" IsChecked="True">
+                                <AppBarToggleButton.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Space" Modifiers="Control" />
+                                </AppBarToggleButton.KeyboardAccelerators>
+                            </AppBarToggleButton>
+                            <AppBarToggleButton Label="Toggle Theme" Click="AppBarToggleButton_Status_Light">
+                                <AppBarToggleButton.KeyboardAccelerators>
+                                    <KeyboardAccelerator Key="Tab" Modifiers="Control" />
+                                </AppBarToggleButton.KeyboardAccelerators>
+                            </AppBarToggleButton>
                         </CommandBar.SecondaryCommands>
 
                         <CommandBar.Content>
@@ -49,7 +55,7 @@
                 </Grid>
 
                 <!--MAIN-->
-                <Grid Background="{ThemeResource SystemAltMediumLowColor}" x:Name="x_Grid_Main" HorizontalAlignment="Stretch"/>
+                <Grid x:Name="x_Grid_Main" Background="{ThemeResource SystemAltMediumLowColor}" HorizontalAlignment="Stretch"/>
             </controls:DockPanel>
         </Frame>
     </NavigationView>

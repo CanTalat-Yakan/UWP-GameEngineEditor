@@ -9,6 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Data;
 
 namespace Editor.Assets.Control
 {
@@ -201,7 +202,8 @@ namespace Editor.Assets.Control
         Grid WrapSplitView(Grid _content, Grid _pane)
         {
             Grid grid = new Grid();
-            SplitView split = new SplitView() { IsPaneOpen = true, DisplayMode = SplitViewDisplayMode.CompactInline, PanePlacement = SplitViewPanePlacement.Right, Pane = _pane, Content = _content };
+            SplitView split = new SplitView() { IsPaneOpen = true, DisplayMode = SplitViewDisplayMode.Inline, PanePlacement = SplitViewPanePlacement.Right, Pane = _pane, Content = _content };
+            BindingOperations.SetBinding(split, SplitView.IsPaneOpenProperty, new Binding() { ElementName = "x_AppBarToggleButton_Status_OpenPane", Path = new PropertyPath("IsChecked") });
             grid.Children.Add(split);
 
             return grid;
