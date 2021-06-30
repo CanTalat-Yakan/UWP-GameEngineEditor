@@ -49,9 +49,7 @@ namespace Editor
 
         void ViewPort_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            Pointer ptr = e.Pointer;
-
-            if (ptr.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
             {
                 Windows.UI.Input.PointerPoint ptrPt = e.GetCurrentPoint(null);
                 m_swapChainRenderer.m_IsRightButtonPressed = ptrPt.Properties.IsRightButtonPressed;
@@ -71,6 +69,8 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = true;
             if (e.VirtualKey == Windows.System.VirtualKey.Shift) m_swapChainRenderer.m_Shift = true;
             if (e.VirtualKey == Windows.System.VirtualKey.Control) m_swapChainRenderer.m_Ctrl = true;
+
+            e.Handled = true;
         }
         void Grid_KeyUp(CoreWindow sender, KeyEventArgs e)
         {
@@ -83,6 +83,8 @@ namespace Editor
             if (e.VirtualKey == Windows.System.VirtualKey.C) m_swapChainRenderer.m_C = false;
             if (e.VirtualKey == Windows.System.VirtualKey.Shift) m_swapChainRenderer.m_Shift = false;
             if (e.VirtualKey == Windows.System.VirtualKey.Control) m_swapChainRenderer.m_Ctrl = false;
+
+            e.Handled = true;
         }
     }
 }
