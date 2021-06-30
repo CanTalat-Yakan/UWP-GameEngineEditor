@@ -17,7 +17,7 @@
             </ListViewHeaderItem.ContextFlyout>
         </ListViewHeaderItem>
 
-        <my:TreeView x:Name="x_TreeView_Hierarchy" Margin="0,44,0,0" SelectionMode="Single">
+        <my:TreeView x:Name="x_TreeView_Hierarchy" Margin="0,42,0,0" SelectionMode="Single">
             <my:TreeView.ContextFlyout>
                 <MenuFlyout>
                     <MenuFlyoutItem Text="Cut" Icon="Cut"/>
