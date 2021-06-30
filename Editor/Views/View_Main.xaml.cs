@@ -50,7 +50,6 @@ namespace Editor
                 x_AppBarToggleButton_Status_Play,
                 x_AppBarToggleButton_Status_Pause,
                 x_AppBarButton_Status_Forward,
-                x_AppBarButton_Status_Kill,
                 x_TextBlock_Status_Content,
                 m_Layout.m_ViewOutput.m_control);
         }

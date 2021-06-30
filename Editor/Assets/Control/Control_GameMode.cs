@@ -22,17 +22,15 @@ namespace Editor.Assets.Control
         AppBarToggleButton m_play;
         AppBarToggleButton m_pause;
         AppBarButton m_forward;
-        AppBarButton m_kill;
         TextBlock m_status;
         Control_Output m_output;
 
-        internal Control_GameMode(View_Main main, AppBarToggleButton play, AppBarToggleButton pause, AppBarButton forward, AppBarButton kill, TextBlock status, Control_Output _output)
+        internal Control_GameMode(View_Main main, AppBarToggleButton play, AppBarToggleButton pause, AppBarButton forward, TextBlock status, Control_Output _output)
         {
             m_main = main;
             m_play = play;
             m_pause = pause;
             m_forward = forward;
-            m_kill = kill;
             m_status = status;
             m_output = _output;
         }
@@ -44,7 +42,6 @@ namespace Editor.Assets.Control
 
             m_pause.IsEnabled = _b;
             m_forward.IsEnabled = _b;
-            m_kill.IsEnabled = _b;
             m_pause.IsChecked = false;
 
             m_play.Label = _b ? "Stop" : "Play";
