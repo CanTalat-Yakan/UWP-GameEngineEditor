@@ -10,44 +10,72 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
-        <ListViewHeaderItem Content="Main Scene" Padding="12,6,0,0">
-            <ListViewHeaderItem.ContextFlyout>
-                <MenuFlyout x:Name="x_MenuFlyOut_Hierarchy_Header"/>
-            </ListViewHeaderItem.ContextFlyout>
-        </ListViewHeaderItem>
-
-        <my:TreeView x:Name="x_TreeView_Hierarchy" Margin="0,42,0,0" SelectionMode="Single">
-            <my:TreeView.ContextFlyout>
-                <MenuFlyout>
-                    <MenuFlyoutItem Text="Cut" Icon="Cut"/>
-                    <MenuFlyoutItem Text="Copy" Icon="Copy"/>
-                    <MenuFlyoutItem Text="Paste" Icon="Paste"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Rename" Icon="Rename"/>
-                    <MenuFlyoutItem Text="Delete" Icon="Delete"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Create Empty"/>
-                    <MenuFlyoutItem Text="Create Empty Child"/>
-                    <MenuFlyoutSeparator/>
-                    <MenuFlyoutItem Text="Camera"/>
-                    <MenuFlyoutSubItem Text="3D Object">
-                        <MenuFlyoutItem Text="Plane"/>
-                        <MenuFlyoutItem Text="Cube"/>
-                        <MenuFlyoutItem Text="Sphere"/>
-                        <MenuFlyoutItem Text="Cylinder"/>
-                        <MenuFlyoutItem Text="Capsule"/>
-                        <MenuFlyoutItem Text="Quad"/>
-                    </MenuFlyoutSubItem>
-                    <MenuFlyoutSubItem Text="Light">
-                        <MenuFlyoutItem Text="Directional Light"/>
-                        <MenuFlyoutItem Text="Point Light"/>
-                        <MenuFlyoutItem Text="Spot Light"/>
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+            <my:Expander Header="Main Scene" IsExpanded="True" Padding="8" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Top">
+                <my:Expander.ContextFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Create Empty"/>
                         <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem Text="Reflection Probe"/>
-                    </MenuFlyoutSubItem>
-                </MenuFlyout>
-            </my:TreeView.ContextFlyout>
-        </my:TreeView>
-    </Grid>
+                        <MenuFlyoutItem Text="Camera"/>
+                        <MenuFlyoutSubItem Text="3D Object">
+                            <MenuFlyoutItem Text="Plane"/>
+                            <MenuFlyoutItem Text="Cube"/>
+                            <MenuFlyoutItem Text="Sphere"/>
+                            <MenuFlyoutItem Text="Cylinder"/>
+                            <MenuFlyoutItem Text="Capsule"/>
+                            <MenuFlyoutItem Text="Quad"/>
+                        </MenuFlyoutSubItem>
+                        <MenuFlyoutSubItem Text="Light">
+                            <MenuFlyoutItem Text="Directional Light"/>
+                            <MenuFlyoutItem Text="Point Light"/>
+                            <MenuFlyoutItem Text="Spot Light"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Reflection Probe"/>
+                        </MenuFlyoutSubItem>
+                    </MenuFlyout>
+                </my:Expander.ContextFlyout>
+                <my:TreeView x:Name="x_TreeView_Hierarchy" SelectionMode="Single">
+                    <my:TreeView.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Text="Cut" Icon="Cut"/>
+                            <MenuFlyoutItem Text="Copy" Icon="Copy"/>
+                            <MenuFlyoutItem Text="Paste" Icon="Paste"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Rename" Icon="Rename"/>
+                            <MenuFlyoutItem Text="Delete" Icon="Delete"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Create Empty"/>
+                            <MenuFlyoutItem Text="Create Empty Child"/>
+                            <MenuFlyoutSeparator/>
+                            <MenuFlyoutItem Text="Camera"/>
+                            <MenuFlyoutSubItem Text="3D Object">
+                                <MenuFlyoutItem Text="Plane"/>
+                                <MenuFlyoutItem Text="Cube"/>
+                                <MenuFlyoutItem Text="Sphere"/>
+                                <MenuFlyoutItem Text="Cylinder"/>
+                                <MenuFlyoutItem Text="Capsule"/>
+                                <MenuFlyoutItem Text="Quad"/>
+                            </MenuFlyoutSubItem>
+                            <MenuFlyoutSubItem Text="Light">
+                                <MenuFlyoutItem Text="Directional Light"/>
+                                <MenuFlyoutItem Text="Point Light"/>
+                                <MenuFlyoutItem Text="Spot Light"/>
+                                <MenuFlyoutSeparator/>
+                                <MenuFlyoutItem Text="Reflection Probe"/>
+                            </MenuFlyoutSubItem>
+                        </MenuFlyout>
+                    </my:TreeView.ContextFlyout>
+                </my:TreeView>
+            </my:Expander>
+
+            <Button Content="Add Scene" Margin="10,10,10,10" HorizontalAlignment="Center">
+                <Button.Flyout>
+                    <Flyout>
+                        <AutoSuggestBox/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
