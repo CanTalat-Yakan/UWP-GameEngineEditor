@@ -15,48 +15,41 @@
         <ResourceDictionary Source="ms-appx:///Microsoft.UI.Xaml/DensityStyles/Compact.xaml"/>
     </Page.Resources>
 
-    <NavigationView x:Name="nvSample" PaneDisplayMode="LeftMinimal" IsBackButtonVisible="Collapsed" IsPaneOpen="False" OpenPaneLength="130">
-        <NavigationView.MenuItems>
-            <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1"/>
-            <NavigationViewItem Icon="Play" Content="Project" IsSelected="True" Tag="SamplePage2" />
-            <NavigationViewItem Icon="Document" Content="Docs" Tag="SamplePage3" />
-        </NavigationView.MenuItems>
-        <Frame x:Name="contentFrame">
-            <controls:DockPanel>
-                <!--STATUS -->
-                <Grid controls:DockPanel.Dock="Bottom">
-                    <CommandBar>
-                        <CommandBar.PrimaryCommands>
-                            <AppBarToggleButton Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
+    <Frame x:Name="contentFrame">
+        <controls:DockPanel>
+            <!--STATUS -->
+            <Grid controls:DockPanel.Dock="Bottom">
+                <CommandBar>
+                    <CommandBar.PrimaryCommands>
+                        <AppBarToggleButton Name="x_AppBarToggleButton_Status_Play" Icon="Play" Label="Play"
                                             Click="AppBarToggleButton_Status_Play_Click"/>
-                            <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
+                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_Pause" Icon="Pause" Label="Pause" IsEnabled="False"
                                             Click="AppBarToggleButton_Status_Pause_Click"/>
-                            <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
+                        <AppBarButton x:Name="x_AppBarButton_Status_Forward" Icon="Forward" Label="Forward" IsEnabled="False"
                                       Click="AppBarButton_Status_Forward_Click"/>
-                        </CommandBar.PrimaryCommands>
+                    </CommandBar.PrimaryCommands>
 
-                        <CommandBar.SecondaryCommands>
-                            <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_OpenPane" Label="Open Pane" IsChecked="True">
-                                <AppBarToggleButton.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Tab" Modifiers="Control" />
-                                </AppBarToggleButton.KeyboardAccelerators>
-                            </AppBarToggleButton>
-                            <AppBarToggleButton Label="Toggle Theme" Click="AppBarToggleButton_Status_Light">
-                                <AppBarToggleButton.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="T" Modifiers="Control" />
-                                </AppBarToggleButton.KeyboardAccelerators>
-                            </AppBarToggleButton>
-                        </CommandBar.SecondaryCommands>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_OpenPane" Label="Open Pane" IsChecked="True">
+                            <AppBarToggleButton.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="Tab" Modifiers="Control" />
+                            </AppBarToggleButton.KeyboardAccelerators>
+                        </AppBarToggleButton>
+                        <AppBarToggleButton Label="Toggle Theme" Click="AppBarToggleButton_Status_Light">
+                            <AppBarToggleButton.KeyboardAccelerators>
+                                <KeyboardAccelerator Key="T" Modifiers="Control" />
+                            </AppBarToggleButton.KeyboardAccelerators>
+                        </AppBarToggleButton>
+                    </CommandBar.SecondaryCommands>
 
-                        <CommandBar.Content>
-                            <TextBlock x:Name="x_TextBlock_Status_Content" Text="Engine Ready..." Margin="12,14"/>
-                        </CommandBar.Content>
-                    </CommandBar>
-                </Grid>
+                    <CommandBar.Content>
+                        <TextBlock x:Name="x_TextBlock_Status_Content" Text="Engine Ready..." Margin="12,14"/>
+                    </CommandBar.Content>
+                </CommandBar>
+            </Grid>
 
-                <!--MAIN-->
-                <Grid x:Name="x_Grid_Main" Background="{ThemeResource SystemAltMediumLowColor}" HorizontalAlignment="Stretch"/>
-            </controls:DockPanel>
-        </Frame>
-    </NavigationView>
+            <!--MAIN-->
+            <Grid x:Name="x_Grid_Main" Background="{ThemeResource SystemAltMediumLowColor}" HorizontalAlignment="Stretch"/>
+        </controls:DockPanel>
+    </Frame>
 </Page>
