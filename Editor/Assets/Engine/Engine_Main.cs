@@ -437,7 +437,8 @@
 
 
             Matrix scale = Matrix.Scaling(new Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3)));
-            Matrix rotation = Matrix.RotationQuaternion(new Quaternion(0, 0, 0, 1));
+            Matrix rotation = Matrix.RotationYawPitchRoll(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360));
+
             Matrix translation = Matrix.Translation(_v);
 
             var worldMatrix = Matrix.Transpose(scale * rotation * translation);
