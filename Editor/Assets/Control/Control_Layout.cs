@@ -202,6 +202,7 @@ namespace Editor.Assets.Control
         Grid WrapSplitView(Grid _content, Grid _pane)
         {
             Grid grid = new Grid();
+            _pane.Margin = new Thickness(4, 0, 0, 0);
             SplitView split = new SplitView() { IsPaneOpen = true, DisplayMode = SplitViewDisplayMode.Inline, PanePlacement = SplitViewPanePlacement.Right, Pane = _pane, Content = _content };
             BindingOperations.SetBinding(split, SplitView.IsPaneOpenProperty, new Binding() { ElementName = "x_AppBarToggleButton_Status_OpenPane", Path = new PropertyPath("IsChecked") });
             grid.Children.Add(split);
