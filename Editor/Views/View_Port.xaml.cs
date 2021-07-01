@@ -25,6 +25,7 @@ namespace Editor
         internal Engine_Main m_swapChainRenderer;
         internal View_Main m_main;
         internal TextBlock m_debugFrames;
+        internal Grid m_borderBrush;
 
         public View_Port(View_Main _main)
         {
@@ -32,6 +33,7 @@ namespace Editor
 
             m_main = _main;
             m_debugFrames = x_TextBlock_Debug_FPS;
+            m_borderBrush = x_Grid_ViewPort_BorderBrush;
 
             Loaded += SwapChain_Init;
 

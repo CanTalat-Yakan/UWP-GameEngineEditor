@@ -12,7 +12,7 @@
 
     <Grid>
         <Grid Height="10000"/>
-        <Grid BorderThickness="2" BorderBrush="Orange">
+        <Grid x:Name="x_Grid_ViewPort_BorderBrush">
             <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
         </Grid>
 

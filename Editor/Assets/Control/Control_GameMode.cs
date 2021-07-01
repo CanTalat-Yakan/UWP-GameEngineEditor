@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace Editor.Assets.Control
 {
@@ -58,6 +59,9 @@ namespace Editor.Assets.Control
                 if (m_output.m_ClearPlay.IsChecked.Value)
                     m_output.ClearOutput();
 
+            m_main.m_Layout.m_ViewPort.m_borderBrush.BorderBrush = new SolidColorBrush(Windows.UI.Colors.Orange);
+            m_main.m_Layout.m_ViewPort.m_borderBrush.BorderThickness = new Thickness(m_play.IsChecked.Value ? 2 : 0);
+
             SetStatusAppBarButtons(m_play.IsChecked.Value);
 
             SetStatus(m_play.IsChecked.Value ? "Now Playing..." : "Stopped Gamemode");
@@ -65,6 +69,8 @@ namespace Editor.Assets.Control
         internal void Pause()
         {
             m_playMode = m_pause.IsChecked.Value ? EGameMode.PAUSED : EGameMode.PLAYING;
+
+            m_main.m_Layout.m_ViewPort.m_borderBrush.BorderBrush = new SolidColorBrush(m_pause.IsChecked.Value ? Windows.UI.Colors.Red : Windows.UI.Colors.Orange);
 
             SetStatus(m_pause.IsChecked.Value ? "Paused Gamemode" : "Continued Gamemode");
         }
