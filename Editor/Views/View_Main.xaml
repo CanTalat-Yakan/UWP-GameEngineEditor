@@ -38,12 +38,12 @@
                         <CommandBar.SecondaryCommands>
                             <AppBarToggleButton x:Name="x_AppBarToggleButton_Status_OpenPane" Label="Open Pane" IsChecked="True">
                                 <AppBarToggleButton.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Space" Modifiers="Control" />
+                                    <KeyboardAccelerator Key="Tab" Modifiers="Control" />
                                 </AppBarToggleButton.KeyboardAccelerators>
                             </AppBarToggleButton>
                             <AppBarToggleButton Label="Toggle Theme" Click="AppBarToggleButton_Status_Light">
                                 <AppBarToggleButton.KeyboardAccelerators>
-                                    <KeyboardAccelerator Key="Tab" Modifiers="Control" />
+                                    <KeyboardAccelerator Key="T" Modifiers="Control" />
                                 </AppBarToggleButton.KeyboardAccelerators>
                             </AppBarToggleButton>
                         </CommandBar.SecondaryCommands>
