@@ -186,7 +186,6 @@ namespace Editor.Assets.Control
             StackPanel stack = new StackPanel() { Orientation = Orientation.Vertical, Spacing = 10 };
             Expander expander = new Expander() { Header = _header, ExpandDirection = ExpandDirection.Down, HorizontalAlignment = HorizontalAlignment.Stretch, HorizontalContentAlignment = HorizontalAlignment.Left };
             ToggleSwitch @switch = new ToggleSwitch() { IsOn = true, OffContent = "", OnContent = "", HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(0, 4, -69, 0) };
-            NavigationViewItemSeparator seperator = new NavigationViewItemSeparator() { VerticalAlignment = VerticalAlignment.Top, Margin = new Thickness(-10) };
 
             foreach (var item in _properties)
                 stack.Children.Add(item);
@@ -194,7 +193,6 @@ namespace Editor.Assets.Control
             expander.Content = stack;
             grid.Children.Add(expander);
             grid.Children.Add(@switch);
-            grid.Children.Add(seperator);
 
             return grid;
         }
