@@ -70,7 +70,8 @@ namespace Editor
             collection.Add(m_Control.CreateReferenceSlot());
             collection.Add(m_Control.CreateHeader());
             collection.Add(m_Control.WrapExpander(m_Control.CreateEvent()));
-            x_StackPanel_Properties.Children.Add(m_Control.CreateScript("Another Example", collection.ToArray()));
+            x_StackPanel_Properties.Children.Add(m_Control.CreateScript("Example", collection.ToArray()));
+            x_StackPanel_Properties.Children.Add(m_Control.CreateScript("Another", m_Control.CreateNumberInput()));
         }
 
 
