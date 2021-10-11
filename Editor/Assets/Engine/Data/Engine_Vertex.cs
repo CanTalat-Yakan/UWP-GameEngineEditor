@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Vector2 = SharpDX.Vector2;
+﻿using Vector2 = SharpDX.Vector2;
 using Vector3 = SharpDX.Vector3;
 
-namespace Editor.Assets.Engine.Helper
+namespace Editor.Assets.Engine.Data
 {
     public struct Engine_Vertex
     {

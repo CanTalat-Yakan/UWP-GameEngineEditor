@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
-using Editor.Assets.Engine.Helper;
+using Editor.Assets.Engine.Data;
 
 namespace Editor.Assets.Engine.Utilities
 {    

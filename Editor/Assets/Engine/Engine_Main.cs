@@ -17,7 +17,7 @@
     using Vector2 = SharpDX.Vector2;
     using Vector3 = SharpDX.Vector3;
     using Vector4 = SharpDX.Vector4;
-    using Editor.Assets.Engine.Helper;
+    using Editor.Assets.Engine.Data;
     using Editor.Assets.Engine.Utilities;
 
     internal class Engine_Main
@@ -491,4 +491,3 @@
         }
     }
 }
-
