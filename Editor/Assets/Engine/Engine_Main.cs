@@ -19,6 +19,7 @@
     using Vector4 = SharpDX.Vector4;
     using Editor.Assets.Engine.Data;
     using Editor.Assets.Engine.Utilities;
+    using Editor.Assets.Engine.Components;
 
     internal class Engine_Main
     {
@@ -47,7 +48,7 @@
         Windows.Foundation.Point? m_tmpPoint = new Windows.Foundation.Point();
         Windows.Foundation.Point m_pointerPosition = new Windows.Foundation.Point();
         D3D11.Buffer m_viewConstantsBuffer;
-        ViewConstantsBuffer m_viewConstants;
+        SViewConstantsBuffer m_viewConstants;
 
         internal bool m_IsRightButtonPressed = false;
         internal float m_MouseSensitivity = 0.2f;
@@ -239,7 +240,7 @@
                 0.1f, 1000);
 
             var viewProj = Matrix.Transpose(view * proj);
-            m_viewConstants = new ViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
+            m_viewConstants = new SViewConstantsBuffer() { VP = viewProj, WCP = m_cameraPosition };
         }
 
         void InitialiseScene()
@@ -333,7 +334,7 @@
 
         void CreateCube(Vector3 _v)
         {
-            Engine_Mesh obj = new Engine_Mesh();
+            Engine_Obj obj = new Engine_Obj();
             float hs = 0.5f;
             obj.Vertices = new List<Engine_Vertex>{
                 // Front Face
@@ -442,7 +443,7 @@
             Matrix translation = Matrix.Translation(_v);
 
             var worldMatrix = Matrix.Transpose(scale * rotation * translation);
-            PerModelConstantBuffer cb = new PerModelConstantBuffer() { World = worldMatrix };
+            SPerModelConstantBuffer cb = new SPerModelConstantBuffer() { World = worldMatrix };
 
             bufferInfo.constantsBuffer = D3D11.Buffer.Create(
               m_device,
@@ -451,7 +452,7 @@
 
             lock (m_bufferMap)
             {
-                m_bufferMap.Add(obj.Id, bufferInfo);
+                //m_bufferMap.Add(obj.Id, bufferInfo);
             }
         }
 

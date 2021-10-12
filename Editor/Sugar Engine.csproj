@@ -138,16 +138,22 @@
     <Compile Include="Assets\Control\Control_Settings.cs" />
     <Compile Include="Assets\Control\Control_TreeView.cs" />
     <Compile Include="Assets\Control\Control_TabViewPage.cs" />
+    <Compile Include="Assets\Engine\Components\Engine_Light.cs" />
     <Compile Include="Assets\Engine\Data\Engine_ConstantsBuffer.cs" />
     <Compile Include="Assets\Engine\Data\Engine_MeshBufferInfo.cs" />
     <Compile Include="Assets\Engine\Data\Engine_Vertex.cs" />
-    <Compile Include="Assets\Engine\Utilities\Engine_Mesh.cs" />
+    <Compile Include="Assets\Engine\Components\Engine_Material.cs" />
+    <Compile Include="Assets\Engine\Components\Engine_Camera.cs" />
+    <Compile Include="Assets\Engine\Data\Engine_MeshInfo.cs" />
+    <Compile Include="Assets\Engine\Components\Engine_Mesh.cs" />
     <Compile Include="Assets\Engine\Engine_Main.cs" />
-    <Compile Include="Assets\Engine\Utilities\Engine_Mouse.cs" />
-    <Compile Include="Assets\Engine\Utilities\Engine_ObjLoader.cs" />
+    <Compile Include="Assets\Engine\Helper\Engine_ObjLoader.cs" />
+    <Compile Include="Assets\Engine\Utilities\Engine_Object.cs" />
+    <Compile Include="Assets\Engine\Utilities\Engine_Input.cs" />
     <Compile Include="Assets\Engine\Utilities\Engine_Renderer.cs" />
     <Compile Include="Assets\Engine\Utilities\Engine_Scene.cs" />
     <Compile Include="Assets\Engine\Utilities\Engine_Time.cs" />
+    <Compile Include="Assets\Engine\Components\Engine_Transform.cs" />
     <Compile Include="Views\View_Files.xaml.cs">
       <DependentUpon>View_Files.xaml</DependentUpon>
     </Compile>
@@ -276,6 +282,9 @@
     <PackageReference Include="SharpDX.Mathematics">
       <Version>4.2.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Engine\_Editor\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

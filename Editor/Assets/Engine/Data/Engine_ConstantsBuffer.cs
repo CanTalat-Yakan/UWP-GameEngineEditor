@@ -1,15 +1,15 @@
-﻿namespace Editor.Assets.Engine.Data
-{
-    using SharpDX.Mathematics.Interop;
+﻿using SharpDX.Mathematics.Interop;
 
-    public struct ViewConstantsBuffer
+namespace Editor.Assets.Engine.Data
+{
+    public struct SViewConstantsBuffer
     {
         public RawMatrix VP;
         public RawVector3 WCP;
         public float pad;
     }
 
-    public struct PerModelConstantBuffer
+    public struct SPerModelConstantBuffer
     {
         public RawMatrix World;
     }
