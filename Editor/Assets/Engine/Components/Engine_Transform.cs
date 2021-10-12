@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Editor.Assets.Engine.Data;
 using SharpDX;
 
 namespace Editor.Assets.Engine.Components
 {
     class Engine_Transform
     {
+        internal SPerModelConstantBuffer m_ConstantsBuffer { get => new SPerModelConstantBuffer() { World = m_WorldMatrix }; }
         internal Matrix m_WorldMatrix = new Matrix();
         internal Vector3 m_Position = new Vector3();
         internal Vector4 m_Rotation = new Vector4(0, 0, 0, 1);
@@ -22,6 +19,5 @@ namespace Editor.Assets.Engine.Components
 
             m_WorldMatrix = Matrix.Transpose(scale * rotation * translation);
         }
-
     }
 }

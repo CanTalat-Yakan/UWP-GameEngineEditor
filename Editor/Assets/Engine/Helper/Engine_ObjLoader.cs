@@ -10,7 +10,7 @@ namespace Editor.Assets.Engine.Helper
     enum EPrimitives { Cube, Plane, Cylinder, Pyramid, Sphere, }
     class Engine_ObjLoader
     {
-        internal Engine_MeshInfo Load(EPrimitives _type)
+        internal static Engine_MeshInfo Load(EPrimitives _type)
         {
             Engine_MeshInfo obj = new Engine_MeshInfo();
 

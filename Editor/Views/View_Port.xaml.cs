@@ -38,6 +38,7 @@ namespace Editor
             Loaded += SwapChain_Init;
 
             PointerMoved += ViewPort_PointerMoved;
+            //PointerPressed += ViewPort_PointerPressed;
             Window.Current.CoreWindow.PointerReleased += ViewPort_PointerReleased;
             Window.Current.CoreWindow.KeyDown += Grid_KeyDown;
             Window.Current.CoreWindow.KeyUp += Grid_KeyUp;

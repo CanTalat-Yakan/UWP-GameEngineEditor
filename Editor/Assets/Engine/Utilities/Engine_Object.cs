@@ -1,22 +1,18 @@
 ﻿using Editor.Assets.Engine.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Editor.Assets.Engine.Data;
 
 namespace Editor.Assets.Engine.Utilities
 {
     class Engine_Object
     {
-        Engine_Transform m_transform;
-        Engine_Material m_material;
-        Engine_Mesh m_mesh;
+        internal Engine_Transform m_transform = new Engine_Transform();
+        internal Engine_Material m_material;
+        internal Engine_Mesh m_mesh;
 
-        internal void Update_Render()
+        internal void Update_Render(SViewConstantsBuffer _viewData)
         {
             m_transform.Udate();
-            m_material.Render();
+            m_material.Render(m_transform.m_ConstantsBuffer, _viewData);
             m_mesh.Render();
         }
     }

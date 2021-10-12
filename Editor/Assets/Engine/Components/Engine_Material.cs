@@ -3,6 +3,7 @@ using Editor.Assets.Engine.Utilities;
 using SharpDX.D3DCompiler;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
+using Editor.Assets.Engine.Helper;
 
 namespace Editor.Assets.Engine.Components
 {
@@ -108,8 +109,11 @@ namespace Editor.Assets.Engine.Components
             m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(1, m_view);
         }
 
-        void CreateTextureAndSampler()
+        void CreateTextureAndSampler(string _imageFileName)
         {
+            var texture = Engine_ImgLoader.CreateTexture2DFromBitmap(m_d3d.m_device, Engine_ImgLoader.LoadBitmap(new SharpDX.WIC.ImagingFactory2(), _imageFileName));
+            D3D11.ShaderResourceView textureView = new D3D11.ShaderResourceView(m_d3d.m_device, texture);
+
             D3D11.SamplerStateDescription samplerStateDescription = new D3D11.SamplerStateDescription
             {
                 Filter = D3D11.Filter.Anisotropic,
@@ -125,6 +129,7 @@ namespace Editor.Assets.Engine.Components
 
             m_d3d.m_deviceContext.PixelShader.SetShaderResource(0, m_resourceView);
             m_d3d.m_deviceContext.PixelShader.SetSampler(0, m_sampler);
+
         }
     }
 }

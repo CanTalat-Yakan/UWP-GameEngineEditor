@@ -12,7 +12,6 @@ namespace Editor.Assets.Engine.Utilities
 
         internal void Update()
         {
-
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
                 m_time += watch.ElapsedMilliseconds;
