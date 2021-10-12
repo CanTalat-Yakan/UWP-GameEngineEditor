@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Editor.Assets.Engine.Utilities
 {
-    class Engine_Mouse
+    class Engine_Input
     {
     }
 }
