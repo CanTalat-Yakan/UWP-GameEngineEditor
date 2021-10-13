@@ -75,8 +75,8 @@ namespace Editor.Assets.Engine.Components
                 CpuAccessFlags = D3D11.CpuAccessFlags.Write,
                 Usage = D3D11.ResourceUsage.Dynamic,
             };
-            m_model = D3D11.Buffer.Create(m_d3d.m_device, ref cbModel, bufferDescription);
-            m_view = D3D11.Buffer.Create(m_d3d.m_device, ref cbView, bufferDescription);
+            m_view = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbView);
+            m_model = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbModel);
             m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(0, m_model);
             m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(1, m_view);
             #endregion

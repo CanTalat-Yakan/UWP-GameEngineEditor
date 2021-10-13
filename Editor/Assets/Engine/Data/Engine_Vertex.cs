@@ -3,7 +3,7 @@ using Vector3 = SharpDX.Vector3;
 
 namespace Editor.Assets.Engine.Data
 {
-    public struct Engine_Vertex
+    struct Engine_Vertex
     {
         public Vector3 pos;
         public Vector2 texCoord;

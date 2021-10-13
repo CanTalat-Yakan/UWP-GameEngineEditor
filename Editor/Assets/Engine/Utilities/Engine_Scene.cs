@@ -38,10 +38,14 @@ namespace Editor.Assets.Engine.Utilities
         }
         internal void Start()
         {
-            CreateCube(0, 0, 1);
-            CreateCube(0, 0, -1);
+            CreateCube(0, 0, 2);
+            CreateCube(0, 0, -2);
+            CreateCube(0, 2, 0);
+            CreateCube(0, -2, 0);
+            CreateCube(2, 0, 0);
+            CreateCube(-2, 0, 0);
             CreateCube(0, -1, -1);
-            CreateCube(-1, -1, -1);
+            CreateCube(-2, 0, -2);
             CreateCube(1, 0, 0);
             CreateCube(1, 1, 1);
             CreateCube(2, 0, 0);

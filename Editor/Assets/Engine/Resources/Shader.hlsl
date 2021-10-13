@@ -1,11 +1,11 @@
-﻿cbuffer ConstantBuffer : register(b0)
+﻿cbuffer PerModelConstantBuffer : register(b0)
+{
+    matrix World;
+};
+cbuffer ViewConstantsBuffer : register(b1)
 {
     matrix VP;
     float3 WCP;
-};
-cbuffer PerModelConstantBuffer : register(b1)
-{
-    matrix World;
 };
 
 struct appdata

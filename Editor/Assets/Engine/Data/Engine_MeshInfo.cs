@@ -2,7 +2,7 @@
 
 namespace Editor.Assets.Engine.Data
 {
-    class Engine_MeshInfo
+    struct Engine_MeshInfo
     {
         public List<Engine_Vertex> Vertices;
         public List<ushort> Indices;

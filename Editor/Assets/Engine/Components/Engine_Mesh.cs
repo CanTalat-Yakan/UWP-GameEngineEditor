@@ -4,6 +4,7 @@ using Editor.Assets.Engine.Data;
 using Editor.Assets.Engine.Utilities;
 using D3D11 = SharpDX.Direct3D11;
 
+
 namespace Editor.Assets.Engine.Components
 {
     public class Engine_Mesh
@@ -21,7 +22,7 @@ namespace Editor.Assets.Engine.Components
 
         internal Engine_Mesh(Engine_MeshInfo _obj)
         {
-            #region //Get Instance of DirectX and Time
+            #region //Get Instance of DirectX
             m_d3d = Engine_Renderer.Instance;
             #endregion
 
@@ -56,7 +57,7 @@ namespace Editor.Assets.Engine.Components
                 fixed (ushort* p = _obj.Indices.ToArray())
                 {
                     IntPtr ptr = (IntPtr)p;
-                    m_vertexBuffer = new D3D11.Buffer(
+                    m_indexBuffer = new D3D11.Buffer(
                       m_d3d.m_device,
                       ptr,
                       new D3D11.BufferDescription(
@@ -72,7 +73,7 @@ namespace Editor.Assets.Engine.Components
         {
             m_d3d.RenderMesh(
                 m_vertexBuffer, m_vertexStride, 
-                m_indexBuffer, m_indexStride);
+                m_indexBuffer, m_indexCount);
         }
     }
 }

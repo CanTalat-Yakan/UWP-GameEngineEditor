@@ -19,16 +19,20 @@ namespace Editor.Assets.Engine
 
             m_scene.Awake();
             m_scene.Start();
+
             Windows.UI.Xaml.Media.CompositionTarget.Rendering += (s, e) =>
             {
-                m_input.Update();
                 m_render.Clear();
+
+                m_input.Update();
+                m_scene.Update();
+                m_scene.LateUpdate();
                 m_time.Update();
+
                 _textBlock.Text = m_time.m_profile;
                 _textBlock.Text += "\n" + m_render.m_profile;
                 _textBlock.Text += "\n" + m_scene.m_profile;
-                m_scene.Update();
-                m_scene.LateUpdate();
+
                 m_scene.Render();
                 m_render.Present();
             };

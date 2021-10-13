@@ -140,7 +140,6 @@
     <Compile Include="Assets\Control\Control_TabViewPage.cs" />
     <Compile Include="Assets\Engine\Components\Engine_Light.cs" />
     <Compile Include="Assets\Engine\Data\Engine_ConstantsBuffer.cs" />
-    <Compile Include="Assets\Engine\Data\Engine_MeshBufferInfo.cs" />
     <Compile Include="Assets\Engine\Data\Engine_Vertex.cs" />
     <Compile Include="Assets\Engine\Components\Engine_Material.cs" />
     <Compile Include="Assets\Engine\Components\Engine_Camera.cs" />

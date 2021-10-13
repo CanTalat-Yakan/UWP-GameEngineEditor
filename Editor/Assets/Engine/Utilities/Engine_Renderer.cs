@@ -24,6 +24,7 @@ namespace Editor.Assets.Engine.Utilities
         D3D11.Texture2D m_depthStencilTexture;
         D3D11.Texture2DDescription m_depthStencilTextureDescription;
         D3D11.DepthStencilView m_depthStencilView;
+        D3D11.BlendState m_blendState;
 
 
         internal Engine_Renderer(SwapChainPanel _swapChainPanel)
@@ -116,6 +117,24 @@ namespace Editor.Assets.Engine.Utilities
             m_deviceContext.Rasterizer.State = new D3D11.RasterizerState(m_device, rasterizerDesc);
             #endregion
 
+            #region //Create Blend State
+            D3D11.BlendStateDescription m_blendStateDesc = new D3D11.BlendStateDescription();
+            var blendDesc = new D3D11.RenderTargetBlendDescription()
+            {
+                IsBlendEnabled = true,
+                SourceBlend = D3D11.BlendOption.SourceAlpha,
+                DestinationBlend = D3D11.BlendOption.InverseSourceAlpha,
+                BlendOperation = D3D11.BlendOperation.Add,
+                SourceAlphaBlend = D3D11.BlendOption.One,
+                DestinationAlphaBlend = D3D11.BlendOption.Zero,
+                AlphaBlendOperation = D3D11.BlendOperation.Add,
+                RenderTargetWriteMask = D3D11.ColorWriteMaskFlags.All
+            };
+
+            m_blendStateDesc.RenderTarget[0] = blendDesc;
+            //m_blendState = m_deviceContext.OutputMerger.BlendState = new D3D11.BlendState(m_device, m_blendStateDesc);
+            #endregion
+
             #region //Set ViewPort
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
             #endregion
@@ -124,9 +143,10 @@ namespace Editor.Assets.Engine.Utilities
         internal void Clear()
         {
             //Clear back buffer with solid color
-            var col = new RawColor4(0.2f, 0.2f, 0.2f,  1);
+            var col = new RawColor4(0.15f, 0.15f, 0.15f, 1);
             m_deviceContext.ClearRenderTargetView(m_backBufferView, col);
             m_deviceContext.ClearDepthStencilView(m_depthStencilView, D3D11.DepthStencilClearFlags.Depth, 1f, 0);
+            m_deviceContext.OutputMerger.SetRenderTargets(m_depthStencilView, m_backBufferView);
         }
 
         internal void Present()
@@ -138,8 +158,8 @@ namespace Editor.Assets.Engine.Utilities
         {
             m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
             m_deviceContext.InputAssembler.SetIndexBuffer(_indexBuffer, DXGI.Format.R16_UInt, 0);
+            //m_deviceContext.OutputMerger.SetBlendState(m_blendState, new RawColor4(255, 255, 255, 255), 0);
             m_deviceContext.InputAssembler.PrimitiveTopology = SharpDX.Direct3D.PrimitiveTopology.TriangleList;
-
             m_deviceContext.DrawIndexed(_indexCount, 0, 0);
         }
 
