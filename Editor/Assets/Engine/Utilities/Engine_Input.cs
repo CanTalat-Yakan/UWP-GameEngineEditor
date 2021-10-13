@@ -4,16 +4,42 @@ using System.Threading;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Input;
+using Vector2 = SharpDX.Vector2;
 
 namespace Editor.Assets.Engine.Utilities
 {
     class Engine_Input
     {
+        public static Engine_Input Instance { get; private set; }
+
         enum Input_State { DOWN, UP, PRESSED }
         Dictionary<VirtualKey, bool> m_virtualKeyDic = new Dictionary<VirtualKey, bool>();
         Windows.UI.Input.PointerPoint m_pointer;
+        Vector2 m_mouseAxis = Vector2.Zero;
+        Windows.Foundation.Point m_tmpPoint = new Windows.Foundation.Point();
+        Windows.Foundation.Point m_pointerPosition = new Windows.Foundation.Point();
 
-        public bool GetKey(VirtualKey _key) { return m_virtualKeyDic[_key]; }
+        public Engine_Input()
+        {
+            #region //Set Instance
+            Instance = this;
+            #endregion
+        }
+
+        public void Update()
+        {
+            #region //Get PointerDelta
+            m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
+
+            m_mouseAxis.X = (float)(m_pointerPosition.X - m_tmpPoint.X);
+            m_mouseAxis.Y = (float)(m_pointerPosition.Y - m_tmpPoint.Y);
+
+            m_tmpPoint = m_pointerPosition;
+            #endregion
+        }
+
+        public bool GetKey(VirtualKey _key) { return false; }
+        public Vector2 GetMouseAxis() { return m_mouseAxis; }
 
         internal void KeyDown(CoreWindow sender, KeyEventArgs e)
         {
@@ -36,14 +62,22 @@ namespace Editor.Assets.Engine.Utilities
 
         internal void PointerMoved(object sender, PointerRoutedEventArgs e)
         {
+
             if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
             {
                 m_pointer = e.GetCurrentPoint(null);
                 _ = m_pointer.Properties.IsRightButtonPressed;
+
             }
 
             e.Handled = true;
         }
+
+        internal void PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
         internal void PointerReleased(CoreWindow sender, PointerEventArgs e)
         {
             m_pointer = e.CurrentPoint;

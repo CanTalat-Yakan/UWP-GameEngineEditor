@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using SharpDX;
+using SharpDX.Mathematics.Interop;
+using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
@@ -8,6 +11,8 @@ namespace Editor.Assets.Engine.Utilities
     class Engine_Renderer
     {
         public static Engine_Renderer Instance { get; private set; }
+
+        internal string m_profile;
 
         internal D3D11.Device2 m_device;
         internal D3D11.DeviceContext m_deviceContext;
@@ -20,13 +25,16 @@ namespace Editor.Assets.Engine.Utilities
         D3D11.Texture2DDescription m_depthStencilTextureDescription;
         D3D11.DepthStencilView m_depthStencilView;
 
-        bool m_initialized = false;
 
-
-        internal Engine_Renderer()
+        internal Engine_Renderer(SwapChainPanel _swapChainPanel)
         {
             #region //Create Instance
             Instance = this;
+            #endregion
+
+            #region //Set SwapChainPanel and SizeChanger
+            m_swapChainPanel = _swapChainPanel;
+            m_swapChainPanel.SizeChanged += OnSwapChainPanelSizeChanged;
             #endregion
 
             #region //Create Buffer Description for swapChain description
@@ -111,14 +119,13 @@ namespace Editor.Assets.Engine.Utilities
             #region //Set ViewPort
             m_deviceContext.Rasterizer.SetViewport(0, 0, (int)m_swapChainPanel.ActualWidth, (int)m_swapChainPanel.ActualHeight);
             #endregion
-
-            m_initialized = true;
         }
 
         internal void Clear()
         {
             //Clear back buffer with solid color
-            m_deviceContext.ClearRenderTargetView(m_backBufferView, new RawColor4(0.4f, 0.74f, 0.86f, 1));
+            var col = new RawColor4(0.2f, 0.2f, 0.2f,  1);
+            m_deviceContext.ClearRenderTargetView(m_backBufferView, col);
             m_deviceContext.ClearDepthStencilView(m_depthStencilView, D3D11.DepthStencilClearFlags.Depth, 1f, 0);
         }
 
@@ -138,14 +145,14 @@ namespace Editor.Assets.Engine.Utilities
 
         internal void OnSwapChainPanelSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(!m_initialized) return;
-
             var newSize = new Size2((int)e.NewSize.Width, (int)e.NewSize.Height);
 
             SharpDX.Utilities.Dispose(ref m_backBufferView);
             SharpDX.Utilities.Dispose(ref m_backBufferTexture);
             SharpDX.Utilities.Dispose(ref m_depthStencilView);
             SharpDX.Utilities.Dispose(ref m_depthStencilTexture);
+
+            m_profile = e.NewSize.Width.ToString() + "x" + e.NewSize.Height.ToString();
 
             m_swapChain.ResizeBuffers(
               m_swapChain.Description.BufferCount,

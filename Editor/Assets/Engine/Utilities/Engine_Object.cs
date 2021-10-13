@@ -12,7 +12,7 @@ namespace Editor.Assets.Engine.Utilities
         internal void Update_Render(SViewConstantsBuffer _viewData)
         {
             m_transform.Udate();
-            m_material.Render(m_transform.m_ConstantsBuffer, _viewData);
+            m_material.Render(m_transform.m_constantsBuffer, _viewData);
             m_mesh.Render();
         }
     }
