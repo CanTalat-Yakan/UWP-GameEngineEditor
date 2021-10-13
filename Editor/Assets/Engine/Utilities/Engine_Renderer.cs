@@ -41,7 +41,6 @@ namespace Editor.Assets.Engine.Utilities
             #region //Create Buffer Description for swapChain description
             var swapChainDescription = new DXGI.SwapChainDescription1()
             {
-                AlphaMode = DXGI.AlphaMode.Ignore,
                 BufferCount = 2,
                 Format = DXGI.Format.R8G8B8A8_UNorm,
                 Height = (int)m_swapChainPanel.RenderSize.Height,
@@ -79,9 +78,9 @@ namespace Editor.Assets.Engine.Utilities
             #region //Create depth stencil view
             m_depthStencilTextureDescription = new D3D11.Texture2DDescription
             {
-                Format = DXGI.Format.D16_UNorm,
+                Format = DXGI.Format.D24_UNorm_S8_UInt,
                 ArraySize = 1,
-                MipLevels = 1,
+                MipLevels = 0, //test 1
                 Width = swapChainDescription.Width,
                 Height = swapChainDescription.Height,
                 SampleDescription = new DXGI.SampleDescription(1, 0),
@@ -132,7 +131,7 @@ namespace Editor.Assets.Engine.Utilities
             };
 
             m_blendStateDesc.RenderTarget[0] = blendDesc;
-            //m_blendState = m_deviceContext.OutputMerger.BlendState = new D3D11.BlendState(m_device, m_blendStateDesc);
+            m_blendState = m_deviceContext.OutputMerger.BlendState = new D3D11.BlendState(m_device, m_blendStateDesc);
             #endregion
 
             #region //Set ViewPort
@@ -158,7 +157,7 @@ namespace Editor.Assets.Engine.Utilities
         {
             m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(_vertexBuffer, _vertexStride, 0));
             m_deviceContext.InputAssembler.SetIndexBuffer(_indexBuffer, DXGI.Format.R16_UInt, 0);
-            //m_deviceContext.OutputMerger.SetBlendState(m_blendState, new RawColor4(255, 255, 255, 255), 0);
+            m_deviceContext.OutputMerger.SetBlendState(m_blendState);
             m_deviceContext.InputAssembler.PrimitiveTopology = SharpDX.Direct3D.PrimitiveTopology.TriangleList;
             m_deviceContext.DrawIndexed(_indexCount, 0, 0);
         }

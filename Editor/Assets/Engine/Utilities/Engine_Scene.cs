@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vector2 = SharpDX.Vector2;
+using Vector3 = SharpDX.Vector3;
 
 namespace Editor.Assets.Engine.Utilities
 {
@@ -26,9 +28,9 @@ namespace Editor.Assets.Engine.Utilities
             Engine_Object gObject = new Engine_Object();
             gObject.m_mesh = new Engine_Mesh(Engine_ObjLoader.Load(EPrimitives.Cube));
             gObject.m_material = new Engine_Material(SHADER_FILE, IMAGE_FILE);
-            gObject.m_transform.m_position = new SharpDX.Vector3(_x, _y, _z);
-            gObject.m_transform.m_scale = new SharpDX.Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3));
-            //gObject.m_transform.m_Rotation = new SharpDX.Vector4(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360), 1);
+            gObject.m_transform.m_position = new Vector3(_x, _y, _z);
+            gObject.m_transform.m_scale = new Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3));
+            gObject.m_transform.m_rotation = new Vector3(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360));
             m_gameObject.Add(gObject);
         }
 
@@ -44,12 +46,6 @@ namespace Editor.Assets.Engine.Utilities
             CreateCube(0, -2, 0);
             CreateCube(2, 0, 0);
             CreateCube(-2, 0, 0);
-            CreateCube(0, -1, -1);
-            CreateCube(-2, 0, -2);
-            CreateCube(1, 0, 0);
-            CreateCube(1, 1, 1);
-            CreateCube(2, 0, 0);
-            CreateCube(0, 2, 4);
         }
         internal void Update()
         {
