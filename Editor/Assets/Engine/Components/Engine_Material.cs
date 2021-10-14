@@ -33,8 +33,6 @@ namespace Editor.Assets.Engine.Components
                 new D3D11.InputElement("POSITION", 0, DXGI.Format.R32G32B32_Float, 0, 0),
                 new D3D11.InputElement("TEXCOORD", 0, DXGI.Format.R32G32_Float, D3D11.InputElement.AppendAligned, 0),
                 new D3D11.InputElement("NORMAL", 0, DXGI.Format.R32G32B32_Float, D3D11.InputElement.AppendAligned, 0)};
-
-            m_d3d.m_deviceContext.InputAssembler.InputLayout = m_inputLayout;
             #endregion
 
             #region //Create VertexShader
@@ -44,25 +42,17 @@ namespace Editor.Assets.Engine.Components
                 m_vertexShader = new D3D11.VertexShader(m_d3d.m_device, vsResult.Bytecode.Data);
                 m_inputLayout = new D3D11.InputLayout(m_d3d.m_device, vsResult.Bytecode, inputElements);
             }
-
-            m_d3d.m_deviceContext.VertexShader.Set(m_vertexShader);
             #endregion
 
             #region //CreatePixelShader 
             using (var psResult = ShaderBytecode.CompileFromFile(_shaderFileName, "PS", "ps_4_0", ShaderFlags.None))
                 m_pixelShader = new D3D11.PixelShader(m_d3d.m_device, psResult.Bytecode.Data);
-
-            m_d3d.m_deviceContext.PixelShader.Set(m_pixelShader);
             #endregion
 
             #region //Create GeometryShader
             if (_includeGeometryShader)
-            {
                 using (var psResult = ShaderBytecode.CompileFromFile(_shaderFileName, "GS", "gs_4_0", ShaderFlags.None))
                     m_geometryShader = new D3D11.GeometryShader(m_d3d.m_device, psResult.Bytecode.Data);
-
-                m_d3d.m_deviceContext.GeometryShader.Set(m_geometryShader);
-            }
             #endregion
 
             #region //Create ConstantBuffers for PerModel and ViewConstants
@@ -75,10 +65,9 @@ namespace Editor.Assets.Engine.Components
                 CpuAccessFlags = D3D11.CpuAccessFlags.Write,
                 Usage = D3D11.ResourceUsage.Dynamic,
             };
+
             m_view = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbView);
             m_model = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbModel);
-            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(0, m_model);
-            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(1, m_view);
             #endregion
 
             #region //Create Texture and Sampler
@@ -96,10 +85,8 @@ namespace Editor.Assets.Engine.Components
                 MinimumLod = 0,
                 MaximumLod = float.MaxValue,
             };
-            m_sampler = new D3D11.SamplerState(m_d3d.m_device, samplerStateDescription);
 
-            m_d3d.m_deviceContext.PixelShader.SetShaderResource(0, m_resourceView);
-            m_d3d.m_deviceContext.PixelShader.SetSampler(0, m_sampler);
+            m_sampler = new D3D11.SamplerState(m_d3d.m_device, samplerStateDescription);
             #endregion
         }
 

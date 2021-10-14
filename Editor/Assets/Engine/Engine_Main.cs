@@ -25,16 +25,20 @@ namespace Editor.Assets.Engine
                 m_render.Clear();
 
                 m_input.Update();
+
                 m_scene.Update();
                 m_scene.LateUpdate();
+
+                m_input.LateUpdate();
+
                 m_time.Update();
+
+                m_scene.Render();
+                m_render.Present();
 
                 _textBlock.Text = m_time.m_profile;
                 _textBlock.Text += "\n" + m_render.m_profile;
                 _textBlock.Text += "\n" + m_scene.m_profile;
-
-                m_scene.Render();
-                m_render.Present();
             };
         }
     }

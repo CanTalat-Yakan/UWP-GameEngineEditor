@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
-
+using Vector3 = SharpDX.Vector3;
 
 namespace Editor.Assets.Engine.Editor
 {
@@ -24,23 +24,29 @@ namespace Editor.Assets.Engine.Editor
 
         internal void Update()
         {
-            m_camera.m_transform.m_rotation.X -= m_input.GetMouseAxis().X;
-            m_camera.m_transform.m_rotation.Y -= m_input.GetMouseAxis().Y;
+            float speed = 50;
+            speed *= (float)Engine_Time.m_delta;
+            m_camera.m_transform.m_rotation.X -= m_input.GetMouseAxis().X * speed;
+            m_camera.m_transform.m_rotation.Y -= m_input.GetMouseAxis().Y * speed;
 
-            float speed = 2;
+            speed = 2;
             if (m_input.GetKey(VirtualKey.LeftShift)) speed *= 4;
             if (m_input.GetKey(VirtualKey.LeftControl)) speed *= 0.25f;
+            speed *= (float)Engine_Time.m_delta;
 
-            if (m_input.GetKey(VirtualKey.W)) m_camera.m_transform.m_position += speed * m_camera.m_front;
-            if (m_input.GetKey(VirtualKey.S)) m_camera.m_transform.m_position -= speed * m_camera.m_front;
-            if (m_input.GetKey(VirtualKey.A)) m_camera.m_transform.m_position += speed * m_camera.m_right;
-            if (m_input.GetKey(VirtualKey.D)) m_camera.m_transform.m_position -= speed * m_camera.m_right;
-            if (m_input.GetKey(VirtualKey.E)) m_camera.m_transform.m_position += speed * m_camera.m_up;
-            if (m_input.GetKey(VirtualKey.Q)) m_camera.m_transform.m_position -= speed * m_camera.m_up;
-            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.W)) m_camera.m_transform.m_position += speed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.W)) m_camera.m_transform.m_position -= speed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.S)) m_camera.m_transform.m_position += speed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.S)) m_camera.m_transform.m_position -= speed * m_camera.m_localUp;
+            Vector3 direction = new Vector3();
+            if (m_input.GetKey(VirtualKey.W)) direction += speed * m_camera.m_front;
+            if (m_input.GetKey(VirtualKey.S)) direction -= speed * m_camera.m_front;
+            if (m_input.GetKey(VirtualKey.A)) direction += speed * m_camera.m_right;
+            if (m_input.GetKey(VirtualKey.D)) direction -= speed * m_camera.m_right;
+            if (m_input.GetKey(VirtualKey.E)) direction += speed * m_camera.m_up;
+            if (m_input.GetKey(VirtualKey.Q)) direction -= speed * m_camera.m_up;
+            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.W)) direction += speed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.W)) direction -= speed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.S)) direction += speed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.S)) direction -= speed * m_camera.m_localUp;
+
+            m_camera.m_transform.m_position += direction;
         }
     }
 }

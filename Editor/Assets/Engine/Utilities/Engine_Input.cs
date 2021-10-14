@@ -4,6 +4,7 @@ using System.Threading;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Input;
 using Vector2 = SharpDX.Vector2;
 
 namespace Editor.Assets.Engine.Utilities
@@ -12,12 +13,21 @@ namespace Editor.Assets.Engine.Utilities
     {
         public static Engine_Input Instance { get; private set; }
 
-        enum Input_State { DOWN, UP, PRESSED }
-        Dictionary<VirtualKey, bool> m_virtualKeyDic = new Dictionary<VirtualKey, bool>();
-        Windows.UI.Input.PointerPoint m_pointer;
+        public enum Input_State { DOWN, UP, PRESSED }
+
+        Dictionary<VirtualKey, bool[]> m_virtualKeyDic = new Dictionary<VirtualKey, bool[]>();
+        List<VirtualKey> m_bufferKeys = new List<VirtualKey>();
+
+
+        Dictionary<PointerPointProperties, bool[]> m_pointerPointDic = new Dictionary<PointerPointProperties, bool[]>();
+        List<PointerPointProperties> m_bufferPoints = new List<PointerPointProperties>();
+
+        PointerPoint m_pointer;
+
         Vector2 m_mouseAxis = Vector2.Zero;
         Windows.Foundation.Point m_tmpPoint = new Windows.Foundation.Point();
         Windows.Foundation.Point m_pointerPosition = new Windows.Foundation.Point();
+
 
         public Engine_Input()
         {
@@ -37,37 +47,58 @@ namespace Editor.Assets.Engine.Utilities
             m_tmpPoint = m_pointerPosition;
             #endregion
         }
+        public void LateUpdate()
+        {
+            foreach (var item in m_bufferKeys)
+                m_virtualKeyDic[item] = new bool[3] { false, false, false };
 
-        public bool GetKey(VirtualKey _key) { return false; }
+            m_bufferKeys.Clear();
+        }
+
+        public bool GetKey(VirtualKey _key, Input_State _state = Input_State.PRESSED)
+        {
+            if (m_virtualKeyDic.ContainsKey(_key))
+                return m_virtualKeyDic[_key][(int)_state];
+
+            return false;
+        }
+        public bool GetButton(PointerPointProperties _point, Input_State _state = Input_State.PRESSED)
+        {
+            if (m_pointerPointDic.ContainsKey(_point))
+                return m_pointerPointDic[_point][(int)_state];
+
+            return false;
+        }
         public Vector2 GetMouseAxis() { return m_mouseAxis; }
+
 
         internal void KeyDown(CoreWindow sender, KeyEventArgs e)
         {
             if (!m_virtualKeyDic.ContainsKey(e.VirtualKey))
-                m_virtualKeyDic.Add(e.VirtualKey, true);
+                m_virtualKeyDic.Add(e.VirtualKey, new bool[3] { true, false, true });
             else
-                m_virtualKeyDic[e.VirtualKey] = true;
+                m_virtualKeyDic[e.VirtualKey] = new bool[3] { true, false, true };
 
             e.Handled = true;
         }
         internal void KeyUp(CoreWindow sender, KeyEventArgs e)
         {
             if (!m_virtualKeyDic.ContainsKey(e.VirtualKey))
-                m_virtualKeyDic.Add(e.VirtualKey, false);
+                m_virtualKeyDic.Add(e.VirtualKey, new bool[3] { false, true, false });
             else
-                m_virtualKeyDic[e.VirtualKey] = false;
+                m_virtualKeyDic[e.VirtualKey] = new bool[3] { false, true, false };
+
+            m_bufferKeys.Add(e.VirtualKey);
 
             e.Handled = true;
         }
 
         internal void PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-
             if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
             {
                 m_pointer = e.GetCurrentPoint(null);
                 _ = m_pointer.Properties.IsRightButtonPressed;
-
             }
 
             e.Handled = true;
@@ -75,6 +106,12 @@ namespace Editor.Assets.Engine.Utilities
 
         internal void PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+                m_pointer = e.GetCurrentPoint(null);
+                _ = m_pointer.Properties.IsRightButtonPressed;
+            }
+
             e.Handled = true;
         }
 

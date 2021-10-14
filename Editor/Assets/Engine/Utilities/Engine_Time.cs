@@ -6,16 +6,17 @@ namespace Editor.Assets.Engine.Utilities
 {
     class Engine_Time
     {
-        internal string m_profile { get => m_fps.ToString(); }
+        internal string m_profile = "";
 
-        double m_time, m_delta;
+        internal static double m_time, m_delta;
         int m_frames, m_fps, m_lastFPS;
         Stopwatch watch = new Stopwatch();
         DateTime now = DateTime.Now;
 
         internal void Update()
         {
-            m_time += watch.ElapsedMilliseconds;
+            m_delta = watch.ElapsedMilliseconds * 0.001;
+            m_time += m_delta;
             ++m_lastFPS;
 
             if (now.Second != DateTime.Now.Second)
@@ -23,10 +24,8 @@ namespace Editor.Assets.Engine.Utilities
                 m_fps = m_lastFPS;
                 m_lastFPS = 0;
                 now = DateTime.Now;
+                m_profile = m_delta.ToString() + "\n" + m_fps.ToString();
             }
-
-            if (m_frames % 24 == 0)
-                m_delta = Math.Floor(watch.Elapsed.TotalMilliseconds);
 
 
             watch.Restart();
