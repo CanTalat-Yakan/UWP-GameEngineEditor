@@ -57,7 +57,7 @@ namespace Editor.Assets.Engine.Utilities
             m_cameraController.Update();
             m_profile = m_cameraController.m_profile;
 
-            if (Engine_Input.Instance.GetKey(Windows.System.VirtualKey.C, Engine_Input.Input_State.UP)) 
+            if (Engine_Input.Instance.GetKey(Windows.System.VirtualKey.C, Engine_Input.Input_State.DOWN)) 
                 CreateCube(0, 0, 0);
         }
         internal void LateUpdate()
