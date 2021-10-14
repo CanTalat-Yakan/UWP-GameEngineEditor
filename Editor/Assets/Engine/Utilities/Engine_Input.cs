@@ -14,8 +14,8 @@ namespace Editor.Assets.Engine.Utilities
     {
         public static Engine_Input Instance { get; private set; }
 
-        public enum Input_State { DOWN, UP, PRESSED }
-        public enum Mouse_Input { IsLeftMouseButtonPressed, IsRightMouseButtonPressed, IsMiddleMouseButtonPressed }
+        public enum Input_State { DOWN, PRESSED, UP }
+        public enum Mouse_Input { IsLeftButtonPressed, IsRightButtonPressed, IsMiddleButtonPressed }
 
         Dictionary<VirtualKey, bool[]> m_virtualKeyDic = new Dictionary<VirtualKey, bool[]>();
         List<VirtualKey> m_bufferKeys = new List<VirtualKey>();
@@ -25,7 +25,7 @@ namespace Editor.Assets.Engine.Utilities
         List<Mouse_Input> m_bufferPoints = new List<Mouse_Input>();
 
         PointerPoint m_pointer;
-
+        int m_mouseWheelDelta;
         Vector2 m_mouseAxis = Vector2.Zero;
         Point m_pointerPosition = new Point(), m_tmpPoint = new Point();
 
@@ -50,11 +50,17 @@ namespace Editor.Assets.Engine.Utilities
         {
             foreach (var item in m_bufferKeys)
             {
-                m_virtualKeyDic[item][0] = false;
-                m_virtualKeyDic[item][1] = false;
+                m_virtualKeyDic[item][(int)Input_State.DOWN] = false;
+                m_virtualKeyDic[item][(int)Input_State.UP] = false;
+            }
+            foreach (var item in m_bufferPoints)
+            {
+                m_pointerPointDic[item][(int)Input_State.DOWN] = false;
+                m_pointerPointDic[item][(int)Input_State.UP] = false;
             }
 
             m_bufferKeys.Clear();
+            m_bufferPoints.Clear();
         }
 
         public bool GetKey(VirtualKey _key, Input_State _state = Input_State.PRESSED)
@@ -64,51 +70,78 @@ namespace Editor.Assets.Engine.Utilities
 
             return false;
         }
-        public bool GetButton(PointerPointProperties _point, Input_State _state = Input_State.PRESSED)
+        public bool GetButton(Mouse_Input _input, Input_State _state = Input_State.PRESSED)
         {
-            //if (m_pointerPointDic.ContainsKey(_point))
-            //    return m_pointerPointDic[_point][(int)_state];
+            if (m_pointerPointDic.ContainsKey(_input))
+                return m_pointerPointDic[_input][(int)_state];
 
             return false;
         }
         public Vector2 GetMouseAxis() { return m_mouseAxis; }
+        public int GetMouseDelta() { return m_mouseWheelDelta; }
 
 
+        void SetKeyDic(VirtualKey _input, bool[] _newBool)
+        {
+            if (!m_virtualKeyDic.ContainsKey(_input))
+                m_virtualKeyDic.Add(_input, _newBool);
+            else
+                m_virtualKeyDic[_input] = _newBool;
+
+            m_bufferKeys.Add(_input);
+        }
         internal void KeyDown(CoreWindow sender, KeyEventArgs e)
         {
-            if (!m_virtualKeyDic.ContainsKey(e.VirtualKey))
-                m_virtualKeyDic.Add(e.VirtualKey, new bool[3] { true, false, true });
-            else
-                m_virtualKeyDic[e.VirtualKey] = new bool[3] { true, false, true };
+            var newBool = new bool[3];
+            newBool[(int)Input_State.DOWN] = true;
+            newBool[(int)Input_State.PRESSED] = true;
+            newBool[(int)Input_State.UP] = false;
 
-            m_bufferKeys.Add(e.VirtualKey);
+            SetKeyDic(e.VirtualKey, newBool);
 
             e.Handled = true;
         }
         internal void KeyUp(CoreWindow sender, KeyEventArgs e)
         {
-            if (!m_virtualKeyDic.ContainsKey(e.VirtualKey))
-                m_virtualKeyDic.Add(e.VirtualKey, new bool[3] { false, true, false });
-            else
-                m_virtualKeyDic[e.VirtualKey] = new bool[3] { false, true, false };
+            var newBool = new bool[3];
+            newBool[(int)Input_State.DOWN] = false;
+            newBool[(int)Input_State.PRESSED] = false;
+            newBool[(int)Input_State.UP] = true;
 
-            m_bufferKeys.Add(e.VirtualKey);
+            SetKeyDic(e.VirtualKey, newBool);
 
             e.Handled = true;
         }
 
 
+        void SetPointerDic(Mouse_Input _input, bool[] _newBool)
+        {
+            if (!m_pointerPointDic.ContainsKey(_input))
+                m_pointerPointDic.Add(_input, _newBool);
+            else
+                m_pointerPointDic[_input] = _newBool;
+
+            m_bufferPoints.Add(_input);
+        }
         internal void PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-
             if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
             {
                 m_pointer = e.GetCurrentPoint(null);
 
-                //if (!m_pointerPointDic.ContainsKey(m_pointer.Properties))
-                //    m_pointerPointDic.Add(m_pointer.Properties, new bool[3] { true, false, true });
-                //else
-                //    m_pointerPointDic[m_pointer.Properties] = new bool[3] { true, false, true };
+                var newBool = new bool[3];
+                newBool[(int)Input_State.DOWN] = true;
+                newBool[(int)Input_State.PRESSED] = true;
+                newBool[(int)Input_State.UP] = false;
+
+                if (m_pointer.Properties.IsLeftButtonPressed)
+                    SetPointerDic(Mouse_Input.IsLeftButtonPressed, newBool);
+
+                if (m_pointer.Properties.IsMiddleButtonPressed)
+                    SetPointerDic(Mouse_Input.IsMiddleButtonPressed, newBool);
+
+                if (m_pointer.Properties.IsRightButtonPressed)
+                    SetPointerDic(Mouse_Input.IsRightButtonPressed, newBool);
             }
 
             e.Handled = true;
@@ -118,10 +151,19 @@ namespace Editor.Assets.Engine.Utilities
         {
             m_pointer = e.CurrentPoint;
 
-            //if (!m_pointerPointDic.ContainsKey(m_pointer.Properties))
-            //    m_pointerPointDic.Add(m_pointer.Properties., new bool[3] { false, true, false });
-            //else
-            //    m_pointerPointDic[m_pointer.Properties] = new bool[3] { false, true, false };
+            var newBool = new bool[3];
+            newBool[(int)Input_State.DOWN] = false;
+            newBool[(int)Input_State.PRESSED] = false;
+            newBool[(int)Input_State.UP] = true;
+
+            if (!m_pointer.Properties.IsLeftButtonPressed)
+                SetPointerDic(Mouse_Input.IsLeftButtonPressed, newBool);
+
+            if (!m_pointer.Properties.IsMiddleButtonPressed)
+                SetPointerDic(Mouse_Input.IsMiddleButtonPressed, newBool);
+
+            if (!m_pointer.Properties.IsRightButtonPressed)
+                SetPointerDic(Mouse_Input.IsRightButtonPressed, newBool);
 
             e.Handled = true;
         }
@@ -129,7 +171,7 @@ namespace Editor.Assets.Engine.Utilities
         internal void PointerWheelChanged(CoreWindow sender, PointerEventArgs e)
         {
             m_pointer = e.CurrentPoint;
-            _ = m_pointer.Properties;
+            m_mouseWheelDelta = m_pointer.Properties.MouseWheelDelta;
 
             e.Handled = true;
         }

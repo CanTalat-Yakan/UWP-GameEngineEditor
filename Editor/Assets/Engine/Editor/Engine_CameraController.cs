@@ -24,6 +24,8 @@ namespace Editor.Assets.Engine.Editor
 
         internal void Update()
         {
+            if (!m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)) return;
+
             float speed = 50;
             speed *= (float)Engine_Time.m_delta;
             m_camera.m_transform.m_rotation.X -= m_input.GetMouseAxis().X * speed;
