@@ -39,12 +39,15 @@ namespace Editor.Assets.Engine.Utilities
 
         public void Update()
         {
-            m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
+            if (m_pointer != null)
+            {
+                m_pointerPosition = m_pointer.Position;
 
-            m_mouseAxis.X = (float)(m_pointerPosition.X - m_tmpPoint.X);
-            m_mouseAxis.Y = (float)(m_pointerPosition.Y - m_tmpPoint.Y);
+                m_mouseAxis.X = (float)(m_tmpPoint.X - m_pointerPosition.X);
+                m_mouseAxis.Y = (float)(m_tmpPoint.Y - m_pointerPosition.Y);
 
-            m_tmpPoint = m_pointerPosition;
+                m_tmpPoint = m_pointerPosition;
+            }
         }
         public void LateUpdate()
         {
@@ -61,7 +64,10 @@ namespace Editor.Assets.Engine.Utilities
 
             m_bufferKeys.Clear();
             m_bufferPoints.Clear();
+
+            m_mouseWheelDelta = 0;
         }
+
 
         public bool GetKey(VirtualKey _key, Input_State _state = Input_State.PRESSED)
         {
@@ -78,7 +84,7 @@ namespace Editor.Assets.Engine.Utilities
             return false;
         }
         public Vector2 GetMouseAxis() { return m_mouseAxis; }
-        public int GetMouseDelta() { return m_mouseWheelDelta; }
+        public int GetMouseWheel() { return m_mouseWheelDelta; }
 
 
         void SetKeyDic(VirtualKey _input, bool[] _newBool)
@@ -146,7 +152,6 @@ namespace Editor.Assets.Engine.Utilities
 
             e.Handled = true;
         }
-
         internal void PointerReleased(CoreWindow sender, PointerEventArgs e)
         {
             m_pointer = e.CurrentPoint;
@@ -167,14 +172,22 @@ namespace Editor.Assets.Engine.Utilities
 
             e.Handled = true;
         }
-
-        internal void PointerWheelChanged(CoreWindow sender, PointerEventArgs e)
+        internal void PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
-            m_pointer = e.CurrentPoint;
-            m_mouseWheelDelta = m_pointer.Properties.MouseWheelDelta;
+            if (e.Pointer.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+                m_pointer = e.GetCurrentPoint(null);
+
+                m_mouseWheelDelta = m_pointer.Properties.MouseWheelDelta;
+            }
 
             e.Handled = true;
         }
+        internal void PointerMoved(CoreWindow sender, PointerEventArgs e)
+        {
+            m_pointer = e.CurrentPoint;
 
+            e.Handled = true;
+        }
     }
 }

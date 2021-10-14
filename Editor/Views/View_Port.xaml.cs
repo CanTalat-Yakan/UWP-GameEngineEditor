@@ -43,8 +43,9 @@ namespace Editor
             m_renderer = new Engine_Main(x_SwapChainPanel_ViewPort, m_debugProfiling);
 
             PointerPressed += m_renderer.m_input.PointerPressed;
+            PointerWheelChanged += m_renderer.m_input.PointerWheelChanged;
             Window.Current.CoreWindow.PointerReleased += m_renderer.m_input.PointerReleased;
-            Window.Current.CoreWindow.PointerWheelChanged += m_renderer.m_input.PointerWheelChanged;
+            Window.Current.CoreWindow.PointerMoved += m_renderer.m_input.PointerMoved;
             Window.Current.CoreWindow.KeyDown += m_renderer.m_input.KeyDown;
             Window.Current.CoreWindow.KeyUp += m_renderer.m_input.KeyUp;
         }
