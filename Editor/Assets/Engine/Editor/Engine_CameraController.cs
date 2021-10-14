@@ -29,18 +29,6 @@ namespace Editor.Assets.Engine.Editor
         {
             MovementSpeedCalc();
 
-            if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed))
-            {
-                if (m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
-                    ScreenMovement();
-                else
-                {
-                    TransformMovement();
-                    HorizontalScreenMovement();
-                    CameraMovement(1, 0);
-                }
-            }
-
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsMiddleButtonPressed))
             {
                 TransformMovement();
@@ -60,7 +48,8 @@ namespace Editor.Assets.Engine.Editor
 
             ZoomMovement();
             HeightTransformMovement();
-            m_camera.m_transform.m_position += m_direction * (float)Engine_Time.m_delta;
+            if (!m_input.GetKey(VirtualKey.X))
+                m_camera.m_transform.m_position += m_direction * (float)Engine_Time.m_delta;
             m_direction = new Vector3();
         }
 
@@ -68,7 +57,9 @@ namespace Editor.Assets.Engine.Editor
         {
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)
                 || m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
-                m_transformSpeed += 0.1f * m_input.GetMouseWheel();
+                m_transformSpeed += m_input.GetMouseWheel();
+
+            m_transformSpeed = Math.Clamp(m_transformSpeed, 0.1f, 10);
         }
 
         void ZoomMovement()
@@ -76,7 +67,7 @@ namespace Editor.Assets.Engine.Editor
             if (!m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)
                 && !m_input.GetButton(Engine_Input.Mouse_Input.IsMiddleButtonPressed)
                 && !m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
-                m_direction += 0.1f * m_camera.m_front * m_input.GetMouseWheel();
+                m_direction += 50 * m_camera.m_front * m_input.GetMouseWheel();
         }
 
         void CameraMovement(int _horizontalFactor = 1, int _verticalFactor = 1)
@@ -107,12 +98,12 @@ namespace Editor.Assets.Engine.Editor
         }
         void ScreenMovement()
         {
-            m_direction += m_transformSpeed * m_camera.m_right * m_input.GetMouseAxis().X;
-            m_direction += m_transformSpeed * m_camera.m_up * m_input.GetMouseAxis().Y;
+            m_direction -= m_camera.m_right * m_input.GetMouseAxis().X;
+            m_direction -= m_camera.m_localUp * m_input.GetMouseAxis().Y;
         }
         void HorizontalScreenMovement()
         {
-            m_direction += m_transformSpeed * Vector3.Normalize(m_camera.m_front * new Vector3(1, 0, 1)) * m_input.GetMouseAxis().Y;
+            m_direction += 0.1f * Vector3.Normalize(m_camera.m_front * new Vector3(1, 0, 1)) * m_input.GetMouseAxis().Y;
         }
     }
 }

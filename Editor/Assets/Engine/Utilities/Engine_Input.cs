@@ -178,7 +178,7 @@ namespace Editor.Assets.Engine.Utilities
             {
                 m_pointer = e.GetCurrentPoint(null);
 
-                m_mouseWheelDelta = m_pointer.Properties.MouseWheelDelta;
+                m_mouseWheelDelta = Math.Clamp(m_pointer.Properties.MouseWheelDelta, -1, 1);
             }
 
             e.Handled = true;

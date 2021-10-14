@@ -80,7 +80,7 @@ namespace Editor.Assets.Engine.Utilities
             {
                 Format = DXGI.Format.D24_UNorm_S8_UInt,
                 ArraySize = 1,
-                MipLevels = 0, //test 1
+                MipLevels = 0,
                 Width = swapChainDescription.Width,
                 Height = swapChainDescription.Height,
                 SampleDescription = new DXGI.SampleDescription(1, 0),
