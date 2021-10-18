@@ -288,7 +288,16 @@
       <Version>4.2.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Assets\Engine\Resources\Sphere.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Engine\Resources\Cylinder.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Engine\Resources\Cube.obj" />
+    <Content Include="Assets\Engine\Resources\Duck.obj" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
