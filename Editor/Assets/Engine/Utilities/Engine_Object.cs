@@ -9,10 +9,10 @@ namespace Editor.Assets.Engine.Utilities
         internal Engine_Material m_material;
         internal Engine_Mesh m_mesh;
 
-        internal void Update_Render(SViewConstantsBuffer _viewData)
+        internal void Update_Render()
         {
             m_transform.Udate();
-            m_material.Render(m_transform.m_constantsBuffer, _viewData);
+            m_material.Render(m_transform.m_constantsBuffer);
             m_mesh.Render();
         }
     }

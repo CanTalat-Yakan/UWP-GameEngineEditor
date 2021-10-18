@@ -19,9 +19,12 @@ namespace Editor.Assets.Engine.Utilities
 
         static readonly string SHADER_FILE = @"Assets//Engine//Resources//Shader.hlsl";
         static readonly string IMAGE_FILE = @"Assets//Engine//Resources//UVMap.jpg";
+        static readonly string IMAGE2_FILE = @"Assets//Engine//Resources//Sky3.jpg";
+        static readonly string OBJ_CUBE = @"Assets//Engine//Resources//Cube.obj";
         static readonly string OBJ_FILE = @"Assets//Engine//Resources//Sphere.obj";
 
         Engine_Material m_material;
+        Engine_Material m_materialSky;
         Engine_Mesh m_meshObj;
         Engine_Mesh m_meshCube;
 
@@ -44,13 +47,23 @@ namespace Editor.Assets.Engine.Utilities
             gObject.m_transform.m_rotation = new Vector3(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360));
             m_objects.Add(gObject);
         }
+        void CreateSkybox()
+        {
+            Engine_Object gObject = new Engine_Object();
+            gObject.m_mesh = m_meshObj;
+            gObject.m_material = m_materialSky;
+            gObject.m_transform.m_scale = new Vector3(-1000, -1000, -1000);
+
+            m_objects.Add(gObject);
+        }
 
         internal void Awake()
         {
             m_cameraController = new Engine_CameraController(m_camera);
-            m_meshCube = new Engine_Mesh(Engine_ObjLoader.Load(EPrimitives.Cube));
-            m_meshObj = new Engine_Mesh(Engine_ObjLoader.LoadFile(OBJ_FILE));
+            m_meshCube = new Engine_Mesh(Engine_ObjLoader.LoadFilePro(OBJ_CUBE));
+            m_meshObj = new Engine_Mesh(Engine_ObjLoader.LoadFilePro(OBJ_FILE));
             m_material = new Engine_Material(SHADER_FILE, IMAGE_FILE);
+            m_materialSky = new Engine_Material(SHADER_FILE, IMAGE2_FILE);
         }
         internal void Start()
         {
@@ -61,6 +74,7 @@ namespace Editor.Assets.Engine.Utilities
             CreateObj(2, 0, 0);
             CreateObj(-2, 0, 0);
             CreateCube(0, 0, 0);
+            CreateSkybox();
         }
         internal void Update()
         {
@@ -82,7 +96,7 @@ namespace Editor.Assets.Engine.Utilities
         internal void Render()
         {
             foreach (var item in m_objects)
-                item.Update_Render(m_camera.m_viewConstants);
+                item.Update_Render();
         }
     }
 }

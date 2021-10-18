@@ -2,6 +2,7 @@
 using Editor.Assets.Engine.Data;
 using Editor.Assets.Engine.Utilities;
 using SharpDX;
+using D3D11 = SharpDX.Direct3D11;
 
 namespace Editor.Assets.Engine.Components
 {
@@ -10,6 +11,7 @@ namespace Editor.Assets.Engine.Components
         Engine_Renderer m_d3d;
 
         internal SViewConstantsBuffer m_viewConstants;
+        D3D11.Buffer m_view;
 
         internal Engine_Transform m_transform = new Engine_Transform();
         internal Vector3 m_front = Vector3.ForwardLH;
@@ -22,6 +24,9 @@ namespace Editor.Assets.Engine.Components
             #region //Get Instances
             m_d3d = Engine_Renderer.Instance;
             #endregion
+
+            SViewConstantsBuffer cbView = new SViewConstantsBuffer();
+            m_view = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbView);
 
             RecreateViewConstants();
         }
@@ -57,6 +62,9 @@ namespace Editor.Assets.Engine.Components
             var viewProj = Matrix.Transpose(view * proj);
             m_viewConstants = new SViewConstantsBuffer() { VP = viewProj, WCP = m_transform.m_position };
             #endregion
+
+            m_d3d.m_deviceContext.UpdateSubresource(ref m_viewConstants, m_view);
+            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(0, m_view);
         }
     }
 }

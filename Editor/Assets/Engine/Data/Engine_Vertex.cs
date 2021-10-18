@@ -18,5 +18,14 @@ namespace Editor.Assets.Engine.Data
             texCoord = new Vector2(u, v);
             normal = new Vector3(nx, ny, nz);
         }
+        public Engine_Vertex(
+            Vector3 _pos,
+            Vector2 _tex,
+            Vector3 _nor)
+        {
+            pos = _pos;
+            texCoord = _tex;
+            normal = _nor;
+        }
     }
 }

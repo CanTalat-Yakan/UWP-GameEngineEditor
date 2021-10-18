@@ -47,6 +47,31 @@ namespace Editor.Assets.Engine.Utilities
                 m_mouseAxis.Y = (float)(m_tmpPoint.Y - m_pointerPosition.Y);
 
                 m_tmpPoint = m_pointerPosition;
+
+                if (m_pointer.Position.X == 0)
+                {
+                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenWidthInRawPixels, m_pointer.Position.Y);
+                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    m_tmpPoint = m_pointerPosition;
+                }
+                if (m_pointer.Position.X >= Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenWidthInRawPixels - 1)
+                {
+                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(0, m_pointer.Position.Y);
+                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    m_tmpPoint = m_pointerPosition;
+                }
+                if (m_pointer.Position.Y == 0)
+                {
+                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(m_pointer.Position.X, Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenHeightInRawPixels);
+                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    m_tmpPoint = m_pointerPosition;
+                }
+                if (m_pointer.Position.Y >= Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenHeightInRawPixels - 1)
+                {
+                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(m_pointer.Position.Y, 0);
+                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    m_tmpPoint = m_pointerPosition;
+                }
             }
         }
         public void LateUpdate()

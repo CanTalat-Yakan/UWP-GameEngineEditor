@@ -1,11 +1,11 @@
-﻿cbuffer PerModelConstantBuffer : register(b0)
-{
-    matrix World;
-};
-cbuffer ViewConstantsBuffer : register(b1)
+﻿cbuffer ViewConstantsBuffer : register(b0)
 {
     matrix VP;
     float3 WCP;
+};
+cbuffer PerModelConstantBuffer : register(b1)
+{
+    matrix World;
 };
 
 struct appdata
@@ -27,6 +27,8 @@ struct VS_OUTPUT
     float3 normal : NORMAL;
 };
 
+//#include "Assets//Engine//Resources//Collection.hlsl"
+
 VS_OUTPUT VS(appdata v)
 {
     VS_OUTPUT o;
@@ -43,6 +45,9 @@ VS_OUTPUT VS(appdata v)
 float4 PS(VS_OUTPUT i) : SV_TARGET
 {
     float4 col = ObjTexture.Sample(ObjSamplerState, i.uv);
-    
-    return col + float4(i.normal, 1);
+
+    //float4 colReflect = ObjSkyBox.SampleLevel(ObjSamplerState, ReflectUV(reflect(-i.worldPos - i.camPos, normal)), params.roughness * 10);
+    //colReflect = CalculateReflection(colReflect, normal, i.worldPos - i.camPos);
+
+    return col;
 }

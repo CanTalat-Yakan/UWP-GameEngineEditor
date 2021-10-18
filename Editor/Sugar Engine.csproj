@@ -184,7 +184,13 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Engine\Resources\Collection.hlsl" />
     <Content Include="Assets\Engine\Resources\Shader.hlsl" />
+    <Content Include="Assets\Engine\Resources\Sky.jpg" />
+    <Content Include="Assets\Engine\Resources\Sky2.jpg" />
+    <Content Include="Assets\Engine\Resources\Sky3.jpg" />
+    <Content Include="Assets\Engine\Resources\Sky4.jpg" />
+    <Content Include="Assets\Engine\Resources\Sky5.jpg" />
     <Content Include="Assets\Engine\Resources\UVMap.jpg" />
     <Content Include="Assets\Icons\LargeTile.scale-100.png" />
     <Content Include="Assets\Icons\LargeTile.scale-200.png" />
@@ -254,11 +260,14 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AssimpNet">
+      <Version>4.1.0</Version>
+    </PackageReference>
     <PackageReference Include="ImGui.NET">
       <Version>1.78.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.12</Version>
+      <Version>6.2.13</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>7.1.0</Version>
@@ -300,6 +309,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Engine\Resources\SmallSphere.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Engine\Resources\Mandalorian.fbx" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

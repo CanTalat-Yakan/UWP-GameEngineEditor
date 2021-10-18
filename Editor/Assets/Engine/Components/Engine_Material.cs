@@ -20,7 +20,6 @@ namespace Editor.Assets.Engine.Components
         D3D11.ShaderResourceView m_resourceView;
         D3D11.SamplerState m_sampler;
         D3D11.Buffer m_model;
-        D3D11.Buffer m_view;
 
         internal Engine_Material(string _shaderFileName, string _imageFileName, bool _includeGeometryShader = false)
         {
@@ -55,9 +54,8 @@ namespace Editor.Assets.Engine.Components
                     m_geometryShader = new D3D11.GeometryShader(m_d3d.m_device, psResult.Bytecode.Data);
             #endregion
 
-            #region //Create ConstantBuffers for PerModel and ViewConstants
+            #region //Create ConstantBuffers for Model
             SPerModelConstantBuffer cbModel = new SPerModelConstantBuffer();
-            SViewConstantsBuffer cbView = new SViewConstantsBuffer();
 
             D3D11.BufferDescription bufferDescription = new D3D11.BufferDescription
             {
@@ -66,7 +64,6 @@ namespace Editor.Assets.Engine.Components
                 Usage = D3D11.ResourceUsage.Dynamic,
             };
 
-            m_view = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbView);
             m_model = D3D11.Buffer.Create(m_d3d.m_device, D3D11.BindFlags.ConstantBuffer, ref cbModel);
             #endregion
 
@@ -90,7 +87,7 @@ namespace Editor.Assets.Engine.Components
             #endregion
         }
 
-        internal void Render(SPerModelConstantBuffer _data, SViewConstantsBuffer _data2)
+        internal void Render(SPerModelConstantBuffer _data)
         {
             m_d3d.m_deviceContext.InputAssembler.InputLayout = m_inputLayout;
             m_d3d.m_deviceContext.VertexShader.Set(m_vertexShader);
@@ -98,9 +95,7 @@ namespace Editor.Assets.Engine.Components
             m_d3d.m_deviceContext.GeometryShader.Set(m_geometryShader);
 
             m_d3d.m_deviceContext.UpdateSubresource(ref _data, m_model);
-            m_d3d.m_deviceContext.UpdateSubresource(ref _data2, m_view);
-            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(0, m_model);
-            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(1, m_view);
+            m_d3d.m_deviceContext.VertexShader.SetConstantBuffer(1, m_model);
 
             m_d3d.m_deviceContext.PixelShader.SetShaderResource(0, m_resourceView);
             m_d3d.m_deviceContext.PixelShader.SetSampler(0, m_sampler);

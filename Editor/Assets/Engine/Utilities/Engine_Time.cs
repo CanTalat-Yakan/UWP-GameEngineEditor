@@ -9,7 +9,7 @@ namespace Editor.Assets.Engine.Utilities
         internal string m_profile = "";
 
         internal static double m_time, m_delta;
-        int m_frames, m_fps, m_lastFPS;
+        int m_fps, m_lastFPS;
         Stopwatch watch = new Stopwatch();
         DateTime now = DateTime.Now;
 

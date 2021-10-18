@@ -1,10 +1,6 @@
 ﻿using Editor.Assets.Engine.Components;
 using Editor.Assets.Engine.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.System;
 using Vector3 = SharpDX.Vector3;
 
@@ -33,6 +29,7 @@ namespace Editor.Assets.Engine.Editor
             {
                 TransformMovement();
                 ScreenMovement();
+                HeightTransformMovement();
             }
 
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
@@ -44,10 +41,10 @@ namespace Editor.Assets.Engine.Editor
                     TransformMovement();
                     CameraMovement();
                 }
+                HeightTransformMovement();
             }
 
             ZoomMovement();
-            HeightTransformMovement();
             if (!m_input.GetKey(VirtualKey.X))
                 m_camera.m_transform.m_position += m_direction * (float)Engine_Time.m_delta;
             m_direction = new Vector3();
