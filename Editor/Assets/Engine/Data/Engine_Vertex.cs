@@ -18,6 +18,5 @@ namespace Editor.Assets.Engine.Data
             texCoord = new Vector2(u, v);
             normal = new Vector3(nx, ny, nz);
         }
-
     }
 }

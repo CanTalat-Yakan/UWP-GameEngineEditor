@@ -49,7 +49,6 @@ namespace Editor
             Window.Current.CoreWindow.KeyDown += m_renderer.m_input.KeyDown;
             Window.Current.CoreWindow.KeyUp += m_renderer.m_input.KeyUp;
             //Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-
         }
 
     }

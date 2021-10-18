@@ -44,5 +44,5 @@ float4 PS(VS_OUTPUT i) : SV_TARGET
 {
     float4 col = ObjTexture.Sample(ObjSamplerState, i.uv);
     
-    return col + float4(i.worldPos, 1);
+    return col + float4(i.normal, 1);
 }

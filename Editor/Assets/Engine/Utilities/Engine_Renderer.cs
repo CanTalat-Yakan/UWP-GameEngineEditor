@@ -153,6 +153,27 @@ namespace Editor.Assets.Engine.Utilities
             m_swapChain.Present(0, DXGI.PresentFlags.None);
         }
 
+        internal void SetSolid()
+        {
+            var rasterizerDesc = new D3D11.RasterizerStateDescription()
+            {
+                FillMode = D3D11.FillMode.Solid,
+                CullMode = D3D11.CullMode.Back,
+            };
+
+            m_deviceContext.Rasterizer.State = new D3D11.RasterizerState(m_device, rasterizerDesc);
+        }
+        internal void SetWireframe()
+        {
+            var rasterizerDescWireframe = new D3D11.RasterizerStateDescription()
+            {
+                FillMode = D3D11.FillMode.Wireframe,
+                CullMode = D3D11.CullMode.None,
+            };
+
+            m_deviceContext.Rasterizer.State = new D3D11.RasterizerState(m_device, rasterizerDescWireframe);
+        }
+
         internal void RenderMesh(D3D11.Buffer _vertexBuffer, int _vertexStride, D3D11.Buffer _indexBuffer, int _indexCount)
         {
             m_deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(_vertexBuffer, _vertexStride, 0));

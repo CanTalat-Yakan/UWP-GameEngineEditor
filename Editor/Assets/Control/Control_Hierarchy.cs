@@ -19,13 +19,6 @@ namespace Editor.Assets.Control
         public int ID;
         public int? ID_parent;
         public string Name;
-        public string IsActive;
-        public string IsStatic;
-        public string Tag;
-        public string Layer;
-        public Vector3 Position;
-        public Vector3 Rotation;
-        public Vector3 Scale;
     }
     class CScene
     {

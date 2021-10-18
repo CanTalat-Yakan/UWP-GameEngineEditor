@@ -1,9 +1,8 @@
 ﻿using Editor.Assets.Engine.Data;
-using System;
+using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Vector3 = SharpDX.Vector3;
+using Vector2 = SharpDX.Vector2;
 
 namespace Editor.Assets.Engine.Helper
 {
@@ -19,7 +18,7 @@ namespace Editor.Assets.Engine.Helper
                 case EPrimitives.Cube:
                     {
                         float hs = 0.5f;
-                        obj.Vertices = new List<Engine_Vertex>{
+                        obj.vertices = new List<Engine_Vertex>{
                         // Front Face
                         new Engine_Vertex(-hs, -hs, -hs, 0, 1, 0, 0, 1),	//Bottom	Left
 			            new Engine_Vertex(-hs, +hs, -hs, 0, 0, 0, 0, 1),	//Top		Left
@@ -56,7 +55,7 @@ namespace Editor.Assets.Engine.Helper
 			            new Engine_Vertex(+hs, -hs, -hs, 0, 0, 0, 1, 0),	//Top		Right
 			            new Engine_Vertex(+hs, -hs, +hs, 1, 0, 0, 1, 0)};   //Bottom	Right
 
-                        obj.Indices = new List<ushort>{
+                        obj.indices = new List<ushort>{
                         // Front Face
                         0, 1, 2,
                         0, 2, 3,
@@ -87,6 +86,81 @@ namespace Editor.Assets.Engine.Helper
                     break;
                 default:
                     break;
+            }
+
+            return obj;
+        }
+
+        internal static Engine_MeshInfo LoadFile(string _fileName)
+        {
+            string[] data = File.ReadAllLines(_fileName);
+
+            Engine_MeshInfo obj = new Engine_MeshInfo();
+            obj.vertices = new List<Engine_Vertex>();
+            obj.indices = new List<ushort>();
+            List<Vector3> position = new List<Vector3>();
+            List<Vector2> uv = new List<Vector2>();
+            List<Vector3> normal = new List<Vector3>();
+            int faceCount = 0;
+
+            foreach (string line in data)
+            {
+                string[] split = line.Split(' ');
+                var ci = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.CurrentCulture.Clone();
+                ci.NumberFormat.NumberDecimalSeparator = ".";
+
+                if (split[0] == "v")
+                {
+                    int iOffset = split[1] == "" ? 1 : 0;
+                    position.Add(new Vector3(float.Parse(split[1 + iOffset], ci), float.Parse(split[2 + iOffset], ci), float.Parse(split[3 + iOffset], ci)));
+                }
+                else if (split[0] == "vt")
+                    uv.Add(new Vector2(float.Parse(split[1], ci), float.Parse(split[2], ci)));
+                else if (split[0] == "vn")
+                    normal.Add(new Vector3(float.Parse(split[1], ci), float.Parse(split[2], ci), float.Parse(split[3], ci)));
+                else if (split[0] == "f")
+                {
+                    int vertexCount = split.Length - 1;
+
+                    for (int i = 1; i <= vertexCount; i++)
+                    {
+                        if (string.IsNullOrEmpty(split[i]))
+                        {
+                            vertexCount--;
+                            continue;
+                        }
+
+                        string[] face = split[i].Split('/');
+                        Engine_Vertex vertex = new Engine_Vertex(
+                            position[int.Parse(face[0]) - 1].X,
+                            position[int.Parse(face[0]) - 1].Y,
+                            position[int.Parse(face[0]) - 1].Z,
+                            uv[int.Parse(face[1]) - 1].X,
+                            uv[int.Parse(face[1]) - 1].Y,
+                            normal[int.Parse(face[2]) - 1].X,
+                            normal[int.Parse(face[2]) - 1].Y,
+                            normal[int.Parse(face[2]) - 1].Z);
+                        obj.vertices.Add(vertex);
+                    }
+
+                    var offSet = faceCount * vertexCount;
+
+                    var rangeIndices = new ushort[] {
+                        (ushort)(0 + offSet),
+                        (ushort)(1 + offSet),
+                        (ushort)(2 + offSet)};
+                    obj.indices.AddRange(rangeIndices);
+                    if (vertexCount == 4)
+                    {
+                        rangeIndices = new ushort[] {
+                        (ushort)(0 + offSet),
+                        (ushort)(2 + offSet),
+                        (ushort)(3 + offSet)};
+                        obj.indices.AddRange(rangeIndices);
+                    }
+
+                    faceCount++;
+                }
             }
 
             return obj;

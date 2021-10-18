@@ -33,7 +33,11 @@ namespace Editor.Assets.Engine
 
                 m_time.Update();
 
+                m_render.SetSolid();
                 m_scene.Render();
+                m_render.SetWireframe();
+                m_scene.Render();
+
                 m_render.Present();
 
                 _textBlock.Text = m_time.m_profile;

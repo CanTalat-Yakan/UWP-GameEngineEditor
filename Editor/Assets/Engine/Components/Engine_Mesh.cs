@@ -27,17 +27,17 @@ namespace Editor.Assets.Engine.Components
             #endregion
 
             #region //Set Variables
-            m_vertexCount = _obj.Vertices.Count();
+            m_vertexCount = _obj.vertices.Count();
             m_vertexStride = SharpDX.Utilities.SizeOf<Engine_Vertex>();
 
-            m_indexCount = _obj.Indices.Count();
+            m_indexCount = _obj.indices.Count();
             m_indexStride = sizeof(int);
             #endregion
 
             #region //Create VertexBuffer
             unsafe
             {
-                fixed (Engine_Vertex* p = _obj.Vertices.ToArray()) //Array
+                fixed (Engine_Vertex* p = _obj.vertices.ToArray()) //Array
                 {
                     IntPtr ptr = (IntPtr)p;
                     m_vertexBuffer = new D3D11.Buffer(
@@ -54,7 +54,7 @@ namespace Editor.Assets.Engine.Components
             #region //Create IndexBuffer
             unsafe
             {
-                fixed (ushort* p = _obj.Indices.ToArray())
+                fixed (ushort* p = _obj.indices.ToArray())
                 {
                     IntPtr ptr = (IntPtr)p;
                     m_indexBuffer = new D3D11.Buffer(
