@@ -50,26 +50,26 @@ namespace Editor.Assets.Engine.Utilities
 
                 if (m_pointer.Position.X == 0)
                 {
-                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenWidthInRawPixels, m_pointer.Position.Y);
-                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width, m_pointer.Position.Y);
+                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
                     m_tmpPoint = m_pointerPosition;
                 }
-                if (m_pointer.Position.X >= Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenWidthInRawPixels - 1)
+                if (m_pointer.Position.X >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width)
                 {
-                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(0, m_pointer.Position.Y);
-                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(0, m_pointer.Position.Y);
+                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
                     m_tmpPoint = m_pointerPosition;
                 }
                 if (m_pointer.Position.Y == 0)
                 {
-                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(m_pointer.Position.X, Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenHeightInRawPixels);
-                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(m_pointer.Position.X, Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height);
+                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
                     m_tmpPoint = m_pointerPosition;
                 }
-                if (m_pointer.Position.Y >= Windows.Graphics.Display.DisplayInformation.GetForCurrentView().ScreenHeightInRawPixels - 1)
+                if (m_pointer.Position.Y >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height)
                 {
-                    Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition = new Point(m_pointer.Position.Y, 0);
-                    m_pointerPosition = Windows.UI.Xaml.Window.Current.CoreWindow.PointerPosition;
+                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(m_pointer.Position.Y, 0);
+                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
                     m_tmpPoint = m_pointerPosition;
                 }
             }

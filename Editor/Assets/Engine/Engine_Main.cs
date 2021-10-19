@@ -1,4 +1,5 @@
-﻿using Editor.Assets.Engine.Utilities;
+﻿using Editor.Assets.Engine.Editor;
+using Editor.Assets.Engine.Utilities;
 using Windows.UI.Xaml.Controls;
 
 namespace Editor.Assets.Engine
@@ -9,6 +10,7 @@ namespace Editor.Assets.Engine
         internal Engine_Time m_time;
         internal Engine_Scene m_scene;
         internal Engine_Renderer m_render;
+        internal Engine_ImGui m_gui;
 
         internal Engine_Main(SwapChainPanel _swapChainPanel, TextBlock _textBlock)
         {
@@ -16,6 +18,7 @@ namespace Editor.Assets.Engine
             m_input = new Engine_Input();
             m_time = new Engine_Time();
             m_scene = new Engine_Scene();
+            m_gui = new Engine_ImGui();
 
             m_scene.Awake();
             m_scene.Start();
@@ -37,6 +40,8 @@ namespace Editor.Assets.Engine
                 m_scene.Render();
                 m_render.SetWireframe();
                 m_scene.Render();
+
+                m_gui.Draw();
 
                 m_render.Present();
 

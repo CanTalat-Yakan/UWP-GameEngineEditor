@@ -27,7 +27,7 @@ namespace Editor.Assets.Control
         internal Grid m_GridContent;
 
         internal View_Port m_ViewPort;
-        internal View_Settings m_ViewSettings;
+        //internal View_Settings m_ViewSettings;
         internal View_Output m_ViewOutput;
         internal View_Hierarchy m_ViewHierarchy;
         internal View_Files m_ViewFiles;
@@ -105,7 +105,7 @@ namespace Editor.Assets.Control
 
             var b = PairVertical(
                 new GridDataTemeplate() { Content = _panel[2], MinHeight = 0 },
-                new GridDataTemeplate() { Content = _panel[3], MinHeight = 0, Length = new GridLength(5, GridUnitType.Star) });
+                new GridDataTemeplate() { Content = _panel[3], MinHeight = 0, Length = new GridLength(2, GridUnitType.Star) });
 
             return WrapSplitView(a, b);
         }
