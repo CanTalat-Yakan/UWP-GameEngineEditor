@@ -33,18 +33,18 @@ namespace Editor.Assets.Control
 
     internal class Control_Output
     {
-        Dictionary<SMessageInfo, List<DateTime>> m_messageCollection = new Dictionary<SMessageInfo, List<DateTime>>();
+        static Dictionary<SMessageInfo, List<DateTime>> m_messageCollection = new Dictionary<SMessageInfo, List<DateTime>>();
 
-        View_Main m_main;
-
-        TextBlock m_status;
-        StackPanel m_stack;
-        ScrollViewer m_scroll;
-        AppBarToggleButton m_collapse;
-        AppBarToggleButton m_filterMessages;
-        AppBarToggleButton m_filterWarnings;
-        AppBarToggleButton m_filterErrors;
-        AppBarToggleButton m_pauseError;
+        static View_Main m_main;
+        
+        static TextBlock m_status;
+        static StackPanel m_stack;
+        static ScrollViewer m_scroll;
+        static AppBarToggleButton m_collapse;
+        static AppBarToggleButton m_filterMessages;
+        static AppBarToggleButton m_filterWarnings;
+        static AppBarToggleButton m_filterErrors;
+        static AppBarToggleButton m_pauseError;
         internal AppBarToggleButton m_ClearPlay;
 
         internal Control_Output(View_Main _main, StackPanel _stack, ScrollViewer _scroll, AppBarToggleButton _collapse, AppBarToggleButton _filterMessages, AppBarToggleButton _filterWarnings, AppBarToggleButton _filterErrors, AppBarToggleButton _pauseError, AppBarToggleButton _clearPlay)
@@ -61,7 +61,7 @@ namespace Editor.Assets.Control
             m_ClearPlay = _clearPlay;
         }
 
-        void SetStatus(SMessageInfo _m)
+        static void SetStatus(SMessageInfo _m)
         {
             m_status.Text = _m.Message;
         }
@@ -74,7 +74,7 @@ namespace Editor.Assets.Control
                 await Launcher.LaunchFileAsync(file);
         }
 
-        UIElement CreateMessage(DateTime _d, SMessageInfo _m, int? _i)
+        static UIElement CreateMessage(DateTime _d, SMessageInfo _m, int? _i)
         {
             //Content of the message
             StackPanel stack = new StackPanel() { Orientation = Orientation.Horizontal, Spacing = 10, Margin = new Thickness(10, 0, 0, 0) };
@@ -117,7 +117,7 @@ namespace Editor.Assets.Control
             return grid;
         }
 
-        public void Log(string _m, EMessageType _t = EMessageType.MESSAGE, [CallerLineNumber] int _l = 0, [CallerMemberName] string _c = null, [CallerFilePath] string _s = null)
+        public static void Log(string _m, EMessageType _t = EMessageType.MESSAGE, [CallerLineNumber] int _l = 0, [CallerMemberName] string _c = null, [CallerFilePath] string _s = null)
         {
             SMessageInfo message = new SMessageInfo() { Script = _s, Method = _c, Line = _l, Message = _m, Type = _t };
 
@@ -135,7 +135,7 @@ namespace Editor.Assets.Control
             IterateOutputMessages();
         }
 
-        internal void IterateOutputMessages()
+        internal static void IterateOutputMessages()
         {
             Dictionary<DateTime, SMessageInfo> dic = new Dictionary<DateTime, SMessageInfo>();
             m_stack.Children.Clear();

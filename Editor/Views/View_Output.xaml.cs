@@ -57,7 +57,7 @@ namespace Editor
 
         void Update()
         {
-            m_control.Log("Updated Frame..");
+            Control_Output.Log("Updated Frame..");
         }
         void UpdateSec()
         {
@@ -69,25 +69,25 @@ namespace Editor
             Random rnd = new Random();
             int i = rnd.Next(0, 24);
 
-            m_control.Log(i.ToString());
+            Control_Output.Log(i.ToString());
             if (i < 5)
-                m_control.Log("Error Example!", EMessageType.ERROR);
+                Control_Output.Log("Error Example!", EMessageType.ERROR);
             if (i < 10 && i > 5)
-                m_control.Log("A Warning.", EMessageType.WARNING);
+                Control_Output.Log("A Warning.", EMessageType.WARNING);
             if (i < 15)
-                m_control.Log("This is a Message");
+                Control_Output.Log("This is a Message");
             if (i > 15)
                 Test();
         }
 
         void Test()
         {
-            m_control.Log("Test");
+            Control_Output.Log("Test");
         }
 
         private void AppBarButton_Output_Clear(object sender, RoutedEventArgs e) { m_control.ClearOutput(); }
-        private void AppBarToggleButton_Output_Collapse_Click(object sender, RoutedEventArgs e) { m_control.IterateOutputMessages(); }
-        private void AppBarToggleButton_Filter_Click(object sender, RoutedEventArgs e) { m_control.IterateOutputMessages(); }
+        private void AppBarToggleButton_Output_Collapse_Click(object sender, RoutedEventArgs e) { Control_Output.IterateOutputMessages(); }
+        private void AppBarToggleButton_Filter_Click(object sender, RoutedEventArgs e) { Control_Output.IterateOutputMessages(); }
         private void AppBarToggleButton_Debug_ErrorPause_Click(object sender, RoutedEventArgs e) { }
         private void AppBarToggleButton_Debug_ClearPlay_Click(object sender, RoutedEventArgs e) { }
     }

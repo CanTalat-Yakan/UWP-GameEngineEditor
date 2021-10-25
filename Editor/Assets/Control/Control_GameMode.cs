@@ -79,7 +79,7 @@ namespace Editor.Assets.Control
             if (m_playMode != EGameMode.PAUSED)
                 return;
 
-            m_output.Log("Stepped Forward..");
+            Control_Output.Log("Stepped Forward..");
 
             SetStatus("Stepped Forward");
         }
