@@ -19,7 +19,7 @@ namespace Editor.Assets.Engine.Utilities
 
         static readonly string SHADER_FILE = @"Assets//Engine//Resources//Shader.hlsl";
         static readonly string IMAGE_FILE = @"Assets//Engine//Resources//UVMap.jpg";
-        static readonly string IMAGE2_FILE = @"Assets//Engine//Resources//Sky3.jpg";
+        static readonly string IMAGE2_FILE = @"Assets//Engine//Resources//Sky4.jpg";
         static readonly string OBJ_CUBE = @"Assets//Engine//Resources//Cube.obj";
         static readonly string OBJ_FILE = @"Assets//Engine//Resources//Sphere.obj";
 

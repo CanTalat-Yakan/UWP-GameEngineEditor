@@ -18,7 +18,7 @@ namespace Editor.Assets.Engine.Editor
             m_input = Engine_Input.Instance;
         }
 
-        float m_transformSpeed = 2;
+        public static float m_transformSpeed = 2;
         float m_cameraSpeed = 25;
         Vector3 m_direction;
         internal void Update()

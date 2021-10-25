@@ -16,15 +16,61 @@
             <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
         </Grid>
 
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
-            <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;"/>
-            <Button.Flyout>
-                <Flyout Placement="BottomEdgeAlignedRight">
-                    <TextBlock x:Name="x_TextBlock_Debug_FPS"/>
-                </Flyout>
-            </Button.Flyout>
-        </Button>
+        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="6" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="20">
+            <Button>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF167;"/>
+                <Button.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <TextBlock x:Name="x_TextBlock_Debug_FPS"/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+            <Button>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xF158;"/>
+            </Button>
+            <Button>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE890;"/>
 
+                <Button.Flyout>
+                    <Flyout Placement="BottomEdgeAlignedRight">
+                        <StackPanel Orientation="Vertical" FlowDirection="LeftToRight">
+                            <Slider Header="FOV" Value="110" Minimum="40" Maximum="180" ValueChanged="Slider_FOV_ValueChanged"/>
+                            <my:NumberBox x:Name="x_NumberBox_CameraSpeed" Header="Speed" Value="25" Minimum="1" Maximum="100" SpinButtonPlacementMode="Inline" ValueChanged="NumberBox_Speed_ValueChanged"/>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Spacing="6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
+            <Button>
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;"/>
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Open"/>
+                        <MenuFlyoutSubItem Text="Send to">
+                            <MenuFlyoutItem Text="Bluetooth"/>
+                            <MenuFlyoutItem Text="Desktop (shortcut)" />
+                            <MenuFlyoutSubItem Text="Compressed file">
+                                <MenuFlyoutItem Text="Compress and email" />
+                                <MenuFlyoutItem Text="Compress to .7z" />
+                                <MenuFlyoutItem Text="Compress to .zip" />
+                            </MenuFlyoutSubItem>
+                        </MenuFlyoutSubItem>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <ComboBox Height="33">
+                <ComboBoxItem Tag="0" Content="Perspective" IsSelected="True"/>
+                <ComboBoxItem Tag="1" Content="Orthographic"/>
+            </ComboBox>
+            <ComboBox Height="33">
+                <ComboBoxItem Tag="0" Content="Lit" IsSelected="True"/>
+                <ComboBoxItem Tag="1" Content="Unlit"/>
+                <ComboBoxItem Tag="2" Content="Wireframe"/>
+                <ComboBoxItem Tag="3" Content="Shaded Wireframe"/>
+            </ComboBox>
+        </StackPanel>
     </Grid>
-
 </Page>

@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Controls.Primitives;
 using Editor.Assets.Engine;
 using System.ComponentModel;
 
@@ -51,5 +52,7 @@ namespace Editor
             //Window.Current.CoreWindow.GetKeyState(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
         }
 
+        void Slider_FOV_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) { Assets.Engine.Components.Engine_Camera.FOV = e.NewValue; }
+        void NumberBox_Speed_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args) { Assets.Engine.Editor.Engine_CameraController.m_transformSpeed = (float)args.NewValue; }
     }
 }

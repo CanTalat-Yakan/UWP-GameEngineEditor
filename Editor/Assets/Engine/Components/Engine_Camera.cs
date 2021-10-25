@@ -10,6 +10,7 @@ namespace Editor.Assets.Engine.Components
     {
         Engine_Renderer m_d3d;
 
+        internal static double FOV;
         internal SViewConstantsBuffer m_viewConstants;
         D3D11.Buffer m_view;
 
@@ -52,13 +53,12 @@ namespace Editor.Assets.Engine.Components
                 m_transform.m_position + m_front,
                 m_up);
 
-            var aspect = (float)(m_d3d.m_swapChainPanel.ActualWidth / m_d3d.m_swapChainPanel.ActualHeight);
-
+            var aspect = m_d3d.m_swapChainPanel.ActualWidth / m_d3d.m_swapChainPanel.ActualHeight;
             var proj = Matrix.PerspectiveFovLH(
-                MathUtil.DegreesToRadians(110 / aspect),
-                aspect,
+                //MathUtil.DegreesToRadians(2 * (float)Math.Atan(Math.Tan(FOV * 0.5f) * aspect)),
+                MathUtil.DegreesToRadians((float)(FOV / aspect)),
+                (float)aspect,
                 0.1f, 1000);
-
             var viewProj = Matrix.Transpose(view * proj);
             m_viewConstants = new SViewConstantsBuffer() { VP = viewProj, WCP = m_transform.m_position };
             #endregion
