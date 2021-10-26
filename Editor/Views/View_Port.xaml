@@ -11,7 +11,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid Height="10000"/>
         <Grid x:Name="x_Grid_ViewPort_BorderBrush">
             <SwapChainPanel x:Name="x_SwapChainPanel_ViewPort"/>
         </Grid>
@@ -44,7 +43,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Spacing="6" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20">
-            <Button>
+            <Button Margin="0,0,12,0">
                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;"/>
                 <Button.Flyout>
                     <MenuFlyout>
