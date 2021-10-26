@@ -12,36 +12,44 @@ namespace Editor.Assets.Engine.Editor
         Engine_Camera m_camera;
         Engine_Input m_input;
 
+        public static float m_movementSpeed = 2;
+        float m_rotationSpeed = 25;
+        Vector3 m_direction;
+
+
         public Engine_CameraController(Engine_Camera _camera)
         {
             m_camera = _camera;
             m_input = Engine_Input.Instance;
         }
 
-        public static float m_transformSpeed = 2;
-        float m_cameraSpeed = 25;
-        Vector3 m_direction;
         internal void Update()
         {
             MovementSpeedCalc();
 
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsMiddleButtonPressed))
             {
-                TransformMovement();
-                ScreenMovement();
-                HeightTransformMovement();
+                if (m_input.SetPointerInBounds())
+                {
+                    TransformMovement();
+                    ScreenMovement();
+                    HeightTransformMovement();
+                }
             }
 
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
             {
-                if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed))
-                    ScreenMovement();
-                else
+                if (m_input.SetPointerInBounds())
                 {
-                    TransformMovement();
-                    CameraMovement();
+                    if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed))
+                        ScreenMovement();
+                    else
+                    {
+                        TransformMovement();
+                        CameraMovement();
+                    }
+                    HeightTransformMovement();
                 }
-                HeightTransformMovement();
             }
 
             ZoomMovement();
@@ -54,9 +62,9 @@ namespace Editor.Assets.Engine.Editor
         {
             if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)
                 || m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
-                m_transformSpeed += m_input.GetMouseWheel();
+                m_movementSpeed += m_input.GetMouseWheel();
 
-            m_transformSpeed = Math.Clamp(m_transformSpeed, 0.1f, 10);
+            m_movementSpeed = Math.Clamp(m_movementSpeed, 0.1f, 10);
         }
 
         void ZoomMovement()
@@ -69,29 +77,29 @@ namespace Editor.Assets.Engine.Editor
 
         void CameraMovement(int _horizontalFactor = 1, int _verticalFactor = 1)
         {
-            m_camera.m_transform.m_rotation.X += m_cameraSpeed * m_input.GetMouseAxis().X * (float)Engine_Time.m_delta * _horizontalFactor;
-            m_camera.m_transform.m_rotation.Y += m_cameraSpeed * m_input.GetMouseAxis().Y * (float)Engine_Time.m_delta * _verticalFactor;
+            m_camera.m_transform.m_rotation.X += m_rotationSpeed * m_input.GetMouseAxis().X * (float)Engine_Time.m_delta * _horizontalFactor;
+            m_camera.m_transform.m_rotation.Y += m_rotationSpeed * m_input.GetMouseAxis().Y * (float)Engine_Time.m_delta * _verticalFactor;
         }
 
         void TransformMovement()
         {
             m_direction = new Vector3();
-            if (m_input.GetKey(VirtualKey.W)) m_direction += m_transformSpeed * m_camera.m_front;
-            if (m_input.GetKey(VirtualKey.S)) m_direction -= m_transformSpeed * m_camera.m_front;
-            if (m_input.GetKey(VirtualKey.A)) m_direction += m_transformSpeed * m_camera.m_right;
-            if (m_input.GetKey(VirtualKey.D)) m_direction -= m_transformSpeed * m_camera.m_right;
+            if (m_input.GetKey(VirtualKey.W)) m_direction += m_movementSpeed * m_camera.m_front;
+            if (m_input.GetKey(VirtualKey.S)) m_direction -= m_movementSpeed * m_camera.m_front;
+            if (m_input.GetKey(VirtualKey.A)) m_direction += m_movementSpeed * m_camera.m_right;
+            if (m_input.GetKey(VirtualKey.D)) m_direction -= m_movementSpeed * m_camera.m_right;
         }
         void HeightTransformMovement()
         {
-            if (m_input.GetKey(VirtualKey.LeftShift)) m_transformSpeed *= 4;
-            if (m_input.GetKey(VirtualKey.LeftControl)) m_transformSpeed *= 0.25f;
+            if (m_input.GetKey(VirtualKey.LeftShift)) m_movementSpeed *= 4;
+            if (m_input.GetKey(VirtualKey.LeftControl)) m_movementSpeed *= 0.25f;
 
-            if (m_input.GetKey(VirtualKey.E)) m_direction += m_transformSpeed * m_camera.m_up;
-            if (m_input.GetKey(VirtualKey.Q)) m_direction -= m_transformSpeed * m_camera.m_up;
-            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.W)) m_direction += m_transformSpeed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.W)) m_direction -= m_transformSpeed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.S)) m_direction += m_transformSpeed * m_camera.m_localUp;
-            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.S)) m_direction -= m_transformSpeed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.E)) m_direction += m_movementSpeed * m_camera.m_up;
+            if (m_input.GetKey(VirtualKey.Q)) m_direction -= m_movementSpeed * m_camera.m_up;
+            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.W)) m_direction += m_movementSpeed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.W)) m_direction -= m_movementSpeed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.E) && m_input.GetKey(VirtualKey.S)) m_direction += m_movementSpeed * m_camera.m_localUp;
+            if (m_input.GetKey(VirtualKey.Q) && m_input.GetKey(VirtualKey.S)) m_direction -= m_movementSpeed * m_camera.m_localUp;
         }
         void ScreenMovement()
         {

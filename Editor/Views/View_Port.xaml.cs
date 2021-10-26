@@ -53,6 +53,6 @@ namespace Editor
         }
 
         void Slider_FOV_ValueChanged(object sender, RangeBaseValueChangedEventArgs e) { Assets.Engine.Components.Engine_Camera.FOV = e.NewValue; }
-        void NumberBox_Speed_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args) { Assets.Engine.Editor.Engine_CameraController.m_transformSpeed = (float)args.NewValue; }
+        void NumberBox_Speed_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args) { Assets.Engine.Editor.Engine_CameraController.m_movementSpeed = (float)args.NewValue; }
     }
 }

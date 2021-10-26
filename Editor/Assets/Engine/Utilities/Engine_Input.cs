@@ -41,37 +41,10 @@ namespace Editor.Assets.Engine.Utilities
         {
             if (m_pointer != null)
             {
-                m_pointerPosition = m_pointer.Position;
-
                 m_mouseAxis.X = (float)(m_tmpPoint.X - m_pointerPosition.X);
                 m_mouseAxis.Y = (float)(m_tmpPoint.Y - m_pointerPosition.Y);
 
                 m_tmpPoint = m_pointerPosition;
-
-                if (m_pointer.Position.X == 0)
-                {
-                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width, m_pointer.Position.Y);
-                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
-                    m_tmpPoint = m_pointerPosition;
-                }
-                if (m_pointer.Position.X >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width)
-                {
-                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(0, m_pointer.Position.Y);
-                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
-                    m_tmpPoint = m_pointerPosition;
-                }
-                if (m_pointer.Position.Y == 0)
-                {
-                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(m_pointer.Position.X, Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height);
-                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
-                    m_tmpPoint = m_pointerPosition;
-                }
-                if (m_pointer.Position.Y >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height)
-                {
-                    CoreWindow.GetForCurrentThread().PointerPosition = new Point(m_pointer.Position.Y, 0);
-                    m_pointerPosition = CoreWindow.GetForCurrentThread().PointerPosition;
-                    m_tmpPoint = m_pointerPosition;
-                }
             }
         }
         public void LateUpdate()
@@ -111,6 +84,43 @@ namespace Editor.Assets.Engine.Utilities
         public Vector2 GetMouseAxis() { return m_mouseAxis; }
         public int GetMouseWheel() { return m_mouseWheelDelta; }
 
+        public bool SetPointerInBounds()
+        {
+            if (m_pointer.Position.X <= 0)
+            {
+                m_tmpPoint = new Point(Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width, m_pointer.Position.Y + 42);
+                CoreWindow.GetForCurrentThread().PointerPosition = m_tmpPoint;
+                m_pointerPosition = m_tmpPoint;
+                m_mouseAxis = Vector2.Zero;
+                return false;
+            }
+            else if (m_pointer.Position.X >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Width - 1)
+            {
+                m_tmpPoint = new Point(0, m_pointer.Position.Y + 42);
+                CoreWindow.GetForCurrentThread().PointerPosition = m_tmpPoint;
+                m_pointerPosition = m_tmpPoint;
+                m_mouseAxis = Vector2.Zero;
+                return false;
+            }
+            else if (m_pointer.Position.Y <= 0)
+            {
+                m_tmpPoint = new Point(m_pointer.Position.X, Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height + 42);
+                CoreWindow.GetForCurrentThread().PointerPosition = m_tmpPoint;
+                m_pointerPosition = m_tmpPoint;
+                m_mouseAxis = Vector2.Zero;
+                return false;
+            }
+            else if (m_pointer.Position.Y >= Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().VisibleBounds.Height - 1)
+            {
+                m_tmpPoint = new Point(m_pointer.Position.X, 0);
+                CoreWindow.GetForCurrentThread().PointerPosition = m_tmpPoint;
+                m_pointerPosition = m_tmpPoint;
+                m_mouseAxis = Vector2.Zero;
+                return false;
+            }
+
+            return true;
+        }
 
         void SetKeyDic(VirtualKey _input, bool[] _newBool)
         {
@@ -211,6 +221,7 @@ namespace Editor.Assets.Engine.Utilities
         internal void PointerMoved(CoreWindow sender, PointerEventArgs e)
         {
             m_pointer = e.CurrentPoint;
+            m_pointerPosition = m_pointer.Position;
 
             e.Handled = true;
         }
