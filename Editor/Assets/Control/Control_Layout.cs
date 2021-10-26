@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Data;
+using System.Globalization;
 
 namespace Editor.Assets.Control
 {
@@ -187,7 +188,6 @@ namespace Editor.Assets.Control
             Grid.SetRow(splitV, 1);
             grid.Children.Add(splitV);
 
-
             return grid;
         }
 
@@ -196,6 +196,8 @@ namespace Editor.Assets.Control
             Grid grid = new Grid();
             Control_TabViewPage tabViewPage = new Control_TabViewPage(m_main, _i);
             grid.Children.Add(tabViewPage.m_TabView);
+
+            //BindingOperations.SetBinding(grid, Grid.VisibilityProperty, new Binding() { ElementName = "x_AppBarToggleButton_Status_OpenPane", Path = new PropertyPath("IsChecked"), Converter = new BooleanToVisibilityConverter() });
 
             return grid;
         }
@@ -216,5 +218,28 @@ namespace Editor.Assets.Control
 
             return grid;
         }
+    }
+}
+public sealed class BooleanToVisibilityConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        bool bValue = false;
+        if (value is bool)
+            bValue = (bool)value;
+        else if (value is Nullable<bool>)
+        {
+            Nullable<bool> tmp = (Nullable<bool>)value;
+            bValue = tmp.HasValue ? tmp.Value : false;
+        }
+        return (bValue) ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        if (value is Visibility)
+            return (Visibility)value == Visibility.Visible;
+        else
+            return false;
     }
 }
