@@ -32,9 +32,13 @@
 
                 <Button.Flyout>
                     <Flyout Placement="BottomEdgeAlignedRight">
-                        <StackPanel Orientation="Vertical" FlowDirection="LeftToRight">
-                            <Slider Header="FOV" Value="110" Minimum="40" Maximum="180" ValueChanged="Slider_FOV_ValueChanged"/>
+                        <StackPanel Orientation="Vertical" Spacing="18" FlowDirection="LeftToRight">
+                            <Slider Header="Field of View" Value="110" Minimum="40" Maximum="180" ValueChanged="Slider_FOV_ValueChanged"/>
                             <my:NumberBox x:Name="x_NumberBox_CameraSpeed" Header="Speed" Value="25" Minimum="1" Maximum="100" SpinButtonPlacementMode="Inline" ValueChanged="NumberBox_Speed_ValueChanged"/>
+                            <ComboBox Header="Projection">
+                                <ComboBoxItem Tag="0" Content="Perspective" IsSelected="True"/>
+                                <ComboBoxItem Tag="1" Content="Orthographic"/>
+                            </ComboBox>
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>
@@ -61,14 +65,10 @@
                 </Button.Flyout>
             </Button>
             <ComboBox Height="33">
-                <ComboBoxItem Tag="0" Content="Perspective" IsSelected="True"/>
-                <ComboBoxItem Tag="1" Content="Orthographic"/>
-            </ComboBox>
-            <ComboBox Height="33">
-                <ComboBoxItem Tag="0" Content="Lit" IsSelected="True"/>
+                <ComboBoxItem Tag="0" Content="Lit"/>
                 <ComboBoxItem Tag="1" Content="Unlit"/>
                 <ComboBoxItem Tag="2" Content="Wireframe"/>
-                <ComboBoxItem Tag="3" Content="Shaded Wireframe"/>
+                <ComboBoxItem Tag="3" Content="Shaded Wireframe" IsSelected="True"/>
             </ComboBox>
         </StackPanel>
     </Grid>

@@ -186,12 +186,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Engine\Resources\Collection.hlsl" />
-    <Content Include="Assets\Engine\Resources\Shader.hlsl" />
+    <Content Include="Assets\Engine\Resources\Default.png" />
+    <Content Include="Assets\Engine\Resources\Lit.hlsl" />
+    <Content Include="Assets\Engine\Resources\Unlit.hlsl" />
     <Content Include="Assets\Engine\Resources\Sky.jpg" />
     <Content Include="Assets\Engine\Resources\Sky2.jpg" />
     <Content Include="Assets\Engine\Resources\Sky3.jpg" />
     <Content Include="Assets\Engine\Resources\Sky4.jpg" />
     <Content Include="Assets\Engine\Resources\Sky5.jpg" />
+    <Content Include="Assets\Engine\Resources\SkyGradient.jpg" />
+    <Content Include="Assets\Engine\Resources\SkyGradient.png" />
     <Content Include="Assets\Engine\Resources\UVMap.jpg" />
     <Content Include="Assets\Icons\LargeTile.scale-100.png" />
     <Content Include="Assets\Icons\LargeTile.scale-200.png" />
