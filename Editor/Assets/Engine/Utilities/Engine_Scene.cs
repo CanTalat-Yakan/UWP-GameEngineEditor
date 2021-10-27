@@ -96,7 +96,7 @@ namespace Editor.Assets.Engine.Utilities
             int vertexCount = 0;
             foreach (var item in m_objects)
                 vertexCount += item.m_mesh.m_vertexCount;
-            m_profile += "Vertices: " + "\n" + vertexCount;
+            m_profile += "\n" + "Vertices: " + vertexCount;
         }
         internal void Render()
         {

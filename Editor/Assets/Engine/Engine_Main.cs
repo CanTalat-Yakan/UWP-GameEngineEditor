@@ -46,8 +46,8 @@ namespace Editor.Assets.Engine
                 m_render.Present();
 
                 _textBlock.Text = m_time.m_profile;
-                _textBlock.Text += "\n" + m_render.m_profile;
-                _textBlock.Text += "\n" + m_scene.m_profile;
+                _textBlock.Text += "\n\n" + m_render.m_profile;
+                _textBlock.Text += "\n\n" + m_scene.m_profile;
             };
         }
     }

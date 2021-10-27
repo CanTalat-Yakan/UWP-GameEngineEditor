@@ -192,7 +192,7 @@ namespace Editor.Assets.Engine.Utilities
             SharpDX.Utilities.Dispose(ref m_depthStencilView);
             SharpDX.Utilities.Dispose(ref m_depthStencilTexture);
 
-            m_profile = e.NewSize.Width.ToString() + "x" + e.NewSize.Height.ToString();
+            m_profile = "Resolution: " + "\n" + ((int)e.NewSize.Width).ToString() + ":" + ((int)e.NewSize.Height).ToString();
 
             m_swapChain.ResizeBuffers(
               m_swapChain.Description.BufferCount,
