@@ -16,8 +16,7 @@ namespace Editor.Assets.Engine.Helper
             var bitmapDecoder = new WIC.BitmapDecoder(
                 factory,
                 filename,
-                WIC.DecodeOptions.CacheOnDemand
-                );
+                WIC.DecodeOptions.CacheOnDemand);
 
             var formatConverter = new WIC.FormatConverter(factory);
 

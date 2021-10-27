@@ -43,7 +43,7 @@ namespace Editor.Assets.Engine.Components
             }
             #endregion
 
-            #region //CreatePixelShader 
+            #region //Create PixelShader 
             using (var psResult = ShaderBytecode.CompileFromFile(_shaderFileName, "PS", "ps_4_0", ShaderFlags.None))
                 m_pixelShader = new D3D11.PixelShader(m_d3d.m_device, psResult.Bytecode.Data);
             #endregion
@@ -74,9 +74,9 @@ namespace Editor.Assets.Engine.Components
             D3D11.SamplerStateDescription samplerStateDescription = new D3D11.SamplerStateDescription
             {
                 Filter = D3D11.Filter.Anisotropic,
-                AddressU = D3D11.TextureAddressMode.Wrap,
-                AddressV = D3D11.TextureAddressMode.Wrap,
-                AddressW = D3D11.TextureAddressMode.Wrap,
+                AddressU = D3D11.TextureAddressMode.Clamp,
+                AddressV = D3D11.TextureAddressMode.Clamp,
+                AddressW = D3D11.TextureAddressMode.Clamp,
                 ComparisonFunction = D3D11.Comparison.Always,
                 MaximumAnisotropy = 16,
                 MinimumLod = 0,
