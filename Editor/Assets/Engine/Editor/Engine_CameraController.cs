@@ -27,7 +27,7 @@ namespace Editor.Assets.Engine.Editor
         {
             MovementSpeedCalc();
 
-            if (m_input.GetButton(Engine_Input.Mouse_Input.IsMiddleButtonPressed))
+            if (m_input.GetButton(MouseButton.IsMiddleButtonPressed))
             {
                 if (m_input.SetPointerInBounds())
                 {
@@ -37,11 +37,11 @@ namespace Editor.Assets.Engine.Editor
                 }
             }
 
-            if (m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
+            if (m_input.GetButton(MouseButton.IsRightButtonPressed))
             {
                 if (m_input.SetPointerInBounds())
                 {
-                    if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed))
+                    if (m_input.GetButton(MouseButton.IsLeftButtonPressed))
                         ScreenMovement();
                     else
                     {
@@ -60,8 +60,8 @@ namespace Editor.Assets.Engine.Editor
 
         void MovementSpeedCalc()
         {
-            if (m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)
-                || m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
+            if (m_input.GetButton(MouseButton.IsLeftButtonPressed)
+                || m_input.GetButton(MouseButton.IsRightButtonPressed))
                 m_movementSpeed += m_input.GetMouseWheel();
 
             m_movementSpeed = Math.Clamp(m_movementSpeed, 0.1f, 10);
@@ -69,9 +69,9 @@ namespace Editor.Assets.Engine.Editor
 
         void ZoomMovement()
         {
-            if (!m_input.GetButton(Engine_Input.Mouse_Input.IsLeftButtonPressed)
-                && !m_input.GetButton(Engine_Input.Mouse_Input.IsMiddleButtonPressed)
-                && !m_input.GetButton(Engine_Input.Mouse_Input.IsRightButtonPressed))
+            if (!m_input.GetButton(MouseButton.IsLeftButtonPressed)
+                && !m_input.GetButton(MouseButton.IsMiddleButtonPressed)
+                && !m_input.GetButton(MouseButton.IsRightButtonPressed))
                 m_direction += 50 * m_camera.m_front * m_input.GetMouseWheel();
         }
 

@@ -10,19 +10,19 @@ using Windows.Foundation;
 
 namespace Editor.Assets.Engine.Utilities
 {
+    public enum MouseButton { IsLeftButtonPressed, IsRightButtonPressed, IsMiddleButtonPressed }
     class Engine_Input
     {
         public static Engine_Input Instance { get; private set; }
 
         public enum Input_State { DOWN, PRESSED, UP }
-        public enum Mouse_Input { IsLeftButtonPressed, IsRightButtonPressed, IsMiddleButtonPressed }
 
         Dictionary<VirtualKey, bool[]> m_virtualKeyDic = new Dictionary<VirtualKey, bool[]>();
         List<VirtualKey> m_bufferKeys = new List<VirtualKey>();
 
 
-        Dictionary<Mouse_Input, bool[]> m_pointerPointDic = new Dictionary<Mouse_Input, bool[]>();
-        List<Mouse_Input> m_bufferPoints = new List<Mouse_Input>();
+        Dictionary<MouseButton, bool[]> m_pointerPointDic = new Dictionary<MouseButton, bool[]>();
+        List<MouseButton> m_bufferPoints = new List<MouseButton>();
 
         PointerPoint m_pointer;
         int m_mouseWheelDelta;
@@ -74,7 +74,7 @@ namespace Editor.Assets.Engine.Utilities
 
             return false;
         }
-        public bool GetButton(Mouse_Input _input, Input_State _state = Input_State.PRESSED)
+        public bool GetButton(MouseButton _input, Input_State _state = Input_State.PRESSED)
         {
             if (m_pointerPointDic.ContainsKey(_input))
                 return m_pointerPointDic[_input][(int)_state];
@@ -155,7 +155,7 @@ namespace Editor.Assets.Engine.Utilities
         }
 
 
-        void SetPointerDic(Mouse_Input _input, bool[] _newBool)
+        void SetPointerDic(MouseButton _input, bool[] _newBool)
         {
             if (!m_pointerPointDic.ContainsKey(_input))
                 m_pointerPointDic.Add(_input, _newBool);
@@ -176,13 +176,13 @@ namespace Editor.Assets.Engine.Utilities
                 newBool[(int)Input_State.UP] = false;
 
                 if (m_pointer.Properties.IsLeftButtonPressed)
-                    SetPointerDic(Mouse_Input.IsLeftButtonPressed, newBool);
+                    SetPointerDic(MouseButton.IsLeftButtonPressed, newBool);
 
                 if (m_pointer.Properties.IsMiddleButtonPressed)
-                    SetPointerDic(Mouse_Input.IsMiddleButtonPressed, newBool);
+                    SetPointerDic(MouseButton.IsMiddleButtonPressed, newBool);
 
                 if (m_pointer.Properties.IsRightButtonPressed)
-                    SetPointerDic(Mouse_Input.IsRightButtonPressed, newBool);
+                    SetPointerDic(MouseButton.IsRightButtonPressed, newBool);
             }
 
             e.Handled = true;
@@ -197,13 +197,13 @@ namespace Editor.Assets.Engine.Utilities
             newBool[(int)Input_State.UP] = true;
 
             if (!m_pointer.Properties.IsLeftButtonPressed)
-                SetPointerDic(Mouse_Input.IsLeftButtonPressed, newBool);
+                SetPointerDic(MouseButton.IsLeftButtonPressed, newBool);
 
             if (!m_pointer.Properties.IsMiddleButtonPressed)
-                SetPointerDic(Mouse_Input.IsMiddleButtonPressed, newBool);
+                SetPointerDic(MouseButton.IsMiddleButtonPressed, newBool);
 
             if (!m_pointer.Properties.IsRightButtonPressed)
-                SetPointerDic(Mouse_Input.IsRightButtonPressed, newBool);
+                SetPointerDic(MouseButton.IsRightButtonPressed, newBool);
 
             e.Handled = true;
         }
