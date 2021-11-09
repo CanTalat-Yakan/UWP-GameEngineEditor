@@ -24,6 +24,7 @@ namespace Editor.Assets.Engine.Utilities
         //static readonly string IMAGE_SKY_FILE = @"Assets//Engine//Resources//Sky4.jpg";
         static readonly string IMAGE_SKY_FILE = @"Assets//Engine//Resources//SkyGradient.png";
         static readonly string OBJ_CUBE = @"Assets//Engine//Resources//Cube.obj";
+        //static readonly string OBJ_CUBE = @"Assets//Engine//Resources//CubeRig.fbx";
         static readonly string OBJ_FILE = @"Assets//Engine//Resources//Sphere.obj";
 
         Engine_Material m_materialCube;
