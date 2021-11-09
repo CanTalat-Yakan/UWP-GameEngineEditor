@@ -24,7 +24,8 @@ namespace Editor.Assets.Engine.Utilities
                 m_fps = m_lastFPS;
                 m_lastFPS = 0;
                 m_now = DateTime.Now;
-                m_profile = m_delta.ToString() + "ms" + "\n" + m_fps.ToString() + "FPS";
+
+                m_profile = m_watch.ElapsedMilliseconds.ToString() + " ms" + "\n" + m_fps.ToString() + " FPS";
             }
 
 
