@@ -27,14 +27,14 @@ namespace Editor.Assets.Control
 
         internal Grid m_GridContent;
 
-        internal View_Port m_ViewPort;
-        //internal View_Settings m_ViewSettings;
         internal View_Output m_ViewOutput;
         internal View_Hierarchy m_ViewHierarchy;
         internal View_Files m_ViewFiles;
         internal View_Properties m_ViewProperties;
+        //internal View_Settings m_ViewSettings;
+        internal View_Port m_ViewPort;
 
-        public Control_Layout(View_Main _main, Grid _content, View_Output _output, View_Hierarchy _hierarchy, View_Files _files, View_Properties _properties, View_Settings _settings, View_Port _port)
+        public Control_Layout(View_Main _main, Grid _content, View_Port _port, View_Output _output, View_Hierarchy _hierarchy, View_Files _files, View_Properties _properties, View_Settings _settings)
         {
             m_main = _main;
 

@@ -5,12 +5,13 @@ namespace Editor.Assets.Engine.Components
 {
     class Engine_Transform
     {
+        internal Engine_Transform m_parent;
+
         internal SPerModelConstantBuffer m_constantsBuffer { get => new SPerModelConstantBuffer() { World = m_worldMatrix }; }
-        internal Matrix m_worldMatrix = new Matrix();
-        internal Vector3 m_position = new Vector3();
-        internal Vector3 m_rotation = new Vector3(0, 0, 0);
-        internal Vector4 m_quaternion = new Vector4(0, 0, 0, 1);
-        internal Vector3 m_scale = new Vector3(1, 1, 1);
+        internal Matrix m_worldMatrix = Matrix.Identity;
+        internal Vector3 m_position = Vector3.Zero;
+        internal Vector3 m_rotation = Vector3.Zero;
+        internal Vector3 m_scale = Vector3.One;
 
         internal void Udate()
         {
@@ -19,6 +20,7 @@ namespace Editor.Assets.Engine.Components
             Matrix scale = Matrix.Scaling(m_scale);
 
             m_worldMatrix = Matrix.Transpose(scale * rotation * translation);
+            if (m_parent != null) m_worldMatrix = m_worldMatrix * m_parent.m_worldMatrix;
         }
 
         public override string ToString()

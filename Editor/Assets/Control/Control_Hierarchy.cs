@@ -9,20 +9,16 @@ using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 
 namespace Editor.Assets.Control
 {
-    class CGameObject
+    class TreeEntry
     {
-        public CGameObject()
-        {
-            ID = new Random().Next(0, int.MaxValue);
-        }
-
-        public int ID;
-        public int? ID_parent;
+        public Guid ID;
+        public Guid? IDparent;
         public string Name;
+        public Engine.Utilities.Engine_Object Object;
     }
     class CScene
     {
-        public List<CGameObject> m_Hierarchy = new List<CGameObject>();
+        public List<TreeEntry> m_Hierarchy = new List<TreeEntry>();
         public string[] ToStringArray()
         {
             string[] s = new string[m_Hierarchy.Count];
@@ -33,14 +29,14 @@ namespace Editor.Assets.Control
             return s;
         }
 
-        string GetParents(CGameObject _current, string _path, char _pathSeperator)
+        string GetParents(TreeEntry _current, string _path, char _pathSeperator)
         {
-            if (_current.ID_parent != null)
-                foreach (CGameObject gameObject in m_Hierarchy)
-                    if (gameObject.ID == _current.ID_parent)
+            if (_current.IDparent != null)
+                foreach (var item in m_Hierarchy)
+                    if (item.ID == _current.IDparent)
                         _path = GetParents(
-                            gameObject,
-                            gameObject.Name + _pathSeperator + _path,
+                            item,
+                            item.Name + _pathSeperator + _path,
                             _pathSeperator);
 
             return _path;

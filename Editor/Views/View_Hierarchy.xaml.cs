@@ -20,21 +20,58 @@ namespace Editor
 {
     public sealed partial class View_Hierarchy : UserControl
     {
+        View_Main m_main;
         Control_Hierarchy hierarchy;
+        Microsoft.UI.Xaml.Controls.TreeView m_treeView;
 
         public View_Hierarchy(View_Main _main)
         {
             this.InitializeComponent();
+            m_main = _main;
+            m_treeView = x_TreeView_Hierarchy;
+
+            m_main.Loaded += Initialize0;
+        }
+
+
+        void Initialize0(object sender, RoutedEventArgs e)
+        {
+            m_main.m_Layout.m_ViewPort.Loaded += Initialize;
+        }
+
+        void Initialize(object sender, RoutedEventArgs e)
+        {
+            var engineObjectList = m_main.m_Layout.m_ViewPort.m_renderer.m_scene.m_objectManager.m_list;
+            engineObjectList.OnAdd += list_OnAdd;
+
             CScene scene = new CScene();
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Core" });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Content" });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Manager" });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Camera", ID_parent = scene.m_Hierarchy[0].ID });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Directional Light", ID_parent = scene.m_Hierarchy[0].ID });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Player", ID_parent = scene.m_Hierarchy[1].ID });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "VCamera", ID_parent = scene.m_Hierarchy[5].ID });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "Controller", ID_parent = scene.m_Hierarchy[5].ID });
-            scene.m_Hierarchy.Add(new CGameObject() { Name = "GameManager", ID_parent = scene.m_Hierarchy[2].ID });
+            foreach (var item in engineObjectList)
+            {
+                var newEntry = new TreeEntry() { Object = item, Name = item.m_name, ID = item.ID };
+                if (item.m_parent != null)
+                    newEntry.IDparent = item.m_parent.ID;
+
+                scene.m_Hierarchy.Add(newEntry);
+            }
+
+            hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
+        }
+
+        void list_OnAdd(object sender, EventArgs e)
+        {
+            var engineObjectList = m_main.m_Layout.m_ViewPort.m_renderer.m_scene.m_objectManager.m_list;
+
+            CScene scene = new CScene();
+
+            foreach (var item in engineObjectList)
+            {
+                var newEntry = new TreeEntry() { Object = item, Name = item.m_name, ID = item.ID };
+                if (item.m_parent != null)
+                    newEntry.IDparent = item.m_parent.ID;
+
+                scene.m_Hierarchy.Add(newEntry);
+            }
+
             hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
         }
     }

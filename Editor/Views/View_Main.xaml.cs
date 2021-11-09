@@ -38,12 +38,12 @@ namespace Editor
             m_Layout = new Control_Layout(
                 this, 
                 x_Grid_Main,
+                new View_Port(this),
                 new View_Output(this), 
                 new View_Hierarchy(this), 
                 new View_Files(this), 
                 new View_Properties(this), 
-                new View_Settings(this),
-                new View_Port(this));
+                new View_Settings(this));
 
             m_GameMode = new Control_GameMode(
                 this,
