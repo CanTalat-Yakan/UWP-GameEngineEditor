@@ -36,7 +36,6 @@ namespace Editor.Assets.Engine.Editor
 
         internal void Draw()
         {
-
             ImGui.GetIO().DeltaTime = (float)Engine_Time.m_watch.Elapsed.TotalSeconds;
             ImGui.NewFrame();
             ImGui.Begin("Test");
