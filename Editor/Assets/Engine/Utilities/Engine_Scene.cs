@@ -21,6 +21,8 @@ namespace Editor.Assets.Engine.Utilities
         internal void Awake()
         {
             m_cameraController = new Engine_CameraController(m_camera);
+
+            m_objectManager.CreateSky();
         }
 
         Engine_Object parent, subParent;
@@ -43,13 +45,17 @@ namespace Editor.Assets.Engine.Utilities
         {
             m_camera.RecreateViewConstants();
             m_cameraController.Update();
-
             if (Engine_Input.Instance.GetKey(Windows.System.VirtualKey.C, Engine_Input.Input_State.DOWN))
-                m_objectManager.CreatePrimitive(EPrimitiveTypes.CUBE, subParent).m_transform = new Engine_Transform
+            {
+                Engine_Object a = m_objectManager.CreatePrimitive(EPrimitiveTypes.CUBE, subParent);
+                a.m_transform = new Engine_Transform
                 {
                     m_rotation = new Vector3(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360)),
                     m_scale = new Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3))
                 };
+                a.m_name = "Cube" + new Random().Next(0, int.MaxValue).ToString();
+            }
+
         }
 
         internal void LateUpdate()
@@ -68,6 +74,8 @@ namespace Editor.Assets.Engine.Utilities
             foreach (var item in m_objectManager.m_list)
                 if (item.m_enabled && item.m_mesh != null)
                     item.Update_Render();
+
+            m_objectManager.m_sky.Update_Render();
         }
     }
 }

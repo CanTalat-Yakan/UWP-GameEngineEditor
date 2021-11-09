@@ -105,10 +105,5 @@ namespace Editor.Assets.Engine.Utilities
 
             m_sky.m_transform.m_scale = new Vector3(-1000, -1000, -1000);
         }
-
-
-        internal void Render()
-        {
-        }
     }
 }
