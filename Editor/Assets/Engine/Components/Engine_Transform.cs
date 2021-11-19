@@ -7,8 +7,9 @@ namespace Editor.Assets.Engine.Components
     {
         internal Engine_Transform m_parent;
 
-        internal SPerModelConstantBuffer m_constantsBuffer { get => new SPerModelConstantBuffer() { World = m_worldMatrix }; }
+        internal SPerModelConstantBuffer m_constantsBuffer { get => new SPerModelConstantBuffer() { ModelView = m_worldMatrix }; }
         internal Matrix m_worldMatrix = Matrix.Identity;
+        internal Matrix m_normalMatrix = Matrix.Identity;
         internal Vector3 m_position = Vector3.Zero;
         internal Vector3 m_rotation = Vector3.Zero;
         internal Vector3 m_scale = Vector3.One;

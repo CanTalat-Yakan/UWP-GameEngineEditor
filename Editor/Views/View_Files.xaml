@@ -51,6 +51,9 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
-        <my:TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
+        <StackPanel>
+            <my:BreadcrumbBar x:Name="x_BoreadcrumBar_Folder"/>
+            <my:TreeView x:Name="x_TreeView_Assets" CanDragItems="False" CanReorderItems="False"/>
+        </StackPanel>
     </Grid>
 </UserControl>

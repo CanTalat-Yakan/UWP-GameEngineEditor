@@ -13,8 +13,8 @@ namespace Editor.Assets.Engine.Utilities
     {
         public string m_profile;
 
-        Engine_Camera m_camera = new Engine_Camera();
-        Engine_CameraController m_cameraController;
+        internal Engine_Camera m_camera = new Engine_Camera();
+        internal Engine_CameraController m_cameraController;
         internal Engine_ObjectManager m_objectManager = new Engine_ObjectManager();
 
 
@@ -32,12 +32,12 @@ namespace Editor.Assets.Engine.Utilities
             subParent = m_objectManager.CreateEmpty("Cubes");
             subParent.m_parent = parent;
 
-            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 0, 2);
-            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 0, -2);
-            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 2, 0);
-            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, -2, 0);
+            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 0, 1);
+            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 0, -3);
+            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, 2.5f, 0);
+            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(0, -4, 0);
             m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(2, 0, 0);
-            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(-2, 0, 0);
+            m_objectManager.CreatePrimitive(EPrimitiveTypes.SPHERE, parent).m_transform.m_position = new Vector3(-1, 1, 0);
             m_objectManager.CreatePrimitive(EPrimitiveTypes.CUBE, subParent);
         }
 
@@ -45,17 +45,13 @@ namespace Editor.Assets.Engine.Utilities
         {
             m_camera.RecreateViewConstants();
             m_cameraController.Update();
+
             if (Engine_Input.Instance.GetKey(Windows.System.VirtualKey.C, Engine_Input.Input_State.DOWN))
-            {
-                Engine_Object a = m_objectManager.CreatePrimitive(EPrimitiveTypes.CUBE, subParent);
-                a.m_transform = new Engine_Transform
+                m_objectManager.CreatePrimitive(EPrimitiveTypes.CUBE, subParent).m_transform = new Engine_Transform
                 {
                     m_rotation = new Vector3(new Random().Next(1, 360), new Random().Next(1, 360), new Random().Next(1, 360)),
                     m_scale = new Vector3(new Random().Next(1, 3), new Random().Next(1, 3), new Random().Next(1, 3))
                 };
-                a.m_name = "Cube" + new Random().Next(0, int.MaxValue).ToString();
-            }
-
         }
 
         internal void LateUpdate()

@@ -25,26 +25,38 @@ namespace Editor.Assets.Engine.Utilities
         internal Engine_Object m_sky;
 
         Engine_Material m_materialDefault;
+        Engine_Material m_materialReflection;
         Engine_Material m_materialSky;
         Engine_Mesh m_meshSphere;
         Engine_Mesh m_meshCube;
 
         static readonly string SHADER_LIT = @"Assets//Engine//Resources//Lit.hlsl";
+        static readonly string SHADER_SIMPLELIT = @"Assets//Engine//Resources//SimpleLit.hlsl";
         static readonly string SHADER_UNLIT = @"Assets//Engine//Resources//Unlit.hlsl";
         static readonly string IMAGE_DEFAULT = @"Assets//Engine//Resources//Default.png";
-        static readonly string IMAGE_SKY = @"Assets//Engine//Resources//SkyGradient.png";
+        static readonly string IMAGE_SKY = @"Assets//Engine//Resources//Sky4.jpg";
         static readonly string OBJ_CUBE = @"Assets//Engine//Resources//Cube.obj";
         static readonly string OBJ_SPHERE = @"Assets//Engine//Resources//Sphere.obj";
+        static readonly string OBJ_DUCK = @"Assets//Engine//Resources//Duck.obj";
 
         internal Engine_ObjectManager()
         {
-            m_materialDefault = new Engine_Material(SHADER_LIT, IMAGE_DEFAULT);
+            m_materialDefault = new Engine_Material(SHADER_SIMPLELIT, IMAGE_DEFAULT);
+            m_materialReflection = new Engine_Material(SHADER_LIT, IMAGE_SKY);
             m_materialSky = new Engine_Material(SHADER_UNLIT, IMAGE_SKY);
 
             m_meshCube = new Engine_Mesh(Engine_ObjLoader.LoadFilePro(OBJ_CUBE));
             m_meshSphere = new Engine_Mesh(Engine_ObjLoader.LoadFilePro(OBJ_SPHERE));
         }
 
+
+        internal Engine_Object Duplicate(Engine_Object _refObject)
+        {
+            Engine_Object gObject = _refObject.Clone();
+
+            m_list.Add(gObject);
+            return gObject;
+        }
 
         internal Engine_Object CreateEmpty(string _name = "Entity")
         {
@@ -61,17 +73,17 @@ namespace Editor.Assets.Engine.Utilities
         internal Engine_Object CreatePrimitive(EPrimitiveTypes _type)
         {
             Engine_Object gObject = new Engine_Object();
-            gObject.m_material = m_materialDefault;
+            gObject.m_material = m_materialReflection;
 
             switch (_type)
             {
                 case EPrimitiveTypes.CUBE:
                     gObject.m_mesh = m_meshCube;
-                    gObject.m_name = "Cube";
+                    gObject.m_name = "Cube" + m_list.Count.ToString();
                     break;
                 case EPrimitiveTypes.SPHERE:
                     gObject.m_mesh = m_meshSphere;
-                    gObject.m_name = "Sphere";
+                    gObject.m_name = "Sphere" + m_list.Count.ToString();
                     break;
                 case EPrimitiveTypes.PLANE:
                     break;

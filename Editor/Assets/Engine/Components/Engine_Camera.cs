@@ -54,13 +54,14 @@ namespace Editor.Assets.Engine.Components
                 m_up);
 
             var aspect = m_d3d.m_swapChainPanel.ActualWidth / m_d3d.m_swapChainPanel.ActualHeight;
-            var proj = Matrix.PerspectiveFovLH(
+            var projection = Matrix.PerspectiveFovLH(
                 //MathUtil.DegreesToRadians(2 * (float)Math.Atan(Math.Tan(FOV * 0.5f) * aspect)),
                 MathUtil.DegreesToRadians((float)(FOV / aspect)),
                 (float)aspect,
                 0.1f, 1000);
-            var viewProj = Matrix.Transpose(view * proj);
-            m_viewConstants = new SViewConstantsBuffer() { VP = viewProj, WCP = m_transform.m_position };
+
+            var viewProjection = Matrix.Transpose(view * projection);
+            m_viewConstants = new SViewConstantsBuffer() { ViewProjection = viewProjection, View = view, Projection = projection, WorldCamPos = m_transform.m_position };
             #endregion
 
             m_d3d.m_deviceContext.UpdateSubresource(ref m_viewConstants, m_view);

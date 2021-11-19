@@ -26,7 +26,7 @@ namespace Editor
         {
             this.InitializeComponent();
 
-            m_control = new Control_Files(x_TreeView_Assets);
+            m_control = new Control_Files(x_TreeView_Assets, x_BoreadcrumBar_Folder);
         }
     }
 }

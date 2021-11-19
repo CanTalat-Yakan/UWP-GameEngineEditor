@@ -15,6 +15,7 @@ namespace Editor.Assets.Control
         public Guid? IDparent;
         public string Name;
         public Engine.Utilities.Engine_Object Object;
+        public Microsoft.UI.Xaml.Controls.TreeViewNode Node;
     }
     class CScene
     {
@@ -29,6 +30,23 @@ namespace Editor.Assets.Control
             return s;
         }
 
+        public TreeEntry GetParent(TreeEntry _node)
+        {
+            if (_node.IDparent != null)
+                foreach (var item in m_Hierarchy)
+                    if (item.ID == _node.IDparent.Value)
+                        return item;
+            return null;
+        }
+        public TreeEntry[] GetChildren(TreeEntry _node)
+        {
+            List<TreeEntry> list = new List<TreeEntry>();
+            foreach (var item in m_Hierarchy)
+                if (item.IDparent != null)
+                    if (item.IDparent.Value == _node.ID)
+                        list.Add(item);
+            return list.ToArray();
+        }
         string GetParents(TreeEntry _current, string _path, char _pathSeperator)
         {
             if (_current.IDparent != null)

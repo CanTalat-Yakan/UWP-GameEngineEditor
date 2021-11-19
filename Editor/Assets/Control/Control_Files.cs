@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace Editor.Assets.Control
         Control_TreeView m_control = new Control_TreeView();
 
         internal TreeView m_tree;
+        internal BreadcrumbBar m_breadcrumbar;
 
-        public Control_Files(TreeView _tree)
+        public Control_Files(TreeView _tree, BreadcrumbBar _bar)
         {
             m_tree = _tree;
+            m_breadcrumbar = _bar;
 
             m_control.PopulateTreeView(
                     m_tree,
@@ -27,6 +30,10 @@ namespace Editor.Assets.Control
                             + "\\Assets"),
                         Directory.GetCurrentDirectory())
                     , '\\');
+
+            m_breadcrumbar.ItemsSource = Directory.GetFiles(
+                            Directory.GetCurrentDirectory()
+                            + "\\Assets");
         }
     }
 }

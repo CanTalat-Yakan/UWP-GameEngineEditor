@@ -21,7 +21,6 @@ namespace Editor
     public sealed partial class View_Hierarchy : UserControl
     {
         View_Main m_main;
-        Control_Hierarchy hierarchy;
         Microsoft.UI.Xaml.Controls.TreeView m_treeView;
 
         public View_Hierarchy(View_Main _main)
@@ -54,7 +53,22 @@ namespace Editor
                 scene.m_Hierarchy.Add(newEntry);
             }
 
-            hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
+            foreach (var item in scene.m_Hierarchy)
+                item.Node = new Microsoft.UI.Xaml.Controls.TreeViewNode() { Content = item.Name, IsExpanded = true };
+
+            TreeEntry tmp;
+            foreach (var item in scene.m_Hierarchy)
+                if ((tmp = scene.GetParent(item)) != null)
+                {
+                    if (!x_TreeView_Hierarchy.RootNodes.Contains(tmp.Node))
+                        x_TreeView_Hierarchy.RootNodes.Add(tmp.Node);
+
+                    if (!tmp.Node.Children.Contains(item.Node))
+                        foreach (var child in scene.GetChildren(tmp))
+                            tmp.Node.Children.Add(child.Node);
+                }
+                else if (!x_TreeView_Hierarchy.RootNodes.Contains(item.Node))
+                    x_TreeView_Hierarchy.RootNodes.Add(item.Node);
         }
 
         void list_OnAdd(object sender, EventArgs e)
@@ -63,16 +77,24 @@ namespace Editor
 
             CScene scene = new CScene();
 
-            foreach (var item in engineObjectList)
+            var newObject = engineObjectList[engineObjectList.Count - 1];
+            var newEntry = new TreeEntry() { Object = newObject, Name = newObject.m_name, ID = newObject.ID };
+            if (newObject.m_parent != null)
+                newEntry.IDparent = newObject.m_parent.ID;
+
+            newEntry.Node = new Microsoft.UI.Xaml.Controls.TreeViewNode() { Content = newEntry.Name, IsExpanded = true };
+            scene.m_Hierarchy.Add(newEntry);
+
+            TreeEntry tmp;
+            if ((tmp = scene.GetParent(newEntry)) != null)
             {
-                var newEntry = new TreeEntry() { Object = item, Name = item.m_name, ID = item.ID };
-                if (item.m_parent != null)
-                    newEntry.IDparent = item.m_parent.ID;
+                if (!x_TreeView_Hierarchy.RootNodes.Contains(tmp.Node))
+                    x_TreeView_Hierarchy.RootNodes.Add(tmp.Node);
 
-                scene.m_Hierarchy.Add(newEntry);
+                tmp.Node.Children.Add(newEntry.Node);
             }
-
-            hierarchy = new Control_Hierarchy(x_TreeView_Hierarchy, scene);
+            else if (!x_TreeView_Hierarchy.RootNodes.Contains(newEntry.Node))
+                x_TreeView_Hierarchy.RootNodes.Add(newEntry.Node);
         }
     }
 }

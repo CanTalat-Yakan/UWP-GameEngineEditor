@@ -1,10 +1,11 @@
 ﻿using Editor.Assets.Engine.Components;
+using System;
 
 namespace Editor.Assets.Engine.Utilities
 {
-    class Engine_Object
+    class Engine_Object : ICloneable
     {
-        internal System.Guid ID = System.Guid.NewGuid();
+        internal Guid ID = Guid.NewGuid();
 
         internal Engine_Object m_parent;
 
@@ -16,7 +17,9 @@ namespace Editor.Assets.Engine.Utilities
         internal bool m_enabled = true;
         internal bool m_static = false;
 
-        
+        internal Engine_Object Clone() { return (Engine_Object)this.MemberwiseClone(); }
+        object ICloneable.Clone() { return Clone(); }
+
         internal void Update_Render()
         {
             if (!m_static)

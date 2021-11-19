@@ -189,6 +189,8 @@
     <Content Include="Assets\Engine\Resources\Collection.hlsl" />
     <Content Include="Assets\Engine\Resources\Default.png" />
     <Content Include="Assets\Engine\Resources\Lit.hlsl" />
+    <Content Include="Assets\Engine\Resources\SimpleLit.hlsl" />
+    <Content Include="Assets\Engine\Resources\SkyFish.jpg" />
     <Content Include="Assets\Engine\Resources\Unlit.hlsl" />
     <Content Include="Assets\Engine\Resources\Sky.jpg" />
     <Content Include="Assets\Engine\Resources\Sky2.jpg" />
@@ -324,6 +326,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Engine\Resources\CubeRig.fbx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Engine\Resources\Sky4k.hdr" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

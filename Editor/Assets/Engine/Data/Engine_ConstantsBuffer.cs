@@ -4,14 +4,16 @@ namespace Editor.Assets.Engine.Data
 {
     public struct SViewConstantsBuffer
     {
-        public RawMatrix VP;
-        public RawVector3 WCP;
+        public RawMatrix ViewProjection;
+        public RawMatrix View;
+        public RawMatrix Projection;
+        public RawVector3 WorldCamPos;
         public float pad;
     }
 
     public struct SPerModelConstantBuffer
     {
-        public RawMatrix World;
+        public RawMatrix ModelView;
     }
 }
 
