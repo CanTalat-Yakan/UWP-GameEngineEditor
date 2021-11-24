@@ -1,11 +1,8 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Editor.Assets.Engine.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Numerics;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
+using TreeViewNode = Microsoft.UI.Xaml.Controls.TreeViewNode;
 
 namespace Editor.Assets.Control
 {
@@ -17,9 +14,10 @@ namespace Editor.Assets.Control
         public Engine.Utilities.Engine_Object Object;
         public Microsoft.UI.Xaml.Controls.TreeViewNode Node;
     }
-    class CScene
+    class TreeEntryCollection
     {
         public List<TreeEntry> m_Hierarchy = new List<TreeEntry>();
+
         public string[] ToStringArray()
         {
             string[] s = new string[m_Hierarchy.Count];
@@ -30,23 +28,6 @@ namespace Editor.Assets.Control
             return s;
         }
 
-        public TreeEntry GetParent(TreeEntry _node)
-        {
-            if (_node.IDparent != null)
-                foreach (var item in m_Hierarchy)
-                    if (item.ID == _node.IDparent.Value)
-                        return item;
-            return null;
-        }
-        public TreeEntry[] GetChildren(TreeEntry _node)
-        {
-            List<TreeEntry> list = new List<TreeEntry>();
-            foreach (var item in m_Hierarchy)
-                if (item.IDparent != null)
-                    if (item.IDparent.Value == _node.ID)
-                        list.Add(item);
-            return list.ToArray();
-        }
         string GetParents(TreeEntry _current, string _path, char _pathSeperator)
         {
             if (_current.IDparent != null)
@@ -65,19 +46,61 @@ namespace Editor.Assets.Control
         Control_TreeView m_control = new Control_TreeView();
 
         internal TreeView m_tree;
-        internal CScene m_scene;
+        internal TreeEntryCollection m_collection;
+        internal MyList<Engine_Object> m_engineObjectsList;
 
-        public Control_Hierarchy(TreeView _tree, CScene _scene)
+        public Control_Hierarchy(View_Main _main, TreeView _tree)
         {
             m_tree = _tree;
-            m_scene = _scene;
+            m_collection = new TreeEntryCollection();
+
+            m_engineObjectsList = _main.m_Layout.m_ViewPort.m_renderer.m_scene.m_objectManager.m_list;
+            m_engineObjectsList.OnAdd += (object sender, EventArgs e) => { Initialize(); };
 
             Initialize();
         }
 
         void Initialize()
         {
-            m_control.PopulateTreeView(m_tree, m_scene.ToStringArray(), '/');
+            foreach (var item in m_engineObjectsList)
+                m_collection.m_Hierarchy.Add(
+                    new TreeEntry()
+                    {
+                        Object = item,
+                        Name = item.m_name,
+                        ID = item.ID,
+                        Node = new TreeViewNode()
+                        {
+                            Content = item.m_name,
+                            IsExpanded = true
+                        }
+                    });
+
+            foreach (var entry in m_collection.m_Hierarchy)
+                if (entry.Object.m_parent != null)
+                    entry.IDparent = entry.Object.m_parent.ID;
+
+            List<TreeViewNode> hierarchy = new List<TreeViewNode>();
+            foreach (var entry in m_collection.m_Hierarchy)
+                if (entry.IDparent is null)
+                    hierarchy.Add(RecursiveGetChildren(m_collection, entry).Node);
+
+            foreach (var entry in hierarchy)
+                m_tree.RootNodes.Add(entry);
+        }
+
+        void list_OnAdd(object sender, EventArgs e)
+        {
+            Initialize();
+        }
+
+        TreeEntry RecursiveGetChildren(TreeEntryCollection _collection, TreeEntry _input)
+        {
+            foreach (var item in _collection.m_Hierarchy)
+                if (item.IDparent == _input.ID)
+                    _input.Node.Children.Add(RecursiveGetChildren(_collection, item).Node);
+
+            return _input;
         }
     }
 }
